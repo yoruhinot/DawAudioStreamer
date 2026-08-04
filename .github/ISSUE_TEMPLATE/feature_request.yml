@@ -1,0 +1,32 @@
+name: 改善提案
+description: 使いやすさや対応環境について提案します
+title: "[提案] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 困っていること
+      description: 現在どの操作や制限で困っているかを記載してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 希望する改善
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 利用環境
+      placeholder: Windows、DAW、オーディオインターフェース、OBS／Discordなど
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 確認
+      options:
+        - label: 公開してよい情報だけを記載しました
+          required: true

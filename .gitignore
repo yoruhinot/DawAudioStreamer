@@ -1,0 +1,13 @@
+.vs/
+.vscode/
+build/
+out/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+*.pdb
+*.ilk
+*.log
+CMakeUserPresets.json
+_deps/

@@ -1,0 +1,101 @@
+name: 不具合報告
+description: DawAudioStreamerで発生した問題を報告します
+title: "[不具合] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        報告ありがとうございます。公開Issueへ個人情報、配信URL、DAWプロジェクトファイルを添付しないでください。
+
+  - type: input
+    id: version
+    attributes:
+      label: DawAudioStreamerのバージョン
+      placeholder: 例：0.4.0-beta.1
+    validations:
+      required: true
+
+  - type: input
+    id: windows
+    attributes:
+      label: Windowsのバージョン
+      placeholder: 例：Windows 11 24H2
+    validations:
+      required: true
+
+  - type: input
+    id: daw
+    attributes:
+      label: DAWとバージョン
+      placeholder: 例：Studio One Pro 8
+    validations:
+      required: true
+
+  - type: input
+    id: audio
+    attributes:
+      label: オーディオインターフェースとASIOドライバー
+      placeholder: 製品名とドライバー名／バージョン
+
+  - type: input
+    id: audio_settings
+    attributes:
+      label: サンプルレートとバッファサイズ
+      placeholder: 例：48 kHz、128 samples
+
+  - type: input
+    id: apps
+    attributes:
+      label: OBS／Discordのバージョン
+      placeholder: 使用しているものだけ記入してください
+
+  - type: dropdown
+    id: destination
+    attributes:
+      label: 問題が起きた場所
+      options:
+        - VST3／DAW
+        - OBS
+        - DiscordのDAWアプリ共有
+        - Discordの画面全体共有
+        - インストール／アンインストール
+        - その他
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      description: 問題が起きるまでの操作を順番に記載してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待した結果と実際の結果
+    validations:
+      required: true
+
+  - type: textarea
+    id: vst_status
+    attributes:
+      label: DAS Sendに表示された状態
+      placeholder: OBS／Discordのステータス表示を記載してください
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 補足・ログ
+      description: 必要ならOBSログなどを添付してください。秘密情報や個人情報は除いてください。
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 確認
+      options:
+        - label: DAS Sendをマスターバスに1個だけ挿して再現することを確認しました
+          required: true
+        - label: 公開してよい情報だけを記載しました
+          required: true
