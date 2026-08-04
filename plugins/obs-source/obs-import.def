@@ -1,0 +1,8 @@
+LIBRARY obs
+EXPORTS
+  obs_register_source_s
+  obs_source_output_audio
+  obs_module_load_locale
+  os_gettime_ns
+  text_lookup_destroy
+  text_lookup_getstr

@@ -1,0 +1,26 @@
+DawAudioStreamer ライセンス概要
+================================
+
+Copyright (c) 2026 SecondLunchi
+
+このリポジトリはコンポーネントごとに次のライセンスを使用します。
+
+- JUCEをリンクする`apps/engine`、`plugins/send-vst3`：
+  GNU Affero General Public License version 3（AGPL-3.0-only）。
+- `libs/audio-core`：GNU General Public License version 3またはそれ以降
+  （GPL-3.0-or-later）。r8brain部分は上流のMIT Licenseにも従います。
+- `plugins/obs-source`：GNU General Public License version 3またはそれ以降
+  （GPL-3.0-or-later）。
+- `libs/transport`：MIT License。`libs/transport/LICENSE`を参照してください。
+
+ライセンス全文：
+
+- `LICENSES/AGPL-3.0-only.txt`
+- `LICENSES/GPL-3.0-or-later.txt`
+
+第三者コンポーネントの著作権、ライセンス、固定revision、商標表示は
+`THIRD_PARTY_NOTICES.md`を参照してください。
+
+本ソフトウェアは無保証です。適用されるライセンスが認める最大限の範囲で、著作者および
+提供者は利用によって生じた損害について責任を負いません。正式な条件は各ライセンス全文を
+優先します。
