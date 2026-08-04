@@ -1,4 +1,4 @@
-# 0.4.0-beta.1 一般配布チェックリスト
+# 0.4.0-beta.2 一般配布チェックリスト
 
 ## 必須
 
@@ -30,8 +30,8 @@
 
 ## 公開物
 
-- `DawAudioStreamer-Setup-0.4.0-beta.1.exe`
-- `DawAudioStreamer-0.4.0-beta.1-source.zip`
+- `DawAudioStreamer-Setup-0.4.0-beta.2.exe`
+- `DawAudioStreamer-0.4.0-beta.2-source.zip`
 - 両fileのSHA-256
 - README、license、privacy、third-party notices
 - 既知の制約と対象OBS／Windows／DAW環境

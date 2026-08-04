@@ -1,32 +1,24 @@
 # 変更履歴
 
-このプロジェクトの利用者向け変更を記録します。
+## [0.4.0-beta.2] - 2026-08-04
+
+- READMEとReleaseの説明を短く整理
+- Discord用のVB-CABLE案内をREADME冒頭とVST画面へ追加
+- VB-CABLE未導入時、インストール完了後に公式ページを開く設定を既定でオンに変更
+- 不具合報告フォームを簡略化
 
 ## [0.4.0-beta.1] - 2026-08-04
 
-初回公開ベータ版です。
+初回ベータ版。
 
-### 追加
+- VST3「DAS Send」からOBSとDiscord画面共有へDAW音声を送信
+- OBS音声ソース「DAS Audio（DAW）」を追加
+- OBS／Discordの状態をVST画面に日本語で表示
+- 対応する仮想オーディオ出力をインストール時に確認
+- Windows用インストーラーとアンインストーラーを追加
 
-- DAWのマスター音声を変更せず複製するVST3「DAS Send」
-- OBSの専用音声ソース「DAS Audio（DAW）」
-- DiscordのDAWアプリ共有／画面全体共有へ音声を渡すWindows音声セッション
-- 8～384 kHzから48 kHzへの高品質サンプルレート変換とクロック差補正
-- VST画面の日本語ステータス表示
-- 対応する無音仮想オーディオ出力のインストール前確認
-- ライセンス、第三者表示、対応ソースZIP、安全なアンインストーラー
-
-### 確認済み
-
-- Windows 11とStudio One Pro 8でのVST3読み込み
-- OBS録画へのDAW音声入力
-- Discord画面共有の視聴側音声
-
-### 既知事項
-
-- Windows x64専用です。
-- Discord利用時は対応する無音仮想出力が必要です。何も入っていないPCではVB-CABLEを別途導入します。
-- インストーラーとバイナリは未署名のため、Windowsが警告を表示する場合があります。
-- ベータ版のため、長時間配信や未確認のDAW／オーディオ環境では事前テストを推奨します。
+未署名のWindows x64向けベータ版です。Discordで必要な仮想出力がない場合は、セットアップから
+VB-CABLEの公式ページを開けます。
 
 [0.4.0-beta.1]: https://github.com/SecondLunchi/DawAudioStreamer/releases/tag/v0.4.0-beta.1
+[0.4.0-beta.2]: https://github.com/SecondLunchi/DawAudioStreamer/releases/tag/v0.4.0-beta.2
