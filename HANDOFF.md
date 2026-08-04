@@ -12,7 +12,7 @@ VST3「DAS Send」を1個挿すだけで、OBSとDiscord画面共有へ送れる
 - r8brain 24-bit SRCで8～384 kHzから48 kHzへ変換。48 kHzはbit-exact。
 - OBS native source「DAS Audio（DAW）」。
 - DiscordはDAW processのWASAPI render sessionを使い、DAW app／monitor全体を直接shareできる。
-- 物理endpointへのfallbackなし。Elgato Virtual Audio／VB-Audio Virtual Cable／CABLE Inputだけを使用。
+- 物理endpointへのfallbackなし。許可した無音仮想オーディオendpointだけを使用。
 - Installerは同じ判定ロジックで仮想出力を事前確認し、未検出時だけVB-CABLE公式導線を表示する。
 - Discordの非公開event、DLL injection、microphone変更なし。
 - ASIO／Windows clock差を40 ms targetのadaptive readerで補正。

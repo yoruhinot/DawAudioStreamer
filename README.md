@@ -27,11 +27,11 @@ DAW側の音声設定を変えずにOBSとDiscordの画面共有へ送るWindows
 3. DAWを起動し、マスターバスの最後へ「DAS Send」を1個挿します。
 4. DAS Sendの画面でOBS／Discordの状態を確認します。
 
-セットアップは対応する無音仮想出力を事前確認します。「Elgato Virtual Audio」がすでに入っている
-PCでは、Discord用の追加設定は不要です。それ以外のPCでは、Elgato Virtual Audio、VB-Audio
-Virtual Cable、CABLE Inputのいずれかが必要です。これらの第三者ドライバーは本インストーラーに
-同梱せず、既定デバイスにも設定しません。仮想出力がない場合もOBSは使えますが、DiscordはVSTに
-「× 無音の仮想出力が必要」と表示して安全に停止します。
+何も追加されていないWindowsでは、インストール直後からOBSを使用できます。Discordの画面共有でも
+音を送る場合は、無音の仮想オーディオ出力としてVB-CABLEを別途導入してください。VB-CABLEは
+本インストーラーに同梱せず、Windowsの既定デバイスにも設定しません。すでに対応する仮想出力がある場合は
+セットアップが自動検出して再利用します。仮想出力がない場合、Discord側だけを安全に停止し、VSTに
+「× 無音の仮想出力が必要」と表示します。OBSはそのまま使用できます。
 
 未検出時はセットアップ完了画面から[VB-CABLE公式ページ](https://vb-audio.com/Cable/)を開けます。
 VB-CABLEの導入はVB-Audio自身のセットアップで行い、表示された再起動やWindowsの既定音声設定を
@@ -93,7 +93,7 @@ OBSやDiscordでは最後に各サービスの配信コーデックで圧縮さ�
 
 アンインストーラーは、セットアップが導入したVST3、OBSプラグイン、文書、ライセンス、
 対応ソース、レジストリ値、スタートメニュー項目を削除します。DAWプロジェクト、OBSシーン、
-オーディオインターフェースのASIO設定、ElgatoやVB-Audioなどの第三者ドライバーは削除しません。
+オーディオインターフェースのASIO設定や、利用者が別途導入した仮想オーディオドライバーは削除しません。
 インストール先へ利用者が追加した未知のファイルは再帰削除しないため、必要なら後から手動で確認できます。
 
 ## 配布・ライセンス
@@ -103,8 +103,8 @@ OBSやDiscordでは最後に各サービスの配信コーデックで圧縮さ�
 `DawAudioStreamer-0.4.0-beta.1-source.zip`を同梱します。詳細は[LICENSE](LICENSE)と
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)を参照してください。
 
-本ソフトウェアはOBS Project、Discord Inc.、Steinberg Media Technologies GmbH、Elgato、
-VB-Audioの公式製品ではなく、各社からの承認・提携を意味しません。VSTはSteinberg Media
+本ソフトウェアはOBS Project、Discord Inc.、Steinberg Media Technologies GmbH、VB-Audioの
+公式製品ではなく、各社からの承認・提携を意味しません。VSTはSteinberg Media
 Technologies GmbHの商標です。各製品名・商標は各権利者に帰属します。
 
 このベータ版はコード署名されていないため、Windowsが発行元不明またはSmartScreenの警告を表示する

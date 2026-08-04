@@ -45,7 +45,7 @@ Discord ● 直接共有用の音声を準備済み
   DiscordでDAW本体または画面全体を共有できます。
 
 Discord × 無音の仮想出力が必要です
-  対応するElgato Virtual Audio、VB-Audio Virtual Cable、CABLE Inputが見つかりません。
+  対応する無音仮想出力が見つかりません。Discordを使う場合はVB-CABLEを別途導入してください。
   物理出力へ同じ音を流す危険があるため、安全に停止しています。OBSは引き続き使えます。
 
 二重音を防ぐ
