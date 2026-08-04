@@ -36,8 +36,8 @@ cmake --build build/windows-msvc-release --config Release --target das_installer
 - OBS DLL：`build/windows-msvc-release/plugins/obs-source/Release/das-obs-source.dll`
 - Installer確認helper：`build/windows-msvc-release/plugins/send-vst3/Release/das-virtual-audio-check.exe`
 - DAS Engine：`build/windows-msvc-release/apps/engine/DawAudioStreamerEngine_artefacts/Release/DAS Engine.exe`
-- 対応ソース：`build/source/DawAudioStreamer-0.4.0-beta.1-source.zip`
-- Setup：`build/installer/DawAudioStreamer-Setup-0.4.0-beta.1.exe`
+- 対応ソース：`build/source/DawAudioStreamer-0.4.0-beta.2-source.zip`
+- Setup：`build/installer/DawAudioStreamer-Setup-0.4.0-beta.2.exe`
 
 ## 自動テスト
 
@@ -63,7 +63,7 @@ installerとuninstallerも同じ発行者で署名します。timestampを付け
 証明書の秘密鍵、password、tokenはリポジトリやsource archiveへ含めません。
 
 署名者名とpublisher名は`installer/DawAudioStreamer.iss`の`MyAppPublisher`およびbinary metadataで
-一致させます。0.4.0-beta.1は未署名ベータとして警告とSHA-256を明記して公開します。安定版の
+一致させます。現在のベータ版は未署名であることとSHA-256を明記して公開します。安定版の
 一般公開前には署名を必須チェックとして扱います。
 
 ## リリース前チェック

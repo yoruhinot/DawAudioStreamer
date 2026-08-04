@@ -105,7 +105,7 @@ void DasSendEditor::timerCallback() {
                              juce::dontSendNotification);
       discordStatus_.setColour(juce::Label::textColourId, green);
     } else if (bridgeState == DiscordBridge::State::virtualOutputRequired) {
-      discordStatus_.setText(japanese("Discord  × 無音の仮想出力が必要です"),
+      discordStatus_.setText(japanese("Discord  × VB-CABLEを追加してください"),
                              juce::dontSendNotification);
       discordStatus_.setColour(juce::Label::textColourId, warning);
     } else if (bridgeState == DiscordBridge::State::starting) {

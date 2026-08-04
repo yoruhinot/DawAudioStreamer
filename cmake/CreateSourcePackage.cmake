@@ -29,7 +29,6 @@ foreach(file
     CHANGELOG.md
     CMakeLists.txt
     CMakePresets.json
-    HANDOFF.md
     LICENSE
     PRIVACY.md
     README.md

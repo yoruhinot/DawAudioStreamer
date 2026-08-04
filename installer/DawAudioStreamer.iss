@@ -1,5 +1,5 @@
 #define MyAppName "DawAudioStreamer"
-#define MyAppVersion "0.4.0-beta.1"
+#define MyAppVersion "0.4.0-beta.2"
 #define MyAppFileVersion "0.4.0.0"
 #define MyAppPublisher "SecondLunchi"
 #define MyAppCopyright "Copyright (c) 2026 SecondLunchi"
@@ -7,7 +7,7 @@
 #define MyAppSupportUrl "https://github.com/SecondLunchi/DawAudioStreamer/issues"
 #define MyAppUpdatesUrl "https://github.com/SecondLunchi/DawAudioStreamer/releases"
 #define BuildRoot "..\build\windows-msvc-release"
-#define SourceArchive "..\build\source\DawAudioStreamer-0.4.0-beta.1-source.zip"
+#define SourceArchive "..\build\source\DawAudioStreamer-0.4.0-beta.2-source.zip"
 #define VbCableUrl "https://vb-audio.com/Cable/"
 
 [Setup]
@@ -76,7 +76,7 @@ Name: "{group}\アンインストール"; Filename: "{uninstallexe}"
 
 [Run]
 Filename: "{app}\クイックスタート.txt"; Description: "クイックスタートを開く"; Flags: postinstall shellexec skipifsilent nowait
-Filename: "{#VbCableUrl}"; Description: "Discord用のVB-CABLE公式ページを開く"; Flags: postinstall shellexec skipifsilent unchecked; Check: ShouldOfferVbCable
+Filename: "{#VbCableUrl}"; Description: "Discordを使うためにVB-CABLE公式ページを開く"; Flags: postinstall shellexec skipifsilent; Check: ShouldOfferVbCable
 
 [Code]
 var
@@ -120,21 +120,21 @@ begin
   end
   else if VirtualAudioCheckFailed then
   begin
-    PageDescription := 'Discord用音声環境を確認できませんでした';
+    PageDescription := 'Discordを使う場合はVB-CABLEを追加してください';
     PageMessage :=
       'インストールは続行できます。OBSはそのまま使用できます。' + #13#10 + #13#10 +
-      'Discordで音声を共有するには、VB-CABLEなどの対応する無音仮想出力が必要です。' +
-      'インストール後もVST画面で状態を確認できます。';
+      'Discordで音声を共有するにはVB-CABLEが必要です。' + #13#10 +
+      '完了を押すと公式ページを開きます。不要な場合は完了画面でチェックを外せます。';
   end
   else
   begin
-    PageDescription := 'Discordには無音仮想出力が必要です';
+    PageDescription := 'Discordを使う場合はVB-CABLEを追加してください';
     PageMessage :=
       'このPCでは対応する無音仮想出力が見つかりませんでした。' + #13#10 + #13#10 +
       '・OBSはこのまま使用できます。' + #13#10 +
-      '・Discordの画面共有音声には、VB-CABLEなどの対応する無音仮想出力が必要です。' + #13#10 +
+      '・Discordの画面共有音声にはVB-CABLEが必要です。' + #13#10 +
       '・本セットアップは第三者ドライバーや既定の音声設定を変更しません。' + #13#10 + #13#10 +
-      '必要な場合は、完了画面からVB-CABLEの公式ページを開けます。';
+      '完了を押すと公式ページを開きます。不要な場合は完了画面でチェックを外せます。';
   end;
 
   VirtualAudioPage := CreateOutputMsgPage(wpLicense, 'Discord用音声の確認',

@@ -1,4 +1,4 @@
-DawAudioStreamer 0.4.0-beta.1 クイックスタート
+DawAudioStreamer 0.4.0-beta.2 クイックスタート
 ==============================================
 
 DAWのオーディオインターフェース／ASIO設定は変更しません。
@@ -8,12 +8,12 @@ DAWのオーディオインターフェース／ASIO設定は変更しません�
 --------------
 
 1. OBS、Discord、DAWを終了します。
-2. DawAudioStreamer-Setup-0.4.0-beta.1.exeを実行します。
+2. DawAudioStreamer-Setup-0.4.0-beta.2.exeを実行します。
 3. DAWを起動します。
 4. プロジェクトのマスターバスの最後へ「DAS Send」を1個だけ挿します。
 
 セットアップ中にDiscord用の無音仮想出力を確認します。見つからなくてもOBSは使用できます。
-Discordも使用する場合は、完了画面からVB-CABLE公式ページを開き、別途導入してください。
+Discordも使用する場合は、完了時に開くVB-CABLE公式ページからドライバーを導入してください。
 DawAudioStreamer自身は第三者ドライバーやWindowsの既定音声設定を変更しません。
 
 OBS
@@ -44,8 +44,8 @@ OBS ● DAS Audioへ送信中
 Discord ● 直接共有用の音声を準備済み
   DiscordでDAW本体または画面全体を共有できます。
 
-Discord × 無音の仮想出力が必要です
-  対応する無音仮想出力が見つかりません。Discordを使う場合はVB-CABLEを別途導入してください。
+Discord × VB-CABLEを追加してください
+  Discordを使う場合はVB-CABLEを導入し、Windowsを再起動してください。
   物理出力へ同じ音を流す危険があるため、安全に停止しています。OBSは引き続き使えます。
 
 二重音を防ぐ
