@@ -1,4 +1,4 @@
-DawAudioStreamer 0.4.0-beta.2 クイックスタート
+DawAudioStreamer 0.4.0-beta.3 クイックスタート
 ==============================================
 
 DAWのオーディオインターフェース／ASIO設定は変更しません。
@@ -8,7 +8,7 @@ DAWのオーディオインターフェース／ASIO設定は変更しません�
 --------------
 
 1. OBS、Discord、DAWを終了します。
-2. DawAudioStreamer-Setup-0.4.0-beta.2.exeを実行します。
+2. DawAudioStreamer-Setup-0.4.0-beta.3.exeを実行します。
 3. DAWを起動します。
 4. プロジェクトのマスターバスの最後へ「DAS Send」を1個だけ挿します。
 
