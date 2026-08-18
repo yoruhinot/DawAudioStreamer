@@ -2,15 +2,12 @@
 
 ## [0.4.0-beta.3] - 2026-08-18
 
-- 公開者名とGitHub URLを`yoruhinot`へ統一
-- REAPERとCubaseの動作確認結果をREADMEへ追加
+- 確認済みDAWにREAPERとCubaseを追加
 
 ## [0.4.0-beta.2] - 2026-08-04
 
-- READMEとReleaseの説明を短く整理
 - Discord用のVB-CABLE案内をREADME冒頭とVST画面へ追加
 - VB-CABLE未導入時、インストール完了後に公式ページを開く設定を既定でオンに変更
-- 不具合報告フォームを簡略化
 
 ## [0.4.0-beta.1] - 2026-08-04
 
