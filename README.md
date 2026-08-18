@@ -81,9 +81,9 @@ DAWプロジェクト、OBSシーン、ASIO設定、別途導入した仮想オ�
 
 不具合や要望は[Issues](https://github.com/yoruhinot/DawAudioStreamer/issues)へお願いします。
 
-## ライセンス・開発
+## ライセンス
 
 ライセンスは[LICENSE](LICENSE)、第三者ソフトウェアの表示は
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)を参照してください。
 
-ビルド方法は[開発資料](docs/development.md)、内部構成は[アーキテクチャ](docs/architecture.md)にあります。
+ソースからビルドする場合は[ビルド手順](docs/development.md)を参照してください。
