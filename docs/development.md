@@ -36,8 +36,8 @@ cmake --build build/windows-msvc-release --config Release --target das_installer
 - OBS DLL：`build/windows-msvc-release/plugins/obs-source/Release/das-obs-source.dll`
 - Installer確認helper：`build/windows-msvc-release/plugins/send-vst3/Release/das-virtual-audio-check.exe`
 - DAS Engine：`build/windows-msvc-release/apps/engine/DawAudioStreamerEngine_artefacts/Release/DAS Engine.exe`
-- 対応ソース：`build/source/DawAudioStreamer-0.4.0-beta.2-source.zip`
-- Setup：`build/installer/DawAudioStreamer-Setup-0.4.0-beta.2.exe`
+- 対応ソース：`build/source/DawAudioStreamer-0.4.0-beta.3-source.zip`
+- Setup：`build/installer/DawAudioStreamer-Setup-0.4.0-beta.3.exe`
 
 ## 自動テスト
 

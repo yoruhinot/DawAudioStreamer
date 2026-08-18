@@ -1,5 +1,10 @@
 # 変更履歴
 
+## [0.4.0-beta.3] - 2026-08-18
+
+- 公開者名とGitHub URLを`yoruhinot`へ統一
+- REAPERとCubaseの動作確認結果をREADMEへ追加
+
 ## [0.4.0-beta.2] - 2026-08-04
 
 - READMEとReleaseの説明を短く整理
@@ -20,5 +25,6 @@
 未署名のWindows x64向けベータ版です。Discordで必要な仮想出力がない場合は、セットアップから
 VB-CABLEの公式ページを開けます。
 
-[0.4.0-beta.1]: https://github.com/SecondLunchi/DawAudioStreamer/releases/tag/v0.4.0-beta.1
-[0.4.0-beta.2]: https://github.com/SecondLunchi/DawAudioStreamer/releases/tag/v0.4.0-beta.2
+[0.4.0-beta.1]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.0-beta.1
+[0.4.0-beta.2]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.0-beta.2
+[0.4.0-beta.3]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.0-beta.3

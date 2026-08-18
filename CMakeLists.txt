@@ -2,13 +2,13 @@ cmake_minimum_required(VERSION 3.25)
 
 project(DawAudioStreamer VERSION 0.4.0 LANGUAGES CXX)
 
-set(DAS_DISPLAY_VERSION "0.4.0-beta.2" CACHE STRING
+set(DAS_DISPLAY_VERSION "0.4.0-beta.3" CACHE STRING
     "Public version shown to users and used in release artifact names")
-set(DAS_PUBLISHER "SecondLunchi" CACHE STRING
+set(DAS_PUBLISHER "yoruhinot" CACHE STRING
     "Publisher shown in Windows file metadata")
-set(DAS_COPYRIGHT "Copyright (c) 2026 SecondLunchi" CACHE STRING
+set(DAS_COPYRIGHT "Copyright (c) 2026 yoruhinot" CACHE STRING
     "Copyright shown in Windows file metadata")
-set(DAS_REPOSITORY_URL "https://github.com/SecondLunchi/DawAudioStreamer" CACHE STRING
+set(DAS_REPOSITORY_URL "https://github.com/yoruhinot/DawAudioStreamer" CACHE STRING
     "Public source repository")
 
 option(DAS_BUILD_TESTS "単体テストとストレステストをビルドする" ON)

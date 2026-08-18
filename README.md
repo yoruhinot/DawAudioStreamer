@@ -18,7 +18,7 @@ DAWのオーディオ設定やDiscordのマイクを変更する必要はあり�
 ### 1. インストール
 
 1. OBS、Discord、DAWを終了します。
-2. [Releases](https://github.com/SecondLunchi/DawAudioStreamer/releases)からインストーラーを入手します。
+2. [Releases](https://github.com/yoruhinot/DawAudioStreamer/releases)からインストーラーを入手します。
 3. インストーラーを実行します。
 4. DAWのマスターバスの最後へ「DAS Send」を1個挿します。
 
@@ -67,7 +67,7 @@ DAS SendはDAWへ戻す音声や音量を変更しません。配信用の音声
 - OBS Studio x64
 - Discordデスクトップ版
 
-Studio One Pro 8で動作を確認しています。
+Studio One Pro 8、REAPER、Cubaseで動作を確認しています。
 
 ## アンインストール
 
@@ -77,9 +77,9 @@ DAWプロジェクト、OBSシーン、ASIO設定、別途導入した仮想オ�
 ## ベータ版について
 
 現在のインストーラーは未署名のため、Windowsが警告を表示する場合があります。ダウンロードは
-[GitHub Releases](https://github.com/SecondLunchi/DawAudioStreamer/releases)から行ってください。
+[GitHub Releases](https://github.com/yoruhinot/DawAudioStreamer/releases)から行ってください。
 
-不具合や要望は[Issues](https://github.com/SecondLunchi/DawAudioStreamer/issues)へお願いします。
+不具合や要望は[Issues](https://github.com/yoruhinot/DawAudioStreamer/issues)へお願いします。
 
 ## ライセンス・開発
 
