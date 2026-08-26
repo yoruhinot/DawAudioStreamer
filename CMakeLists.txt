@@ -42,6 +42,10 @@ if(EXISTS "${DAS_BUNDLED_THIRD_PARTY_DIR}/obs_headers-src/libobs/obs.h")
   set(FETCHCONTENT_SOURCE_DIR_OBS_HEADERS "${DAS_BUNDLED_THIRD_PARTY_DIR}/obs_headers-src"
       CACHE PATH "Bundled OBS source" FORCE)
 endif()
+if(EXISTS "${DAS_BUNDLED_THIRD_PARTY_DIR}/simde-src/simde/x86/sse2.h")
+  set(FETCHCONTENT_SOURCE_DIR_SIMDE "${DAS_BUNDLED_THIRD_PARTY_DIR}/simde-src"
+      CACHE PATH "Bundled SIMDe source" FORCE)
+endif()
 
 if(MSVC)
   add_compile_options(/W4 /permissive- /Zc:__cplusplus /utf-8)
@@ -82,6 +86,18 @@ if(DAS_BUILD_OBS_PLUGIN)
     EXCLUDE_FROM_ALL
   )
   FetchContent_MakeAvailable(obs_headers)
+
+  if(APPLE)
+    FetchContent_Declare(
+      simde
+      GIT_REPOSITORY https://github.com/simd-everywhere/simde.git
+      GIT_TAG 71fd833d9666141edcd1d3c109a80e228303d8d7
+      GIT_SHALLOW TRUE
+      SOURCE_SUBDIR headers-only-no-cmake-project
+      EXCLUDE_FROM_ALL
+    )
+    FetchContent_MakeAvailable(simde)
+  endif()
 endif()
 
 add_subdirectory(libs/audio-core)

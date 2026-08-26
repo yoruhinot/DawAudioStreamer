@@ -3,6 +3,9 @@ target_include_directories(das_obs_source PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/Source"
   "${obs_headers_SOURCE_DIR}/libobs"
 )
+if(APPLE)
+  target_include_directories(das_obs_source SYSTEM PRIVATE "${simde_SOURCE_DIR}")
+endif()
 target_link_libraries(das_obs_source PRIVATE das_transport)
 set_target_properties(das_obs_source PROPERTIES
   PREFIX ""

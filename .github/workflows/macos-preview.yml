@@ -2,12 +2,13 @@ name: macOS preview
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - feature/macos-preview
   pull_request:
     branches:
       - main
+
+concurrency:
+  group: macos-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read

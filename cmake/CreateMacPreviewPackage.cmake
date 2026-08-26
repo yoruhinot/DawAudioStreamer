@@ -61,6 +61,10 @@ if(EXISTS "${binary_root}/_deps/obs_headers-src/COPYING")
   file(COPY "${binary_root}/_deps/obs_headers-src/COPYING"
        DESTINATION "${package_root}/licenses/OBS")
 endif()
+if(EXISTS "${binary_root}/_deps/simde-src/COPYING")
+  file(COPY "${binary_root}/_deps/simde-src/COPYING"
+       DESTINATION "${package_root}/licenses/SIMDe")
+endif()
 
 file(WRITE "${package_root}/SOURCE.txt"
 "この検証版に対応するソース：\n"
