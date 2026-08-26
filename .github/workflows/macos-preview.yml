@@ -1,0 +1,57 @@
+name: macOS preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/macos-preview
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Apple Silicon preview
+    runs-on: macos-15
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install OBS Studio
+        run: |
+          brew install --cask obs
+          test -d /Applications/OBS.app/Contents/Frameworks/libobs.framework
+
+      - name: Configure
+        run: cmake --preset macos-preview
+
+      - name: Build
+        run: cmake --build --preset macos-preview --parallel 3
+
+      - name: Test
+        run: ctest --preset macos-preview
+
+      - name: Stage bundles
+        run: |
+          cmake -E remove_directory build/macos-package
+          cmake --install build/macos-preview --config Release
+
+      - name: Create preview package
+        run: >-
+          cmake
+          -DDAS_SOURCE_DIR=${{ github.workspace }}
+          -DDAS_BINARY_DIR=${{ github.workspace }}/build/macos-preview
+          -DDAS_INSTALL_ROOT=${{ github.workspace }}/build/macos-package
+          -DDAS_OUTPUT_DIR=${{ github.workspace }}/build/dist
+          -DDAS_VERSION=0.4.0-macos-preview.1
+          -DDAS_COMMIT=${{ github.sha }}
+          -P cmake/CreateMacPreviewPackage.cmake
+
+      - name: Upload preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: DawAudioStreamer-macOS-AppleSilicon-${{ github.sha }}
+          path: build/dist/*.zip
+          if-no-files-found: error

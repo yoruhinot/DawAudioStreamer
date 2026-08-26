@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <cstdlib>
 #include <cwctype>
 #include <iostream>
 #include <memory>
@@ -26,6 +27,8 @@
 #include <Propsys.h>
 #include <audiopolicy.h>
 #include <wrl/client.h>
+#elif defined(__APPLE__)
+#include <unistd.h>
 #endif
 
 #if defined(_WIN32)
@@ -111,6 +114,12 @@ int main(const int argc, char** argv) {
   const auto testSuffix = std::wstring(L"vst3-smoke-") + std::to_wstring(GetCurrentProcessId());
   SetEnvironmentVariableW(L"DAS_TEST_NAMESPACE", testSuffix.c_str());
   const auto obsMappingName = std::wstring(das::transport::kObsAudioMappingName) + L'.' + testSuffix;
+#elif defined(__APPLE__)
+  const auto testSuffix = std::string("vst3-smoke-") +
+                          std::to_string(static_cast<unsigned long long>(getpid()));
+  setenv("DAS_TEST_NAMESPACE", testSuffix.c_str(), 1);
+  const auto obsMappingName = std::wstring(das::transport::kObsAudioMappingName) + L'.' +
+                              std::wstring(testSuffix.begin(), testSuffix.end());
 #else
   const auto obsMappingName = std::wstring(das::transport::kObsAudioMappingName);
 #endif

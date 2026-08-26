@@ -4,6 +4,7 @@ add_library(das_discord_bridge STATIC
   Source/VirtualAudioEndpoint.cpp
   Source/VirtualAudioEndpoint.h
 )
+set_target_properties(das_discord_bridge PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(das_discord_bridge PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Source")
 target_link_libraries(das_discord_bridge PUBLIC das_transport)
 if(WIN32)
@@ -23,6 +24,11 @@ if(WIN32)
   )
 endif()
 
+set(das_send_formats VST3)
+if(APPLE)
+  list(APPEND das_send_formats AU)
+endif()
+
 juce_add_plugin(DasSend
   PRODUCT_NAME "DAS Send"
   VERSION "${PROJECT_VERSION}"
@@ -32,7 +38,7 @@ juce_add_plugin(DasSend
   BUNDLE_ID "org.dawaudiostreamer.send"
   PLUGIN_MANUFACTURER_CODE Daud
   PLUGIN_CODE Ds01
-  FORMATS VST3
+  FORMATS ${das_send_formats}
   VST3_CATEGORIES Fx
   VST3_AUTO_MANIFEST FALSE
   IS_SYNTH FALSE
@@ -65,4 +71,11 @@ if(WIN32)
   target_link_libraries(DasSend PRIVATE shell32 advapi32)
 endif()
 
-install(DIRECTORY "$<TARGET_FILE_DIR:DasSend_VST3>/DAS Send.vst3" DESTINATION VST3)
+if(APPLE)
+  install(DIRECTORY "$<TARGET_BUNDLE_DIR:DasSend_VST3>"
+          DESTINATION "Library/Audio/Plug-Ins/VST3")
+  install(DIRECTORY "$<TARGET_BUNDLE_DIR:DasSend_AU>"
+          DESTINATION "Library/Audio/Plug-Ins/Components")
+else()
+  install(DIRECTORY "$<TARGET_FILE_DIR:DasSend_VST3>/DAS Send.vst3" DESTINATION VST3)
+endif()
