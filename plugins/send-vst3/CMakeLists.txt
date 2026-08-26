@@ -73,9 +73,11 @@ endif()
 
 if(APPLE)
   install(DIRECTORY "$<TARGET_BUNDLE_DIR:DasSend_VST3>"
-          DESTINATION "Library/Audio/Plug-Ins/VST3")
+          DESTINATION "Library/Audio/Plug-Ins/VST3"
+          USE_SOURCE_PERMISSIONS)
   install(DIRECTORY "$<TARGET_BUNDLE_DIR:DasSend_AU>"
-          DESTINATION "Library/Audio/Plug-Ins/Components")
+          DESTINATION "Library/Audio/Plug-Ins/Components"
+          USE_SOURCE_PERMISSIONS)
 else()
   install(DIRECTORY "$<TARGET_FILE_DIR:DasSend_VST3>/DAS Send.vst3" DESTINATION VST3)
 endif()

@@ -42,6 +42,12 @@ file(CHMOD
   "${package_root}/Uninstall.command"
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE
               WORLD_READ WORLD_EXECUTE)
+file(CHMOD
+  "${payload_root}/DAS Send.vst3/Contents/MacOS/DAS Send"
+  "${payload_root}/DAS Send.component/Contents/MacOS/DAS Send"
+  "${payload_root}/das-obs-source.plugin/Contents/MacOS/das-obs-source"
+  PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE
+              WORLD_READ WORLD_EXECUTE)
 
 file(COPY "${source_root}/LICENSE" "${source_root}/THIRD_PARTY_NOTICES.md"
      DESTINATION "${package_root}/licenses")
