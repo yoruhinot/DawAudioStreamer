@@ -2,6 +2,8 @@
 #include <das/transport/NamedSharedMemory.h>
 
 #include <cerrno>
+#include <cstdio>
+#include <cstdint>
 #include <fcntl.h>
 #include <string>
 #include <sys/mman.h>
@@ -13,16 +15,21 @@ namespace das::transport {
 namespace {
 
 std::string posixName(const std::wstring_view name) {
-  std::string result {"/"};
-  result.reserve(name.size() + 1);
+  // Darwin limits POSIX shared-memory names to 31 characters. Use a stable
+  // per-user hash so the public transport names and test namespaces fit while
+  // still resolving to the same object in independent processes.
+  std::uint64_t hash = 14695981039346656037ULL;
   for (const auto value : name) {
-    const auto ascii = static_cast<unsigned int>(value);
-    const bool safe = (ascii >= 'a' && ascii <= 'z') ||
-                      (ascii >= 'A' && ascii <= 'Z') ||
-                      (ascii >= '0' && ascii <= '9') ||
-                      ascii == '.' || ascii == '-' || ascii == '_';
-    result.push_back(safe ? static_cast<char>(ascii) : '_');
+    const auto codePoint = static_cast<std::uint32_t>(value);
+    for (unsigned int shift = 0; shift < 32; shift += 8) {
+      hash ^= (codePoint >> shift) & 0xffU;
+      hash *= 1099511628211ULL;
+    }
   }
+  char result[31] {};
+  std::snprintf(result, sizeof(result), "/das-%08x-%016llx",
+                static_cast<unsigned int>(getuid()),
+                static_cast<unsigned long long>(hash));
   return result;
 }
 
