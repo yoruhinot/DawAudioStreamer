@@ -53,6 +53,7 @@ jobs:
             -DDAS_COMMIT=${{ github.sha }} \
             -P cmake/CreateMacPreviewPackage.cmake
           package=build/dist/DawAudioStreamer-0.4.0-macos-preview.1-macOS-AppleSilicon
+          test -f "$package/README-macOS.txt"
           test -x "$package/Install.command"
           test -x "$package/Uninstall.command"
           test -x "$package/payload/DAS Send.vst3/Contents/MacOS/DAS Send"
