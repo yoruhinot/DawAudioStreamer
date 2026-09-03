@@ -5,7 +5,7 @@ DawAudioStreamerは、Windows正式版へのコード署名を準備していま
 
 ## Windows release signing
 
-SignPath Foundationのオープンソース向け署名サービスへ申請予定です。承認後は、
+2026年9月4日にSignPath Foundationのオープンソース向け署名サービスへ申請し、現在審査待ちです。承認後は、
 公開リポジトリから自動生成された正式リリースだけを署名対象にします。
 
 Free code signing provided by [SignPath.io](https://signpath.io/), certificate by
