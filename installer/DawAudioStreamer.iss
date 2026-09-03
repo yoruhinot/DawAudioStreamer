@@ -8,7 +8,7 @@
 #define MyAppUpdatesUrl "https://github.com/yoruhinot/DawAudioStreamer/releases"
 #define BuildRoot "..\build\windows-msvc-release"
 #define SourceArchive "..\build\source\DawAudioStreamer-0.4.0-beta.3-source.zip"
-#define VbCableUrl "https://vb-audio.com/Cable/"
+#define VbCableUrl "https://yoruhinot.github.io/DawAudioStreamer/#vbcable"
 
 [Setup]
 AppId={{A2AB3F48-3BA4-46A2-9AE8-E46A6D107BA3}
@@ -76,7 +76,7 @@ Name: "{group}\アンインストール"; Filename: "{uninstallexe}"
 
 [Run]
 Filename: "{app}\クイックスタート.txt"; Description: "クイックスタートを開く"; Flags: postinstall shellexec skipifsilent nowait
-Filename: "{#VbCableUrl}"; Description: "Discordを使うためにVB-CABLE公式ページを開く"; Flags: postinstall shellexec skipifsilent; Check: ShouldOfferVbCable
+Filename: "{#VbCableUrl}"; Description: "Discord用のVB-CABLE導入手順を開く"; Flags: postinstall shellexec skipifsilent; Check: ShouldOfferVbCable
 
 [Code]
 var
@@ -124,7 +124,7 @@ begin
     PageMessage :=
       'インストールは続行できます。OBSはそのまま使用できます。' + #13#10 + #13#10 +
       'Discordで音声を共有するにはVB-CABLEが必要です。' + #13#10 +
-      '完了を押すと公式ページを開きます。不要な場合は完了画面でチェックを外せます。';
+      '完了を押すと詳しい導入手順を開きます。不要な場合は完了画面でチェックを外せます。';
   end
   else
   begin
@@ -134,7 +134,7 @@ begin
       '・OBSはこのまま使用できます。' + #13#10 +
       '・Discordの画面共有音声にはVB-CABLEが必要です。' + #13#10 +
       '・本セットアップは第三者ドライバーや既定の音声設定を変更しません。' + #13#10 + #13#10 +
-      '完了を押すと公式ページを開きます。不要な場合は完了画面でチェックを外せます。';
+      '完了を押すと詳しい導入手順を開きます。不要な場合は完了画面でチェックを外せます。';
   end;
 
   VirtualAudioPage := CreateOutputMsgPage(wpLicense, 'Discord用音声の確認',

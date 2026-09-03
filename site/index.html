@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DawAudioStreamer — DAWの音を配信へ</title>
+  <meta name="description" content="DAWのASIO音声を、設定を変えずにOBSやDiscordの画面共有へ送れます。">
+  <meta name="theme-color" content="#171b24">
+  <link rel="canonical" href="https://yoruhinot.github.io/DawAudioStreamer/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yoruhinot.github.io/DawAudioStreamer/">
+  <meta property="og:title" content="DawAudioStreamer — DAWの音を配信へ">
+  <meta property="og:description" content="DAWのASIO音声を、設定を変えずにOBSやDiscordの画面共有へ送れます。">
+  <meta property="og:image" content="https://yoruhinot.github.io/DawAudioStreamer/og.png">
+  <meta property="og:image:width" content="1729">
+  <meta property="og:image:height" content="910">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DawAudioStreamer — DAWの音を配信へ">
+  <meta name="twitter:description" content="DAWのASIO音声を、設定を変えずにOBSやDiscordの画面共有へ送れます。">
+  <meta name="twitter:image" content="https://yoruhinot.github.io/DawAudioStreamer/og.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="DawAudioStreamer トップ">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>DawAudioStreamer</span>
+    </a>
+    <nav aria-label="メインメニュー">
+      <a href="#start">使い方</a>
+      <a href="#discord">Discord</a>
+      <a href="https://github.com/yoruhinot/DawAudioStreamer">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">FOR WINDOWS 11</p>
+        <h1>DAWの音を、<br><span>そのまま配信へ。</span></h1>
+        <p class="lead">オーディオインターフェースのASIO設定はそのまま。<br>マスターバスに挿すだけで、OBSとDiscordへ音を送れます。</p>
+        <div class="hero-actions">
+          <a class="download-button" id="windows-download" href="https://github.com/yoruhinot/DawAudioStreamer/releases/latest">
+            <span class="download-icon" aria-hidden="true">↓</span>
+            <span><strong id="download-title">Windowsベータ版をダウンロード</strong><small id="download-version">Windows 11・64-bit</small></span>
+          </a>
+          <a class="text-link" href="#start">先に使い方を見る <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="download-note">無料・広告なし・オープンソース</p>
+        <p class="release-notice" id="release-notice">現在のベータ版は未署名です。正式版ではWindows向けのコード署名を予定しています。</p>
+      </div>
+
+      <div class="plugin-preview" aria-label="DAS Sendの画面イメージ">
+        <div class="preview-header">
+          <strong>DAS Send</strong>
+          <span>DAW AUDIO STREAM</span>
+        </div>
+        <div class="preview-cards">
+          <div class="preview-card">
+            <span class="preview-icon wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            <span><small>OBS</small><strong>接続待ち</strong></span>
+          </div>
+          <div class="preview-card ready">
+            <span class="preview-icon share-icon" aria-hidden="true"></span>
+            <span><small>DISCORD</small><strong>準備完了</strong></span>
+          </div>
+        </div>
+        <p class="preview-guide">OBS：DAS Audioを追加　／　Discord：DAWまたは画面全体を共有</p>
+      </div>
+    </section>
+
+    <section class="quick-start" id="start">
+      <div class="section-heading">
+        <p class="eyebrow">QUICK START</p>
+        <h2>3ステップで使えます</h2>
+      </div>
+      <ol class="steps">
+        <li><span class="step-number">1</span><div><strong>インストール</strong><p>ダウンロードしたセットアップを実行します。</p></div></li>
+        <li><span class="step-number">2</span><div><strong>DAWに挿す</strong><p>マスターバスの最後に「DAS Send」を追加します。</p></div></li>
+        <li><span class="step-number">3</span><div><strong>配信ソフトに追加</strong><p>OBSに「DAS Audio（DAW）」を追加すれば完了です。</p></div></li>
+      </ol>
+    </section>
+
+    <section class="discord-callout" id="discord">
+      <div>
+        <p class="eyebrow">DISCORD</p>
+        <h2>Discordでも使いたい場合</h2>
+        <p>Windowsでは、無料の仮想オーディオデバイス「VB-CABLE」を追加で使用します。Discordのマイク設定や、DAWのASIO設定を変える必要はありません。</p>
+      </div>
+      <a class="secondary-button" href="#vbcable">導入手順を見る <span aria-hidden="true">↓</span></a>
+    </section>
+
+    <section class="guide-section" id="obs">
+      <div class="section-heading">
+        <p class="eyebrow">OBS SETUP</p>
+        <h2>OBSで配信する</h2>
+        <p>OBSだけで使う場合、VB-CABLEは不要です。</p>
+      </div>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <span class="guide-number">1</span>
+          <div>
+            <h3>DAWのマスターに挿す</h3>
+            <p>マスターバスの一番最後に、VST3プラグイン「DAS Send」を1個追加します。</p>
+            <div class="mini-ui"><span>MASTER</span><b>DAS Send</b></div>
+          </div>
+        </article>
+        <article class="guide-card">
+          <span class="guide-number">2</span>
+          <div>
+            <h3>OBSに音声ソースを追加</h3>
+            <p>OBSの「ソース」にある［＋］を押し、「DAS Audio（DAW）」を選びます。</p>
+            <div class="mini-ui list-ui"><span>＋ ソースを追加</span><b>DAS Audio（DAW）</b></div>
+          </div>
+        </article>
+        <article class="guide-card">
+          <span class="guide-number">3</span>
+          <div>
+            <h3>メーターを確認</h3>
+            <p>DAWを再生し、OBSの音声ミキサーが動けば準備完了です。</p>
+            <div class="meter" aria-label="音声メーターのイメージ"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="guide-section vb-section" id="vbcable">
+      <div class="section-heading">
+        <p class="eyebrow">VB-CABLE SETUP</p>
+        <h2>Discord用にVB-CABLEを入れる</h2>
+        <p>DAS Sendに「VB-CABLE」と表示された場合だけ行います。</p>
+      </div>
+      <div class="vb-layout">
+        <ol class="detail-steps">
+          <li><span>1</span><div><strong>公式サイトからダウンロード</strong><p>「VBCABLE_Driver_Pack」のZIPをダウンロードして展開します。</p></div></li>
+          <li><span>2</span><div><strong>64-bit版を管理者として実行</strong><p>「VBCABLE_Setup_x64.exe」を右クリックし、［管理者として実行］を選びます。</p></div></li>
+          <li><span>3</span><div><strong>ドライバーをインストール</strong><p>［Install Driver］を押し、完了したらWindowsを再起動します。</p></div></li>
+          <li><span>4</span><div><strong>DAS Sendを確認</strong><p>DAWを開き直し、Discordが「準備完了」になれば完了です。</p></div></li>
+        </ol>
+        <aside class="vb-side">
+          <a class="official-download" href="https://vb-audio.com/Cable/">
+            <strong>VB-CABLEをダウンロード</strong>
+            <span>VB-Audio公式サイトへ ↗</span>
+          </a>
+          <div class="important-note">
+            <strong>設定変更は不要です</strong>
+            <p>「CABLE Input」をDAWの出力やDiscordのマイクに選ばないでください。DASが内部で使用します。</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="guide-section" id="discord-share">
+      <div class="section-heading">
+        <p class="eyebrow">SCREEN SHARE</p>
+        <h2>Discordで画面共有する</h2>
+      </div>
+      <div class="share-flow">
+        <div><span>1</span><strong>DAS Sendが「準備完了」</strong></div>
+        <i aria-hidden="true">→</i>
+        <div><span>2</span><strong>Discordで［画面を共有］</strong></div>
+        <i aria-hidden="true">→</i>
+        <div><span>3</span><strong>DAWまたは画面全体を選ぶ</strong></div>
+      </div>
+      <p class="quiet-note">VST画面も見せたい場合は画面全体を共有します。Discordのマイク設定はそのままで構いません。</p>
+    </section>
+
+    <section class="guide-section daw-section" id="daw">
+      <div class="section-heading">
+        <p class="eyebrow">DAW GUIDE</p>
+        <h2>DAWごとの挿し方</h2>
+        <p>どのDAWでも「最終的な音が通るマスターバスの最後」が基本です。</p>
+      </div>
+      <div class="daw-list">
+        <details open>
+          <summary><strong>Studio Pro 8</strong><span>確認済み</span></summary>
+          <p>コンソールで「メイン」チャンネルを開き、インサートの最後に「DAS Send」を追加します。</p>
+        </details>
+        <details>
+          <summary><strong>Cubase</strong><span>確認済み</span></summary>
+          <p>MixConsoleで「Stereo Out」を開き、Insertsの最後に「DAS Send」を追加します。</p>
+        </details>
+        <details>
+          <summary><strong>REAPER</strong><span>確認済み</span></summary>
+          <p>MASTERトラックの［FX］を開き、エフェクト列の最後に「DAS Send」を追加します。</p>
+        </details>
+      </div>
+      <details class="advanced-tip">
+        <summary>共有する音だけを選びたい場合</summary>
+        <p>「配信用BUS」を1本作り、配信したいトラックだけを送ります。そのBUSの最後にDAS Sendを1個挿すと、自分だけが聞く音を配信から外せます。</p>
+      </details>
+    </section>
+
+    <section class="guide-section trouble-section" id="trouble">
+      <div class="section-heading">
+        <p class="eyebrow">TROUBLESHOOTING</p>
+        <h2>うまくいかないとき</h2>
+      </div>
+      <div class="faq-grid">
+        <details><summary>DAS SendがDAWに出てこない</summary><p>DAWのVST3プラグインを再スキャンします。インストール後にDAWを再起動していない場合は、一度終了して開き直してください。</p></details>
+        <details><summary>OBSにDAS Audioが出てこない</summary><p>OBSを完全に終了して開き直します。その後、「ソース」の［＋］をもう一度確認してください。</p></details>
+        <details><summary>DiscordがVB-CABLEのまま</summary><p>VB-CABLEの64-bit版を管理者として導入し、Windowsを再起動してください。</p></details>
+        <details><summary>音が二重に聞こえる</summary><p>OBSでDAS Audioとデスクトップ音声の両方から、同じDAW音声を取り込んでいないか確認します。DAS Sendも1個だけにしてください。</p></details>
+      </div>
+    </section>
+
+    <section class="requirements">
+      <div><p class="eyebrow">REQUIREMENTS</p><h2>対応環境</h2></div>
+      <ul><li>Windows 11・64-bit</li><li>VST3対応DAW</li><li>OBS Studio または Discordデスクトップ版</li></ul>
+      <a class="text-link" href="https://github.com/yoruhinot/DawAudioStreamer/issues">不具合を報告する →</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 yoruhinot</span>
+    <a href="https://github.com/yoruhinot/DawAudioStreamer/blob/main/PRIVACY.md">プライバシー</a>
+    <a href="https://github.com/yoruhinot/DawAudioStreamer/blob/main/LICENSE">ライセンス</a>
+    <span class="trademark-note">OBS、Discord、VB-CABLEの公式製品ではありません。</span>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
