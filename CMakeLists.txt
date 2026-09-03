@@ -14,6 +14,11 @@ set(DAS_REPOSITORY_URL "https://github.com/yoruhinot/DawAudioStreamer" CACHE STR
 option(DAS_BUILD_TESTS "単体テストとストレステストをビルドする" ON)
 option(DAS_ENABLE_JUCE "JUCEを取得し、JUCE依存ターゲットを有効にする" OFF)
 option(DAS_BUILD_OBS_PLUGIN "OBS音声ソースプラグインをビルドする" OFF)
+if(WIN32)
+  option(DAS_BUILD_ENGINE "開発者向けDAS Engineをビルドする" ON)
+else()
+  option(DAS_BUILD_ENGINE "開発者向けDAS Engineをビルドする" OFF)
+endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -36,6 +41,10 @@ endif()
 if(EXISTS "${DAS_BUNDLED_THIRD_PARTY_DIR}/obs_headers-src/libobs/obs.h")
   set(FETCHCONTENT_SOURCE_DIR_OBS_HEADERS "${DAS_BUNDLED_THIRD_PARTY_DIR}/obs_headers-src"
       CACHE PATH "Bundled OBS source" FORCE)
+endif()
+if(EXISTS "${DAS_BUNDLED_THIRD_PARTY_DIR}/simde-src/simde/x86/sse2.h")
+  set(FETCHCONTENT_SOURCE_DIR_SIMDE "${DAS_BUNDLED_THIRD_PARTY_DIR}/simde-src"
+      CACHE PATH "Bundled SIMDe source" FORCE)
 endif()
 
 if(MSVC)
@@ -77,13 +86,27 @@ if(DAS_BUILD_OBS_PLUGIN)
     EXCLUDE_FROM_ALL
   )
   FetchContent_MakeAvailable(obs_headers)
+
+  if(APPLE)
+    FetchContent_Declare(
+      simde
+      GIT_REPOSITORY https://github.com/simd-everywhere/simde.git
+      GIT_TAG 71fd833d9666141edcd1d3c109a80e228303d8d7
+      GIT_SHALLOW TRUE
+      SOURCE_SUBDIR headers-only-no-cmake-project
+      EXCLUDE_FROM_ALL
+    )
+    FetchContent_MakeAvailable(simde)
+  endif()
 endif()
 
 add_subdirectory(libs/audio-core)
 add_subdirectory(libs/transport)
 
 if(DAS_ENABLE_JUCE)
-  add_subdirectory(apps/engine)
+  if(DAS_BUILD_ENGINE)
+    add_subdirectory(apps/engine)
+  endif()
   add_subdirectory(plugins/send-vst3)
 endif()
 

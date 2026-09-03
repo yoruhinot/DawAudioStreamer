@@ -3,6 +3,7 @@
 #include "PluginEditor.h"
 
 #include <algorithm>
+#include <cstdlib>
 #include <cstring>
 #include <string>
 
@@ -10,6 +11,11 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <Windows.h>
+#elif defined(__APPLE__)
+#include <fcntl.h>
+#include <sys/file.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #endif
 
 namespace {
@@ -23,8 +29,52 @@ std::wstring namespacedName(const std::wstring_view base) {
     name.push_back(L'.');
     name.append(suffix, length);
   }
+#else
+  if (const auto* suffix = std::getenv("DAS_TEST_NAMESPACE");
+      suffix != nullptr && *suffix != '\0') {
+    name.push_back(L'.');
+    while (*suffix != '\0') name.push_back(static_cast<unsigned char>(*suffix++));
+  }
 #endif
   return name;
+}
+
+#if defined(__APPLE__)
+std::string senderLockPath() {
+  std::string path = "/tmp/org.dawaudiostreamer.send.owner." +
+                     std::to_string(static_cast<unsigned long long>(getuid()));
+  if (const auto* suffix = std::getenv("DAS_TEST_NAMESPACE");
+      suffix != nullptr && *suffix != '\0') {
+    path.push_back('.');
+    while (*suffix != '\0') {
+      const auto value = static_cast<unsigned char>(*suffix++);
+      const bool safe = (value >= 'a' && value <= 'z') ||
+                        (value >= 'A' && value <= 'Z') ||
+                        (value >= '0' && value <= '9') || value == '-' || value == '_';
+      path.push_back(safe ? static_cast<char>(value) : '_');
+    }
+  }
+  return path;
+}
+#endif
+
+std::unique_ptr<das::transport::RingBuffer> prepareSharedRing(
+    das::transport::NamedSharedMemory& memory, const std::wstring_view name,
+    const std::size_t bytes) {
+  memory = das::transport::NamedSharedMemory::create(namespacedName(name), bytes);
+  if (!memory.isOpen()) return {};
+  auto ring = std::make_unique<das::transport::RingBuffer>(memory.storage());
+  if (!ring->isCompatible()) {
+    if (!das::transport::RingBuffer::initialize(memory.storage(),
+                                                das::transport::kAudioCapacityFrames,
+                                                das::transport::kAudioChannels,
+                                                das::transport::kAudioSampleRate))
+      return {};
+    ring = std::make_unique<das::transport::RingBuffer>(memory.storage());
+  }
+  if (!ring->isCompatible()) return {};
+  ring->discardAll();
+  return ring;
 }
 }
 
@@ -35,11 +85,20 @@ DasSendProcessor::DasSendProcessor()
 #if defined(_WIN32)
   const auto guardName = namespacedName(L"Local\\DawAudioStreamer.Send.Owner.v1");
   const auto guard = CreateEventW(nullptr, TRUE, FALSE, guardName.c_str());
-  senderGuard_ = guard;
+  if (guard != nullptr) senderGuard_ = reinterpret_cast<std::intptr_t>(guard);
   if (guard != nullptr && GetLastError() == ERROR_ALREADY_EXISTS) {
     primarySender_ = false;
     CloseHandle(guard);
-    senderGuard_ = nullptr;
+    senderGuard_ = -1;
+  }
+#elif defined(__APPLE__)
+  const auto lockPath = senderLockPath();
+  const auto guard = ::open(lockPath.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+  if (guard < 0 || flock(guard, LOCK_EX | LOCK_NB) != 0) {
+    primarySender_ = false;
+    if (guard >= 0) ::close(guard);
+  } else {
+    senderGuard_ = guard;
   }
 #endif
 }
@@ -47,7 +106,13 @@ DasSendProcessor::DasSendProcessor()
 DasSendProcessor::~DasSendProcessor() {
   releaseResources();
 #if defined(_WIN32)
-  if (senderGuard_ != nullptr) CloseHandle(static_cast<HANDLE>(senderGuard_));
+  if (senderGuard_ != -1)
+    CloseHandle(reinterpret_cast<HANDLE>(senderGuard_));
+#elif defined(__APPLE__)
+  if (senderGuard_ != -1) {
+    static_cast<void>(flock(static_cast<int>(senderGuard_), LOCK_UN));
+    ::close(static_cast<int>(senderGuard_));
+  }
 #endif
 }
 
@@ -68,43 +133,16 @@ void DasSendProcessor::prepareToPlay(const double sampleRate, const int samplesP
   }
   const auto bytes = das::transport::requiredBytes(das::transport::kAudioCapacityFrames,
                                                     das::transport::kAudioChannels);
-  memory_ = das::transport::NamedSharedMemory::create(
-      namespacedName(das::transport::kDefaultAudioMappingName), bytes);
-  if (memory_.isOpen()) {
-    if (!memory_.alreadyExisted())
-      das::transport::RingBuffer::initialize(memory_.storage(),
-                                             das::transport::kAudioCapacityFrames,
-                                             das::transport::kAudioChannels,
-                                             das::transport::kAudioSampleRate);
-    ring_ = std::make_unique<das::transport::RingBuffer>(memory_.storage());
-    if (!ring_->isCompatible()) ring_.reset();
-  }
-  obsMemory_ = das::transport::NamedSharedMemory::create(
-      namespacedName(das::transport::kObsAudioMappingName), bytes);
-  if (obsMemory_.isOpen()) {
-    if (!obsMemory_.alreadyExisted())
-      das::transport::RingBuffer::initialize(obsMemory_.storage(),
-                                             das::transport::kAudioCapacityFrames,
-                                             das::transport::kAudioChannels,
-                                             das::transport::kAudioSampleRate);
-    obsRing_ = std::make_unique<das::transport::RingBuffer>(obsMemory_.storage());
-    if (!obsRing_->isCompatible()) obsRing_.reset();
-  }
-  discordMemory_ = das::transport::NamedSharedMemory::create(
-      namespacedName(das::transport::kDiscordAudioMappingName), bytes);
-  if (discordMemory_.isOpen()) {
-    if (!discordMemory_.alreadyExisted())
-      das::transport::RingBuffer::initialize(discordMemory_.storage(),
-                                             das::transport::kAudioCapacityFrames,
-                                             das::transport::kAudioChannels,
-                                             das::transport::kAudioSampleRate);
-    discordRing_ = std::make_unique<das::transport::RingBuffer>(discordMemory_.storage());
-    if (!discordRing_->isCompatible()) discordRing_.reset();
-  }
+  ring_ = prepareSharedRing(memory_, das::transport::kDefaultAudioMappingName, bytes);
+  obsRing_ = prepareSharedRing(obsMemory_, das::transport::kObsAudioMappingName, bytes);
+#if defined(_WIN32)
+  discordRing_ = prepareSharedRing(discordMemory_,
+                                   das::transport::kDiscordAudioMappingName, bytes);
   if (discordRing_) {
     discordBridge_ = std::make_unique<DiscordBridge>(*discordRing_);
     discordBridge_->start();
   }
+#endif
   transportReady_.store(ring_ != nullptr || obsRing_ != nullptr || discordRing_ != nullptr);
 }
 

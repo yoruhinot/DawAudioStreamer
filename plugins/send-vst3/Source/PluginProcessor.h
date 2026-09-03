@@ -9,8 +9,9 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 
 #include <array>
-#include <memory>
 #include <atomic>
+#include <cstdint>
+#include <memory>
 #include <vector>
 
 class DasSendProcessor final : public juce::AudioProcessor {
@@ -66,6 +67,6 @@ private:
   std::atomic<std::uint64_t> obsConsumerHeartbeat_ {};
   std::atomic<std::uint64_t> engineConsumerHeartbeat_ {};
   void writeTransport(std::uint32_t frames) noexcept;
-  void* senderGuard_ {};
+  std::intptr_t senderGuard_ {-1};
   bool primarySender_ {true};
 };

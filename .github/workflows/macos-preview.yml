@@ -2,12 +2,13 @@ name: macOS preview
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - feature/macos-preview
   pull_request:
     branches:
       - main
+
+concurrency:
+  group: macos-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -15,12 +16,12 @@ permissions:
 jobs:
   build:
     name: Apple Silicon preview
-    runs-on: macos-15
+    runs-on: macos-14
     timeout-minutes: 60
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install OBS Studio
         run: |
@@ -42,18 +43,25 @@ jobs:
           cmake --install build/macos-preview --config Release
 
       - name: Create preview package
-        run: >-
-          cmake
-          -DDAS_SOURCE_DIR=${{ github.workspace }}
-          -DDAS_BINARY_DIR=${{ github.workspace }}/build/macos-preview
-          -DDAS_INSTALL_ROOT=${{ github.workspace }}/build/macos-package
-          -DDAS_OUTPUT_DIR=${{ github.workspace }}/build/dist
-          -DDAS_VERSION=0.4.0-macos-preview.1
-          -DDAS_COMMIT=${{ github.sha }}
-          -P cmake/CreateMacPreviewPackage.cmake
+        run: |
+          cmake \
+            -DDAS_SOURCE_DIR=${{ github.workspace }} \
+            -DDAS_BINARY_DIR=${{ github.workspace }}/build/macos-preview \
+            -DDAS_INSTALL_ROOT=${{ github.workspace }}/build/macos-package \
+            -DDAS_OUTPUT_DIR=${{ github.workspace }}/build/dist \
+            -DDAS_VERSION=0.4.0-macos-preview.1 \
+            -DDAS_COMMIT=${{ github.sha }} \
+            -P cmake/CreateMacPreviewPackage.cmake
+          package=build/dist/DawAudioStreamer-0.4.0-macos-preview.1-macOS-AppleSilicon
+          test -f "$package/README-macOS.txt"
+          test -x "$package/Install.command"
+          test -x "$package/Uninstall.command"
+          test -x "$package/payload/DAS Send.vst3/Contents/MacOS/DAS Send"
+          test -x "$package/payload/DAS Send.component/Contents/MacOS/DAS Send"
+          test -x "$package/payload/das-obs-source.plugin/Contents/MacOS/das-obs-source"
 
       - name: Upload preview
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: DawAudioStreamer-macOS-AppleSilicon-${{ github.sha }}
           path: build/dist/*.zip

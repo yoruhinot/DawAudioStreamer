@@ -2,12 +2,13 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 #include <span>
 #include <string_view>
 
 namespace das::transport {
 
-// Windowsの名前付きファイルマッピングを所有するRAIIラッパー。
+// OSの名前付き共有メモリを所有するRAIIラッパー。
 // create/openは制御スレッドでだけ呼び、音声スレッドではstorage()だけを使用する。
 class NamedSharedMemory final {
 public:
@@ -30,11 +31,11 @@ public:
   [[nodiscard]] std::span<const std::byte> storage() const noexcept;
 
 private:
-  NamedSharedMemory(void* mapping, void* view, std::size_t bytes,
+  NamedSharedMemory(std::intptr_t nativeHandle, void* view, std::size_t bytes,
                     bool alreadyExisted) noexcept;
   void close() noexcept;
 
-  void* mapping_ {};
+  std::intptr_t nativeHandle_ {-1};
   void* view_ {};
   std::size_t bytes_ {};
   bool alreadyExisted_ {};

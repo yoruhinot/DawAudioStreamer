@@ -18,10 +18,11 @@ std::wstring terminatedName(const std::wstring_view name) {
 
 } // namespace
 
-NamedSharedMemory::NamedSharedMemory(void* const mapping, void* const view,
+NamedSharedMemory::NamedSharedMemory(const std::intptr_t nativeHandle, void* const view,
                                      const std::size_t bytes,
                                      const bool alreadyExisted) noexcept
-    : mapping_(mapping), view_(view), bytes_(bytes), alreadyExisted_(alreadyExisted) {}
+    : nativeHandle_(nativeHandle), view_(view), bytes_(bytes),
+      alreadyExisted_(alreadyExisted) {}
 
 NamedSharedMemory::~NamedSharedMemory() noexcept { close(); }
 
@@ -32,7 +33,7 @@ NamedSharedMemory::NamedSharedMemory(NamedSharedMemory&& other) noexcept {
 NamedSharedMemory& NamedSharedMemory::operator=(NamedSharedMemory&& other) noexcept {
   if (this != &other) {
     close();
-    mapping_ = std::exchange(other.mapping_, nullptr);
+    nativeHandle_ = std::exchange(other.nativeHandle_, -1);
     view_ = std::exchange(other.view_, nullptr);
     bytes_ = std::exchange(other.bytes_, 0);
     alreadyExisted_ = std::exchange(other.alreadyExisted_, false);
@@ -56,7 +57,7 @@ NamedSharedMemory NamedSharedMemory::create(const std::wstring_view name,
     CloseHandle(mapping);
     return {};
   }
-  return {mapping, view, bytes, existed};
+  return {reinterpret_cast<std::intptr_t>(mapping), view, bytes, existed};
 }
 
 NamedSharedMemory NamedSharedMemory::open(const std::wstring_view name,
@@ -70,7 +71,7 @@ NamedSharedMemory NamedSharedMemory::open(const std::wstring_view name,
     CloseHandle(mapping);
     return {};
   }
-  return {mapping, view, bytes, true};
+  return {reinterpret_cast<std::intptr_t>(mapping), view, bytes, true};
 }
 
 std::span<std::byte> NamedSharedMemory::storage() noexcept {
@@ -83,7 +84,10 @@ std::span<const std::byte> NamedSharedMemory::storage() const noexcept {
 
 void NamedSharedMemory::close() noexcept {
   if (view_ != nullptr) UnmapViewOfFile(std::exchange(view_, nullptr));
-  if (mapping_ != nullptr) CloseHandle(std::exchange(mapping_, nullptr));
+  if (nativeHandle_ != -1) {
+    const auto handle = reinterpret_cast<HANDLE>(std::exchange(nativeHandle_, -1));
+    CloseHandle(handle);
+  }
   bytes_ = 0;
   alreadyExisted_ = false;
 }

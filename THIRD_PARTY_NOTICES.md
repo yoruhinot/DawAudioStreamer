@@ -32,6 +32,15 @@ Sample rate converter designed by Aleksey Vaneev of Voxengo.
 
 ライセンス全文は`LICENSES/MIT-r8brain.txt`に収録します。
 
+## SIMDe
+
+- 上流：<https://github.com/simd-everywhere/simde>
+- revision：`71fd833d9666141edcd1d3c109a80e228303d8d7`（0.8.2）
+- ライセンス：MIT License
+
+macOS版OBSプラグインのApple Silicon対応にSIMDeヘッダーを使用します。
+ライセンス全文はmacOS配布物の`licenses/SIMDe`に収録します。
+
 ## OBS Studio
 
 - 上流：<https://github.com/obsproject/obs-studio>

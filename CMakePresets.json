@@ -25,11 +25,36 @@
         "DAS_BUILD_OBS_PLUGIN": "ON",
         "DAS_ENABLE_JUCE": "ON"
       }
+    },
+    {
+      "name": "macos-preview",
+      "displayName": "macOS Apple Silicon 検証版",
+      "generator": "Xcode",
+      "binaryDir": "${sourceDir}/build/macos-preview",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      },
+      "cacheVariables": {
+        "CMAKE_OSX_ARCHITECTURES": "arm64",
+        "CMAKE_OSX_DEPLOYMENT_TARGET": "13.0",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/macos-package",
+        "CMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED": "NO",
+        "CMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED": "NO",
+        "DAS_DISPLAY_VERSION": "0.4.0-macos-preview.1",
+        "DAS_BUILD_TESTS": "ON",
+        "DAS_BUILD_ENGINE": "OFF",
+        "DAS_BUILD_OBS_PLUGIN": "ON",
+        "DAS_ENABLE_JUCE": "ON",
+        "DAS_OBS_FRAMEWORK_DIR": "/Applications/OBS.app/Contents/Frameworks"
+      }
     }
   ],
   "buildPresets": [
     { "name": "windows-msvc-debug", "configurePreset": "windows-msvc-debug", "configuration": "Debug" },
-    { "name": "windows-msvc-release", "configurePreset": "windows-msvc-release", "configuration": "Release" }
+    { "name": "windows-msvc-release", "configurePreset": "windows-msvc-release", "configuration": "Release" },
+    { "name": "macos-preview", "configurePreset": "macos-preview", "configuration": "Release" }
   ],
   "testPresets": [
     {
@@ -41,6 +66,12 @@
     {
       "name": "windows-msvc-release",
       "configurePreset": "windows-msvc-release",
+      "configuration": "Release",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "macos-preview",
+      "configurePreset": "macos-preview",
       "configuration": "Release",
       "output": { "outputOnFailure": true }
     }

@@ -99,6 +99,15 @@ void DasSendEditor::timerCallback() {
                        juce::dontSendNotification);
     obsStatus_.setColour(juce::Label::textColourId, obsActive ? green : waiting);
 
+    #if defined(__APPLE__)
+    discordStatus_.setText(japanese("Discord  ● macOSの共有音声を使用できます"),
+                           juce::dontSendNotification);
+    discordStatus_.setColour(juce::Label::textColourId, green);
+    detail_.setText(japanese(
+        "DiscordではDAWアプリまたは画面全体を共有すると、macOSが音声を載せます。\n"
+        "OBSでは音声ソース「DAS Audio（DAW）」を1つ追加してください。"),
+        juce::dontSendNotification);
+    #else
     const auto bridgeState = processor_.discordBridgeState();
     if (bridgeState == DiscordBridge::State::ready) {
       discordStatus_.setText(japanese("Discord  ● 直接共有用の音声を準備済み"),
@@ -122,5 +131,6 @@ void DasSendEditor::timerCallback() {
         "DiscordではDAWアプリまたは画面全体をそのまま共有します。マイク設定は変更しません。\n"
         "OBSでは音声ソース「DAS Audio（DAW）」を1つ追加してください。"),
         juce::dontSendNotification);
+    #endif
   }
 }
