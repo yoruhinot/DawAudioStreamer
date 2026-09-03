@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DawAudioStreamer — DAWの音を配信へ</title>
   <meta name="description" content="DAWのASIO音声を、設定を変えずにOBSやDiscordの画面共有へ送れます。">
-  <meta name="theme-color" content="#171b24">
+  <meta name="theme-color" content="#f7f5f3">
   <link rel="canonical" href="https://yoruhinot.github.io/DawAudioStreamer/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yoruhinot.github.io/DawAudioStreamer/">
   <meta property="og:title" content="DawAudioStreamer — DAWの音を配信へ">
   <meta property="og:description" content="DAWのASIO音声を、設定を変えずにOBSやDiscordの画面共有へ送れます。">
   <meta property="og:image" content="https://yoruhinot.github.io/DawAudioStreamer/og.png">
-  <meta property="og:image:width" content="1729">
-  <meta property="og:image:height" content="910">
+  <meta property="og:image:width" content="1731">
+  <meta property="og:image:height" content="909">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DawAudioStreamer — DAWの音を配信へ">
   <meta name="twitter:description" content="DAWのASIO音声を、設定を変えずにOBSやDiscordの画面共有へ送れます。">
@@ -69,25 +69,41 @@
       </div>
     </section>
 
-    <section class="quick-start" id="start">
+    <section class="route-section" id="start">
       <div class="section-heading">
-        <p class="eyebrow">QUICK START</p>
-        <h2>3ステップで使えます</h2>
+        <p class="eyebrow">CHOOSE YOUR ROUTE</p>
+        <h2>使い方を選ぶ</h2>
+        <p>OBSとDiscordは別々の使い方です。目的に合う方から始めてください。</p>
       </div>
-      <ol class="steps">
-        <li><span class="step-number">1</span><div><strong>インストール</strong><p>ダウンロードしたセットアップを実行します。</p></div></li>
-        <li><span class="step-number">2</span><div><strong>DAWに挿す</strong><p>マスターバスの最後に「DAS Send」を追加します。</p></div></li>
-        <li><span class="step-number">3</span><div><strong>配信ソフトに追加</strong><p>OBSに「DAS Audio（DAW）」を追加すれば完了です。</p></div></li>
-      </ol>
-    </section>
+      <div class="route-grid">
+        <article class="route-card obs-route">
+          <div class="route-label"><span class="route-symbol wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>OBS</strong></div>
+          <h3>配信・録画に使う</h3>
+          <p class="route-summary">DAWの音だけを、OBSの音声ミキサーへ直接送ります。</p>
+          <ol>
+            <li><span>1</span>DASをインストール</li>
+            <li><span>2</span>DAWにDAS Sendを挿す</li>
+            <li><span>3</span>OBSにDAS Audioを追加</li>
+          </ol>
+          <a class="route-button" href="#obs">OBSの手順へ <span aria-hidden="true">↓</span></a>
+          <small>VB-CABLEは不要</small>
+        </article>
 
-    <section class="discord-callout" id="discord">
-      <div>
-        <p class="eyebrow">DISCORD</p>
-        <h2>Discordでも使いたい場合</h2>
-        <p>Windowsでは、無料の仮想オーディオデバイス「VB-CABLE」を追加で使用します。Discordのマイク設定や、DAWのASIO設定を変える必要はありません。</p>
+        <div class="route-separator" aria-label="または"><span>または</span></div>
+
+        <article class="route-card discord-route" id="discord">
+          <div class="route-label"><span class="route-symbol share-icon" aria-hidden="true"></span><strong>DISCORD</strong></div>
+          <h3>画面共有に音を載せる</h3>
+          <p class="route-summary">DAWや画面全体を共有したとき、一緒に音を届けます。</p>
+          <ol>
+            <li><span>1</span>DASをインストール</li>
+            <li><span>2</span>VB-CABLEをインストール</li>
+            <li><span>3</span>DAWにDAS Sendを挿して共有</li>
+          </ol>
+          <a class="route-button" href="#vbcable">Discordの手順へ <span aria-hidden="true">↓</span></a>
+          <small>Discordのマイク設定は変更不要</small>
+        </article>
       </div>
-      <a class="secondary-button" href="#vbcable">導入手順を見る <span aria-hidden="true">↓</span></a>
     </section>
 
     <section class="guide-section" id="obs">
