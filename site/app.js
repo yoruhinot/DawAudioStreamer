@@ -24,7 +24,7 @@ fetch("https://api.github.com/repos/yoruhinot/DawAudioStreamer/releases?per_page
         ? "Windowsベータ版をダウンロード"
         : "Windows版をダウンロード";
       versionLabel.textContent = `${release.tag_name}・Windows 11・64-bit`;
-      if (!release.prerelease) releaseNotice.hidden = true;
+      if (!release.prerelease && releaseNotice) releaseNotice.hidden = true;
     }
 
     const macRelease = releases.find((item) =>

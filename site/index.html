@@ -93,17 +93,25 @@
 
     <section class="setup-section" id="setup">
       <span class="anchor-alias" id="start" aria-hidden="true"></span>
-      <div class="section-heading"><p class="eyebrow">SETUP</p><h2>セットアップ</h2><p>ダウンロードしたOSの案内を、上から順番に進めてください。</p></div>
+      <div class="section-heading"><p class="eyebrow">SETUP</p><h2>セットアップ</h2><p>OSごとに違うのはインストールだけ。その後は同じ流れで使えます。</p></div>
 
-      <article class="platform-guide" id="windows-setup">
-        <header class="guide-header"><div><p class="platform-label">WINDOWS 11</p><h3>Windowsで使う</h3></div><p>最初の2手順はOBSとDiscordで共通です。</p></header>
-        <ol class="common-steps">
-          <li><span>1</span><div><strong>DASをインストール</strong><p>OBS、Discord、DAWを終了してから、ダウンロードしたインストーラーを実行します。</p></div></li>
-          <li><span>2</span><div><strong>DAWのマスターに挿す</strong><p>マスターバスの一番最後に、VST3プラグイン「DAS Send」を1個追加します。</p></div></li>
-        </ol>
+      <article class="setup-flow">
+        <div class="flow-heading"><span>1</span><div><h3>OSに合わせてインストール</h3><p>ここだけOSごとに手順が違います。</p></div></div>
+        <div class="install-grid">
+          <section class="install-card" id="windows-setup">
+            <p class="platform-label">WINDOWS 11</p><h4>インストーラーを実行</h4>
+            <p>OBS、Discord、DAWを終了してから、ダウンロードしたインストーラーを実行します。</p>
+          </section>
+          <section class="install-card" id="macos">
+            <p class="platform-label">macOS PREVIEW</p><h4>Install.commandを実行</h4>
+            <p>ZIPを展開し、「Install.command」をControlキーを押しながらクリックして［開く］を選びます。</p>
+            <small>Apple Silicon・macOS 13以降。署名・公証前のプレビュー版です。</small>
+          </section>
+        </div>
 
-        <div class="daw-block" id="daw">
-          <div class="subheading"><h4>DAWごとの場所</h4><p>名前は違っても、最終的な音が通る場所の最後に挿します。</p></div>
+        <div class="flow-heading" id="daw"><span>2</span><div><h3>DAWのマスターに挿す</h3><p>ここからはWindows・Mac共通です。最終的な音が通る場所の最後に「DAS Send」を1個追加します。</p></div></div>
+        <div class="daw-block">
+          <div class="subheading"><h4>DAWごとの場所</h4><p>WindowsはVST3、MacはAUまたはVST3を使用できます。</p></div>
           <div class="daw-list">
             <article class="daw-card"><header><strong>Studio One Pro 8</strong><span>動作確認済み</span></header><p>コンソールの「メイン」チャンネルにある、インサートの最後へ追加します。</p></article>
             <article class="daw-card"><header><strong>Cubase</strong><span>動作確認済み</span></header><p>MixConsoleの「Stereo Out」にある、Insertsの最後へ追加します。</p></article>
@@ -111,19 +119,31 @@
           </div>
         </div>
 
-        <div class="destination-heading"><span>3</span><div><h4>配信先を選ぶ</h4><p>OBSとDiscordは別の手順です。使いたい側だけ進めます。</p></div></div>
-        <div class="destination-grid">
-          <article class="destination-card obs-guide" id="obs">
+        <div class="flow-heading"><span>3</span><div><h3>使いたい配信先を選ぶ</h3><p>OBSかDiscord、使いたい方を選びます。選んだ先の手順だけ見れば大丈夫です。</p></div></div>
+        <div class="route-choice-grid">
+          <a class="route-choice obs-choice" href="#obs">
             <div class="destination-label obs-label"><span class="wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>OBS</strong></div>
-            <h4>配信・録画に使う</h4><p>DAWの音をOBSの音声ミキサーへ直接送ります。</p>
-            <ol><li><span>1</span>OBSの「ソース」で［＋］を押す</li><li><span>2</span>「DAS Audio（DAW）」を追加</li><li><span>3</span>DAWを再生してメーターを確認</li></ol>
-            <p class="result-note success-note">VB-CABLEは不要です</p>
-          </article>
-
-          <article class="destination-card discord-guide" id="discord">
-            <span class="anchor-alias" id="discord-share" aria-hidden="true"></span>
+            <h4>配信・録画</h4><p>Windows・Macで同じ3手順。追加ソフトは不要です。</p><span class="route-arrow" aria-hidden="true">↓</span>
+          </a>
+          <a class="route-choice discord-choice" href="#discord">
             <div class="destination-label discord-label"><span class="share-icon" aria-hidden="true"></span><strong>DISCORD</strong></div>
-            <h4>画面共有に音を載せる</h4><p>WindowsではVB-CABLEを、DAS内部の音声経路として使用します。</p>
+            <h4>画面共有</h4><p>WindowsではVB-CABLEを使用。Macでは通常DAS不要です。</p><span class="route-arrow" aria-hidden="true">↓</span>
+          </a>
+        </div>
+
+        <div class="route-details">
+          <section class="destination-card obs-guide" id="obs">
+            <header class="detail-header"><div class="destination-label obs-label"><span class="wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>OBS</strong></div><span class="platform-scope">WINDOWS + macOS</span></header>
+            <h4>OBSへ送る3手順</h4><p>WindowsでもMacでも操作は同じです。</p>
+            <ol><li><span>1</span>OBSの「ソース」で［＋］を押す</li><li><span>2</span>「DAS Audio（DAW）」を追加</li><li><span>3</span>DAWを再生して音声ミキサーのメーターを確認</li></ol>
+            <p class="result-note success-note">追加ソフトは不要です</p>
+          </section>
+
+          <section class="destination-card discord-guide" id="discord">
+            <span class="anchor-alias" id="discord-share" aria-hidden="true"></span>
+            <header class="detail-header"><div class="destination-label discord-label"><span class="share-icon" aria-hidden="true"></span><strong>DISCORD</strong></div><span class="platform-scope">WINDOWS</span></header>
+            <h4>Discordの画面共有へ送る</h4><p>WindowsではVB-CABLEを、DAS内部の音声経路として使用します。</p>
+            <div class="native-mac-note"><strong>Macではこの設定は不要</strong><p>DAWアプリまたは画面全体を共有すれば、macOS標準機能で音声も共有できます。</p></div>
             <div id="vbcable" class="dependency-box">
               <strong>先にVB-CABLEをインストール</strong>
               <ol><li><span>1</span>公式ZIPを展開</li><li><span>2</span>「VBCABLE_Setup_x64.exe」を管理者として実行</li><li><span>3</span>［Install Driver］を押してWindowsを再起動</li></ol>
@@ -131,24 +151,10 @@
             </div>
             <ol class="discord-final-steps"><li><span>4</span>DAS Sendが「準備完了」になることを確認</li><li><span>5</span>DiscordでDAWまたは画面全体を共有</li></ol>
             <div class="important-note"><strong>設定は変えません</strong><p>「CABLE Input」をDAWの出力やDiscordのマイクに選ばないでください。DASが内部で使用します。</p></div>
-          </article>
+          </section>
         </div>
 
         <details class="advanced-tip"><summary>共有する音だけを選びたい場合</summary><p>「配信用BUS」を1本作り、配信したいトラックだけを送ります。そのBUSの最後にDAS Sendを1個挿すと、自分だけが聞く音を配信から外せます。</p></details>
-      </article>
-
-      <article class="platform-guide mac-guide" id="macos">
-        <header class="guide-header"><div><p class="platform-label">macOS PREVIEW</p><h3>Macで使う</h3></div><p>Apple Silicon搭載Mac・macOS 13以降向けです。</p></header>
-        <ol class="common-steps mac-steps">
-          <li><span>1</span><div><strong>ZIPを展開</strong><p>DAWとOBSを終了してから、ダウンロードしたZIPを展開します。</p></div></li>
-          <li><span>2</span><div><strong>インストール</strong><p>「Install.command」をControlキーを押しながらクリックし、［開く］を選びます。</p></div></li>
-          <li><span>3</span><div><strong>DAWとOBSに追加</strong><p>DAWのマスターへ「DAS Send」、OBSのソースへ「DAS Audio（DAW）」を追加します。</p></div></li>
-        </ol>
-        <div class="mac-outcomes">
-          <div class="outcome-card obs-outcome"><span>OBS</span><div><strong>DASを使います</strong><p>DAWを再生し、OBSの音声ミキサーが動けば準備完了です。</p></div></div>
-          <div class="outcome-card native-outcome"><span>Discord</span><div><strong>DASは通常不要です</strong><p>DAWアプリまたは画面全体を共有すれば、macOS標準機能で音声も共有できます。</p></div></div>
-        </div>
-        <div class="important-note mac-preview-note"><strong>プレビュー版です</strong><p>Appleの正式な署名・公証前のため、macOSが警告を表示します。</p></div>
       </article>
     </section>
 
