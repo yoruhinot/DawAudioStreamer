@@ -1,5 +1,5 @@
 #define MyAppName "DawAudioStreamer"
-#define MyAppVersion "0.4.0-beta.3"
+#define MyAppVersion "0.4.0"
 #define MyAppFileVersion "0.4.0.0"
 #define MyAppPublisher "yoruhinot"
 #define MyAppCopyright "Copyright (c) 2026 yoruhinot"
@@ -7,7 +7,7 @@
 #define MyAppSupportUrl "https://github.com/yoruhinot/DawAudioStreamer/issues"
 #define MyAppUpdatesUrl "https://github.com/yoruhinot/DawAudioStreamer/releases"
 #define BuildRoot "..\build\windows-msvc-release"
-#define SourceArchive "..\build\source\DawAudioStreamer-0.4.0-beta.3-source.zip"
+#define SourceArchive "..\build\source\DawAudioStreamer-0.4.0-source.zip"
 #define VbCableUrl "https://yoruhinot.github.io/DawAudioStreamer/#vbcable"
 
 [Setup]
@@ -41,7 +41,7 @@ CloseApplications=yes
 RestartApplications=no
 SetupLogging=yes
 LicenseFile=..\LICENSES\AGPL-3.0-only.txt
-InfoAfterFile=..\docs\クイックスタート.txt
+InfoAfterFile=..\docs\QuickStart.txt
 
 [Languages]
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
@@ -51,7 +51,7 @@ Source: "{#BuildRoot}\plugins\send-vst3\Release\das-virtual-audio-check.exe"; De
 Source: "{#BuildRoot}\plugins\send-vst3\DasSend_artefacts\Release\VST3\DAS Send.vst3\*"; DestDir: "{commoncf64}\VST3\DAS Send.vst3"; Flags: ignoreversion recursesubdirs createallsubdirs restartreplace uninsrestartdelete
 Source: "{#BuildRoot}\plugins\obs-source\Release\das-obs-source.dll"; DestDir: "{commonappdata}\obs-studio\plugins\das-obs-source\bin\64bit"; Flags: ignoreversion restartreplace uninsrestartdelete
 Source: "..\plugins\obs-source\data\locale\ja-JP.ini"; DestDir: "{commonappdata}\obs-studio\plugins\das-obs-source\data\locale"; Flags: ignoreversion restartreplace uninsrestartdelete
-Source: "..\docs\クイックスタート.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\docs\QuickStart.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\CHANGELOG.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
@@ -70,12 +70,12 @@ Source: "{#BuildRoot}\_deps\obs_headers-src\COPYING"; DestDir: "{app}\licenses";
 Source: "{#SourceArchive}"; DestDir: "{app}\source"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\クイックスタート"; Filename: "{app}\クイックスタート.txt"
+Name: "{group}\クイックスタート"; Filename: "{app}\QuickStart.txt"
 Name: "{group}\ライセンスとソース"; Filename: "{app}\LICENSE"
 Name: "{group}\アンインストール"; Filename: "{uninstallexe}"
 
 [Run]
-Filename: "{app}\クイックスタート.txt"; Description: "クイックスタートを開く"; Flags: postinstall shellexec skipifsilent nowait
+Filename: "{app}\QuickStart.txt"; Description: "クイックスタートを開く"; Flags: postinstall shellexec skipifsilent nowait
 Filename: "{#VbCableUrl}"; Description: "Discord用のVB-CABLE導入手順を開く"; Flags: postinstall shellexec skipifsilent; Check: ShouldOfferVbCable
 
 [Code]

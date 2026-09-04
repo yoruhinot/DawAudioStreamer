@@ -5,7 +5,7 @@ DAWの音を、ASIOのままOBSとDiscordへ。
 DawAudioStreamerは、DAWのマスター音声をOBSなどへ送る配信用プラグインです。
 Windows版（VST3）とApple Silicon向けmacOSプレビュー版（AU／VST3）があります。
 
-> 現在はベータ版です。配信前に短い録画や限定配信で動作を確認してください。
+> macOS版はプレビュー版です。配信前に短い録画や限定配信で動作を確認してください。
 
 ## 先に確認
 
@@ -78,9 +78,10 @@ Studio One Pro 8、REAPER、Cubaseで動作を確認しています。
 DAWとOBSを終了し、Windowsの「インストールされているアプリ」からDawAudioStreamerを削除します。
 DAWプロジェクト、OBSシーン、ASIO設定、別途導入した仮想オーディオドライバーは削除されません。
 
-## ベータ版について
+## ダウンロードと問い合わせ
 
 ダウンロードは[GitHub Releases](https://github.com/yoruhinot/DawAudioStreamer/releases)から行ってください。
+インストール時にWindowsまたはmacOSの警告が表示される場合があります。
 
 不具合や要望は[Issues](https://github.com/yoruhinot/DawAudioStreamer/issues)へお願いします。
 

@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="DawAudioStreamer — DAWの音を配信へ">
   <meta name="twitter:description" content="DAWの音声を、オーディオ設定を変えずにOBSやDiscordの画面共有へ送れます。">
   <meta name="twitter:image" content="https://yoruhinot.github.io/DawAudioStreamer/og.png">
-  <link rel="stylesheet" href="styles.css?v=20260905-5">
+  <link rel="stylesheet" href="styles.css?v=20260905-7">
 </head>
 <body>
   <header class="site-header">
@@ -67,13 +67,14 @@
 
       <div class="platform-grid">
         <article class="platform-card windows-card">
-          <div class="platform-card-header"><h3>Windows</h3><span class="stage-badge">ベータ版</span></div>
+          <div class="platform-card-header"><h3>Windows</h3></div>
           <p class="platform-summary">OBSでの配信・録画と、Discordの画面共有に対応します。</p>
           <div class="purpose-chips" aria-label="Windows版の用途"><span class="obs-chip">OBS</span><span class="discord-chip">Discord</span></div>
-          <a class="download-button" id="windows-download" href="https://github.com/yoruhinot/DawAudioStreamer/releases/download/v0.4.0-beta.3/DawAudioStreamer-Setup-0.4.0-beta.3.exe">
-            <span class="download-icon" aria-hidden="true">↓</span><span><strong id="download-title">Windowsベータ版をダウンロード</strong><small id="download-version">Windows 11・x64</small></span>
+          <a class="download-button" id="windows-download" href="https://github.com/yoruhinot/DawAudioStreamer/releases/download/v0.4.0/DawAudioStreamer-Setup-0.4.0.exe">
+            <span class="download-icon" aria-hidden="true">↓</span><span><strong id="download-title">Windows版をダウンロード</strong><small id="download-version">Windows 11・x64</small></span>
           </a>
           <ul class="platform-facts"><li><strong>対応環境</strong>Windows 11・x64</li><li><strong>プラグイン</strong>VST3</li></ul>
+          <p class="install-warning">インストール時にWindowsの警告が表示される場合があります。</p>
           <a class="card-link" href="#windows-setup">Windowsの手順へ <span aria-hidden="true">↓</span></a>
         </article>
 
@@ -85,6 +86,7 @@
             <span class="download-icon" aria-hidden="true">↓</span><span><strong id="mac-download-title">macOSプレビュー版をダウンロード</strong><small id="mac-download-version">macOS 13以降・Apple Silicon</small></span>
           </a>
           <ul class="platform-facts"><li><strong>対応環境</strong>macOS 13以降・Apple Silicon</li><li><strong>プラグイン</strong>AU／VST3</li></ul>
+          <p class="install-warning">初回インストール時にmacOSの警告が表示される場合があります。</p>
           <a class="card-link" href="#macos">macOSの手順へ <span aria-hidden="true">↓</span></a>
         </article>
       </div>

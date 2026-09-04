@@ -1,5 +1,13 @@
 # 変更履歴
 
+## [0.4.0] - 2026-09-05
+
+- Windows正式版を公開
+- プラグイン画面を導入サイトと共通のデザインに刷新
+- ライトモードとダークモードへ対応
+- Windows／macOS、OBS／Discordごとの導入手順を整理
+- macOSプレビュー版の案内を追加
+
 ## [0.4.0-beta.3] - 2026-08-18
 
 - 確認済みDAWにREAPERとCubaseを追加
@@ -25,3 +33,4 @@ VB-CABLEの公式ページを開けます。
 [0.4.0-beta.1]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.0-beta.1
 [0.4.0-beta.2]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.0-beta.2
 [0.4.0-beta.3]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.0-beta.3
+[0.4.0]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.0

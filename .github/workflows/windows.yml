@@ -1,0 +1,38 @@
+name: Windows
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: windows-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: windows-2025
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Configure
+        run: >-
+          cmake -S . -B build/windows-ci
+          -G "Visual Studio 18 2026" -A x64
+          -DDAS_BUILD_TESTS=ON
+          -DDAS_BUILD_OBS_PLUGIN=ON
+          -DDAS_ENABLE_JUCE=ON
+
+      - name: Build
+        run: cmake --build build/windows-ci --config Release --parallel 3
+
+      - name: Test
+        run: ctest --test-dir build/windows-ci -C Release --output-on-failure
