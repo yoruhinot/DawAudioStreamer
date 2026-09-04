@@ -2,19 +2,35 @@
 #include "PluginEditor.h"
 
 namespace {
-constexpr auto parchment = 0xffded5c8;
-constexpr auto card = 0xfff3eee7;
-constexpr auto ink = 0xff000000;
-constexpr auto graphite = 0xff6a6559;
-constexpr auto linen = 0xffc8beb1;
-constexpr auto smoke = 0xffddd5ca;
-constexpr auto markerYellow = 0xffffdd33;
+struct Theme {
+  juce::Colour parchment;
+  juce::Colour card;
+  juce::Colour ink;
+  juce::Colour graphite;
+  juce::Colour linen;
+  juce::Colour smoke;
+  juce::Colour markerYellow;
+  juce::Colour detail;
+};
+
+Theme themeFor(const bool darkMode) {
+  if (darkMode) {
+    return {juce::Colour(0xff151411), juce::Colour(0xff211f1b),
+            juce::Colour(0xfff7f3eb), juce::Colour(0xffbcb4a5),
+            juce::Colour(0xff484239), juce::Colour(0xff3a3630),
+            juce::Colour(0xfff2cd32), juce::Colour(0xff2a2721)};
+  }
+  return {juce::Colour(0xffded5c8), juce::Colour(0xfff3eee7),
+          juce::Colour(0xff000000), juce::Colour(0xff6a6559),
+          juce::Colour(0xffc8beb1), juce::Colour(0xffddd5ca),
+          juce::Colour(0xffffdd33), juce::Colour(0xffd2c7b8)};
+}
 
 void drawRaisedPanel(juce::Graphics& graphics, juce::Rectangle<float> bounds,
-                     const float radius) {
-  graphics.setColour(juce::Colour(card));
+                     const float radius, const Theme& theme) {
+  graphics.setColour(theme.card);
   graphics.fillRoundedRectangle(bounds, radius);
-  graphics.setColour(juce::Colour(linen));
+  graphics.setColour(theme.linen);
   graphics.drawRoundedRectangle(bounds.reduced(0.5F), radius, 1.0F);
 }
 
@@ -56,21 +72,23 @@ void drawShareIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds,
 DasSendEditor::DasSendEditor(DasSendProcessor& processor)
     : AudioProcessorEditor(processor), processor_(processor) {
   useJapanese_ = juce::SystemStats::getUserLanguage().startsWithIgnoreCase("ja");
+  darkMode_ = juce::Desktop::getInstance().isDarkModeActive();
+  const auto theme = themeFor(darkMode_);
 
   title_.setText("DAS Send", juce::dontSendNotification);
   title_.setFont(juce::FontOptions(25.0F, juce::Font::bold));
-  title_.setColour(juce::Label::textColourId, juce::Colour(ink));
+  title_.setColour(juce::Label::textColourId, theme.ink);
   addAndMakeVisible(title_);
 
   subtitle_.setText("DAW AUDIO STREAM", juce::dontSendNotification);
   subtitle_.setFont(juce::FontOptions(11.0F, juce::Font::bold));
-  subtitle_.setColour(juce::Label::textColourId, juce::Colour(graphite));
+  subtitle_.setColour(juce::Label::textColourId, theme.graphite);
   subtitle_.setJustificationType(juce::Justification::centredRight);
   addAndMakeVisible(subtitle_);
 
   for (auto* heading : {&obsTitle_, &discordTitle_}) {
     heading->setFont(juce::FontOptions(13.0F, juce::Font::bold));
-    heading->setColour(juce::Label::textColourId, juce::Colour(graphite));
+    heading->setColour(juce::Label::textColourId, theme.graphite);
     addAndMakeVisible(*heading);
   }
   obsTitle_.setText("OBS", juce::dontSendNotification);
@@ -78,47 +96,72 @@ DasSendEditor::DasSendEditor(DasSendProcessor& processor)
 
   for (auto* status : {&obsStatus_, &discordStatus_}) {
     status->setFont(juce::FontOptions(18.0F, juce::Font::bold));
-    status->setColour(juce::Label::textColourId, juce::Colour(ink));
+    status->setColour(juce::Label::textColourId, theme.ink);
     addAndMakeVisible(*status);
   }
 
   detail_.setFont(juce::FontOptions(13.0F));
-  detail_.setColour(juce::Label::textColourId, juce::Colour(graphite));
+  detail_.setColour(juce::Label::textColourId, theme.graphite);
   detail_.setJustificationType(juce::Justification::centredLeft);
   addAndMakeVisible(detail_);
 
   setSize(620, 280);
+  juce::Desktop::getInstance().addDarkModeSettingListener(this);
   startTimerHz(5);
   timerCallback();
 }
 
-DasSendEditor::~DasSendEditor() { stopTimer(); }
+DasSendEditor::~DasSendEditor() {
+  juce::Desktop::getInstance().removeDarkModeSettingListener(this);
+  stopTimer();
+}
 
 juce::String DasSendEditor::text(const char* japanese, const char* english) const {
   return juce::String::fromUTF8(useJapanese_ ? japanese : english);
 }
 
 juce::Colour DasSendEditor::colourFor(const VisualState state) const {
+  const auto theme = themeFor(darkMode_);
   switch (state) {
-    case VisualState::active: return juce::Colour(0xff3e6b15);
-    case VisualState::waiting: return juce::Colour(graphite);
-    case VisualState::warning: return juce::Colour(0xffaa7e2e);
-    case VisualState::error: return juce::Colour(0xffff6137);
+    case VisualState::active:
+      return darkMode_ ? juce::Colour(0xff95c96a) : juce::Colour(0xff3e6b15);
+    case VisualState::waiting: return theme.graphite;
+    case VisualState::warning:
+      return darkMode_ ? theme.markerYellow : juce::Colour(0xffaa7e2e);
+    case VisualState::error:
+      return darkMode_ ? juce::Colour(0xffff7b59) : juce::Colour(0xffc74725);
   }
-  return juce::Colour(graphite);
+  return theme.graphite;
+}
+
+void DasSendEditor::darkModeSettingChanged() {
+  darkMode_ = juce::Desktop::getInstance().isDarkModeActive();
+  applyTheme();
+}
+
+void DasSendEditor::applyTheme() {
+  const auto theme = themeFor(darkMode_);
+  title_.setColour(juce::Label::textColourId, theme.ink);
+  subtitle_.setColour(juce::Label::textColourId, theme.graphite);
+  obsTitle_.setColour(juce::Label::textColourId, theme.graphite);
+  discordTitle_.setColour(juce::Label::textColourId, theme.graphite);
+  detail_.setColour(juce::Label::textColourId, theme.graphite);
+  timerCallback();
 }
 
 void DasSendEditor::updateCard(juce::Label& label, const juce::String& value,
                                const VisualState state) {
+  const auto theme = themeFor(darkMode_);
   label.setText(value, juce::dontSendNotification);
   label.setColour(juce::Label::textColourId,
                   state == VisualState::active || state == VisualState::error
                       ? juce::Colours::white
-                      : juce::Colour(ink));
+                      : state == VisualState::warning ? juce::Colours::black : theme.ink);
 }
 
 void DasSendEditor::paint(juce::Graphics& graphics) {
-  graphics.fillAll(juce::Colour(parchment));
+  const auto theme = themeFor(darkMode_);
+  graphics.fillAll(theme.parchment);
 
   auto marker = juce::Path();
   marker.startNewSubPath(24.0F, 46.0F);
@@ -126,22 +169,22 @@ void DasSendEditor::paint(juce::Graphics& graphics) {
   marker.lineTo(165.0F, 58.0F);
   marker.lineTo(22.0F, 61.0F);
   marker.closeSubPath();
-  graphics.setColour(juce::Colour(markerYellow).withAlpha(0.9F));
+  graphics.setColour(theme.markerYellow.withAlpha(0.9F));
   graphics.fillPath(marker);
 
   const auto obsCard = juce::Rectangle<float>(24.0F, 82.0F, 278.0F, 116.0F);
   const auto discordCard = juce::Rectangle<float>(318.0F, 82.0F, 278.0F, 116.0F);
-  drawRaisedPanel(graphics, obsCard, 12.0F);
-  drawRaisedPanel(graphics, discordCard, 12.0F);
+  drawRaisedPanel(graphics, obsCard, 12.0F, theme);
+  drawRaisedPanel(graphics, discordCard, 12.0F, theme);
 
-  const auto statusFill = [this](const VisualState state) {
+  const auto statusFill = [&theme](const VisualState state) {
     switch (state) {
       case VisualState::active: return juce::Colour(0xff3e6b15);
-      case VisualState::waiting: return juce::Colour(smoke);
-      case VisualState::warning: return juce::Colour(markerYellow);
-      case VisualState::error: return juce::Colour(0xffff6137);
+      case VisualState::waiting: return theme.smoke;
+      case VisualState::warning: return theme.markerYellow;
+      case VisualState::error: return juce::Colour(0xffc74725);
     }
-    return juce::Colour(smoke);
+    return theme.smoke;
   };
   graphics.setColour(statusFill(obsState_));
   graphics.fillRoundedRectangle(106.0F, 130.0F, 168.0F, 32.0F, 16.0F);
@@ -153,9 +196,9 @@ void DasSendEditor::paint(juce::Graphics& graphics) {
   drawShareIcon(graphics, juce::Rectangle<float>(338.0F, 112.0F, 48.0F, 48.0F),
                 colourFor(discordState_));
 
-  graphics.setColour(juce::Colour(0xffd2c7b8));
+  graphics.setColour(theme.detail);
   graphics.fillRoundedRectangle(24.0F, 220.0F, 572.0F, 38.0F, 12.0F);
-  graphics.setColour(juce::Colour(linen));
+  graphics.setColour(theme.linen);
   graphics.drawRoundedRectangle(24.5F, 220.5F, 571.0F, 37.0F, 12.0F, 1.0F);
 }
 

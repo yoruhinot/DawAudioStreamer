@@ -6,7 +6,8 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 class DasSendEditor final : public juce::AudioProcessorEditor,
-                            private juce::Timer {
+                            private juce::Timer,
+                            private juce::DarkModeSettingListener {
 public:
   explicit DasSendEditor(DasSendProcessor& processor);
   ~DasSendEditor() override;
@@ -17,12 +18,15 @@ private:
   enum class VisualState { active, waiting, warning, error };
 
   void timerCallback() override;
+  void darkModeSettingChanged() override;
+  void applyTheme();
   void updateCard(juce::Label& label, const juce::String& text, VisualState state);
   [[nodiscard]] juce::Colour colourFor(VisualState state) const;
   [[nodiscard]] juce::String text(const char* japanese, const char* english) const;
 
   DasSendProcessor& processor_;
   bool useJapanese_ {};
+  bool darkMode_ {};
   VisualState obsState_ {VisualState::waiting};
   VisualState discordState_ {VisualState::waiting};
   juce::Label title_;
