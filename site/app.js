@@ -11,7 +11,9 @@ fetch("https://api.github.com/repos/yoruhinot/DawAudioStreamer/releases?per_page
     return response.json();
   })
   .then((releases) => {
-    const release = releases.find((item) => !item.draft);
+    const release = releases.find((item) =>
+      !item.draft && item.assets.some((asset) => asset.name.toLowerCase().endsWith(".exe"))
+    );
     const installer = release?.assets.find((asset) => asset.name.toLowerCase().endsWith(".exe"));
     if (!release || !installer) return;
     downloadButton.href = installer.browser_download_url;

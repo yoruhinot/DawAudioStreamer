@@ -240,7 +240,7 @@ footer a { text-underline-offset: 3px; }
   .site-header, main, footer { width: min(100% - 28px, 1200px); }
   .site-header { min-height: 68px; }
   .brand span:last-child { font-size: 14px; }
-  nav a:not(:last-child) { display: none; }
+  nav a:not(:first-child) { display: none; }
   .hero { padding: 68px 0 76px; min-height: auto; }
   h1 { font-size: 58px; }
   h1 span { white-space: normal; }
