@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 
 project(DawAudioStreamer VERSION 0.4.0 LANGUAGES CXX)
 
-set(DAS_DISPLAY_VERSION "0.4.0-beta.3" CACHE STRING
+set(DAS_DISPLAY_VERSION "0.4.0" CACHE STRING
     "Public version shown to users and used in release artifact names")
 set(DAS_PUBLISHER "yoruhinot" CACHE STRING
     "Publisher shown in Windows file metadata")
