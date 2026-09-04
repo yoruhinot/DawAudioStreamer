@@ -78,7 +78,7 @@ h1 span::before {
   clip-path: polygon(1% 14%, 99% 0, 97% 92%, 0 100%);
 }
 .lead { margin: 34px 0 0; color: var(--charcoal); font-size: 18px; line-height: 1.7; letter-spacing: -.01em; }
-.hero-actions { margin-top: 35px; display: flex; align-items: center; justify-content: center; gap: 24px; }
+.hero-actions { margin-top: 35px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 18px; }
 .download-button {
   display: inline-flex;
   align-items: center;
@@ -93,6 +93,8 @@ h1 span::before {
   text-decoration: none;
 }
 .download-button:hover { color: var(--ink); background: var(--yellow); }
+.mac-download { color: var(--ink); background: var(--card); }
+.mac-download:hover { color: var(--paper); background: var(--ink); }
 .download-button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
 .download-button strong, .download-button small { display: block; }
 .download-button strong { font-size: 15px; }
@@ -100,7 +102,8 @@ h1 span::before {
 .download-icon { font-size: 24px; line-height: 1; }
 .text-link { color: var(--ink); font-size: 16px; text-underline-offset: 4px; }
 .download-note { margin: 14px 0 0; color: var(--graphite); font-size: 13px; }
-.release-notice { width: fit-content; max-width: 560px; margin: 18px auto 0; padding: 5px 10px; color: var(--ink); background: var(--attention-soft); border: 1px solid var(--attention); border-radius: 9999px; font-size: 13px; line-height: 1.5; }
+.release-notices { margin-top: 18px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.release-notice { width: fit-content; max-width: 560px; margin: 0; padding: 5px 10px; color: var(--ink); background: var(--attention-soft); border: 1px solid var(--attention); border-radius: 9999px; font-size: 13px; line-height: 1.5; }
 
 .plugin-preview {
   max-width: 880px;
@@ -190,6 +193,7 @@ h1 span::before {
 .important-note { position: relative; padding: 30px 23px 22px; background: var(--attention-soft); border: 1px solid var(--attention); border-radius: 12px; }
 .important-note strong { position: absolute; top: -13px; left: 18px; padding: 4px 10px; color: #fff; background: var(--attention); border-radius: 9999px; font-size: 13px; }
 .important-note p { margin: 0; color: var(--graphite); font-size: 16px; line-height: 1.55; }
+.mac-preview-note { max-width: 850px; margin: 38px auto 0; }
 
 .share-flow { margin-top: 54px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .share-flow div { flex: 1; min-height: 95px; padding: 20px; display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--linen); border-radius: 12px; }

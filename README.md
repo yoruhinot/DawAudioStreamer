@@ -2,8 +2,8 @@
 
 DAWの音を、ASIOのままOBSとDiscordへ。
 
-DawAudioStreamerは、DAWのマスター音声を配信用にコピーするWindows向けVST3です。
-DAWのオーディオ設定やDiscordのマイクを変更する必要はありません。
+DawAudioStreamerは、DAWのマスター音声をOBSなどへ送る配信用プラグインです。
+Windows版（VST3）とApple Silicon向けmacOSプレビュー版（AU／VST3）があります。
 
 > 現在はベータ版です。配信前に短い録画や限定配信で動作を確認してください。
 
@@ -12,6 +12,9 @@ DAWのオーディオ設定やDiscordのマイクを変更する必要はあり�
 - **OBSだけで使う：** DawAudioStreamerのインストーラーだけで使えます。
 - **Discordにも音を載せる：** VB-CABLEが必要です。入っていないPCでは、インストール完了時に
   VB-CABLEの公式ページが開きます。
+
+macOSでは主にOBS向けに使用します。DiscordはmacOS標準の画面共有音声を利用できるため、
+DawAudioStreamerや仮想オーディオデバイスは不要です。
 
 ## 使い方
 
@@ -66,6 +69,7 @@ DAS SendはDAWへ戻す音声や音量を変更しません。配信用の音声
 - VST3対応の64-bit DAW
 - OBS Studio x64
 - Discordデスクトップ版
+- Apple Silicon搭載Mac・macOS 13以降（AU／VST3、プレビュー版）
 
 Studio One Pro 8、REAPER、Cubaseで動作を確認しています。
 
@@ -78,6 +82,7 @@ DAWプロジェクト、OBSシーン、ASIO設定、別途導入した仮想オ�
 
 現在のインストーラーは未署名のため、Windowsが警告を表示する場合があります。ダウンロードは
 [GitHub Releases](https://github.com/yoruhinot/DawAudioStreamer/releases)から行ってください。
+macOSプレビュー版もAppleの正式な署名・公証前です。
 
 不具合や要望は[Issues](https://github.com/yoruhinot/DawAudioStreamer/issues)へお願いします。
 
