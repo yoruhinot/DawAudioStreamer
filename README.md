@@ -80,9 +80,7 @@ DAWプロジェクト、OBSシーン、ASIO設定、別途導入した仮想オ�
 
 ## ベータ版について
 
-現在のインストーラーは未署名のため、Windowsが警告を表示する場合があります。ダウンロードは
-[GitHub Releases](https://github.com/yoruhinot/DawAudioStreamer/releases)から行ってください。
-macOSプレビュー版もAppleの正式な署名・公証前です。
+ダウンロードは[GitHub Releases](https://github.com/yoruhinot/DawAudioStreamer/releases)から行ってください。
 
 不具合や要望は[Issues](https://github.com/yoruhinot/DawAudioStreamer/issues)へお願いします。
 
@@ -90,6 +88,5 @@ macOSプレビュー版もAppleの正式な署名・公証前です。
 
 ライセンスは[LICENSE](LICENSE)、第三者ソフトウェアの表示は
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)を参照してください。
-[セキュリティとコード署名](CODE_SIGNING_POLICY.md)も確認できます。
 
 ソースからビルドする場合は[ビルド手順](docs/development.md)を参照してください。

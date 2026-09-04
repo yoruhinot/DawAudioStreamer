@@ -1,7 +1,6 @@
 const downloadButton = document.querySelector("#windows-download");
 const downloadTitle = document.querySelector("#download-title");
 const versionLabel = document.querySelector("#download-version");
-const releaseNotice = document.querySelector("#release-notice");
 const macDownloadButton = document.querySelector("#mac-download");
 const macDownloadTitle = document.querySelector("#mac-download-title");
 const macVersionLabel = document.querySelector("#mac-download-version");
@@ -36,7 +35,6 @@ fetch("https://api.github.com/repos/yoruhinot/DawAudioStreamer/releases?per_page
         ? "Windowsベータ版をダウンロード"
         : "Windows版をダウンロード";
       versionLabel.textContent = `${release.tag_name}・Windows 11・x64`;
-      if (!release.prerelease && releaseNotice) releaseNotice.hidden = true;
     }
 
     const macRelease = releases.find((item) =>

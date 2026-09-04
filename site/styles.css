@@ -122,7 +122,6 @@ h1 span::before { content: ""; position: absolute; z-index: -1; left: -.03em; ri
 .mac-download:hover { color: var(--paper); background: var(--ink); }
 .platform-facts { margin: 24px 0 0; padding: 20px 0 0 19px; color: var(--graphite); border-top: 1px solid var(--linen); font-size: 15px; line-height: 1.8; }
 .platform-facts strong { display: inline-block; min-width: 88px; color: var(--charcoal); font-size: 12px; letter-spacing: .03em; }
-.release-notice { margin: 20px 0 0; padding: 10px 12px; color: var(--charcoal); background: var(--attention-soft); border-left: 4px solid var(--attention); border-radius: 6px; font-size: 13px; line-height: 1.5; }
 .card-link { margin-top: auto; padding-top: 22px; }
 
 .setup-section { position: relative; }

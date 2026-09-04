@@ -19,7 +19,7 @@
 - 対応する仮想オーディオ出力をインストール時に確認
 - Windows用インストーラーとアンインストーラーを追加
 
-未署名のWindows x64向けベータ版です。Discordで必要な仮想出力がない場合は、セットアップから
+Windows x64向けベータ版です。Discordで必要な仮想出力がない場合は、セットアップから
 VB-CABLEの公式ページを開けます。
 
 [0.4.0-beta.1]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.0-beta.1
