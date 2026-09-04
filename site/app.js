@@ -11,8 +11,8 @@ if (pluginImageLink && window.matchMedia) {
   const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
   const updatePluginImageLink = () => {
     pluginImageLink.href = darkMode.matches
-      ? "das-send-ui-dark.png?v=20260905"
-      : "das-send-ui.png?v=20260905";
+      ? "das-send-ui-dark.png?v=20260905-2x"
+      : "das-send-ui.png?v=20260905-2x";
   };
   updatePluginImageLink();
   darkMode.addEventListener?.("change", updatePluginImageLink);

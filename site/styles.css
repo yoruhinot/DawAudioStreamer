@@ -82,12 +82,10 @@ h1 span::before { content: ""; position: absolute; z-index: -1; left: -.03em; ri
 .hero-actions { margin-top: 34px; display: flex; align-items: center; justify-content: center; gap: 22px; }
 .download-note { margin: 14px 0 0; color: var(--graphite); font-size: 13px; }
 
-.plugin-figure { max-width: 622px; margin: 72px auto 0; text-align: left; }
+.plugin-figure { max-width: 620px; margin: 72px auto 0; }
 .plugin-image-link { display: block; overflow: hidden; background: #ded5c8; border: 1px solid var(--linen); border-radius: 12px; box-shadow: 0 20px 50px rgb(0 0 0 / 12%); }
 .plugin-image-link picture, .plugin-image-link img { display: block; width: 100%; }
 .plugin-image-link img { height: auto; }
-.plugin-figure figcaption { margin-top: 13px; display: flex; justify-content: space-between; gap: 18px; color: var(--graphite); font-size: 12px; }
-.plugin-figure figcaption strong { color: var(--charcoal); }
 .wave-icon { display: flex; align-items: center; justify-content: center; gap: 2px; }
 .wave-icon i { width: 2px; border-radius: 2px; background: currentColor; }
 .wave-icon i:nth-child(1), .wave-icon i:nth-child(5) { height: 8px; }
@@ -232,7 +230,6 @@ footer a { text-underline-offset: 3px; }
   .hero-actions { align-items: stretch; flex-direction: column; }
   .primary-button { width: 100%; }
   .plugin-figure { margin-top: 54px; }
-  .plugin-figure figcaption { align-items: flex-start; flex-direction: column; gap: 4px; }
   .download-section, .setup-section, .trouble-section { padding: 72px 0; }
   .section-heading h2 { font-size: 36px; }
   .section-heading > p:last-child { font-size: 16px; }
