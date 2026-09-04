@@ -23,7 +23,7 @@ fetch("https://api.github.com/repos/yoruhinot/DawAudioStreamer/releases?per_page
       downloadTitle.textContent = release.prerelease
         ? "Windowsベータ版をダウンロード"
         : "Windows版をダウンロード";
-      versionLabel.textContent = `${release.tag_name}・Windows 11・64-bit`;
+      versionLabel.textContent = `${release.tag_name}・Windows 11・x64`;
       if (!release.prerelease && releaseNotice) releaseNotice.hidden = true;
     }
 
@@ -40,7 +40,7 @@ fetch("https://api.github.com/repos/yoruhinot/DawAudioStreamer/releases?per_page
     if (macRelease && macPackage) {
       macDownloadButton.href = macPackage.browser_download_url;
       macDownloadTitle.textContent = "macOSプレビュー版をダウンロード";
-      macVersionLabel.textContent = `${macRelease.tag_name}・Apple Silicon・macOS 13以降`;
+      macVersionLabel.textContent = `${macRelease.tag_name}・macOS 13以降・Apple Silicon`;
     }
   })
   .catch(() => {

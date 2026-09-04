@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="DawAudioStreamer — DAWの音を配信へ">
   <meta name="twitter:description" content="DAWの音声を、オーディオ設定を変えずにOBSやDiscordの画面共有へ送れます。">
   <meta name="twitter:image" content="https://yoruhinot.github.io/DawAudioStreamer/og.png">
-  <link rel="stylesheet" href="styles.css?v=20260905">
+  <link rel="stylesheet" href="styles.css?v=20260905-2">
 </head>
 <body>
   <header class="site-header">
@@ -38,7 +38,7 @@
   <main id="top">
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">WINDOWS 11 + macOS PREVIEW</p>
+        <p class="eyebrow">Windows + macOS</p>
         <h1>DAWの音を、<br><span>そのまま配信へ。</span></h1>
         <p class="lead">オーディオインターフェースの設定はそのまま。<br>DAWのマスター音声をOBSへ。WindowsではDiscordの画面共有にも送れます。</p>
         <div class="hero-actions">
@@ -67,27 +67,27 @@
 
       <div class="platform-grid">
         <article class="platform-card windows-card">
-          <div class="platform-card-header"><div><p class="platform-label">WINDOWS</p><h3>Windows 11</h3></div><span class="stage-badge">ベータ版</span></div>
+          <div class="platform-card-header"><div><p class="platform-label">OS</p><h3>Windows</h3></div><span class="stage-badge">ベータ版</span></div>
           <p class="platform-summary">OBSでの配信・録画と、Discordの画面共有に対応します。</p>
           <div class="purpose-chips" aria-label="Windows版の用途"><span class="obs-chip">OBS</span><span class="discord-chip">Discord</span></div>
           <a class="download-button" id="windows-download" href="https://github.com/yoruhinot/DawAudioStreamer/releases/download/v0.4.0-beta.3/DawAudioStreamer-Setup-0.4.0-beta.3.exe">
-            <span class="download-icon" aria-hidden="true">↓</span><span><strong id="download-title">Windowsベータ版をダウンロード</strong><small id="download-version">Windows 11・64-bit</small></span>
+            <span class="download-icon" aria-hidden="true">↓</span><span><strong id="download-title">Windowsベータ版をダウンロード</strong><small id="download-version">Windows 11・x64</small></span>
           </a>
-          <ul class="platform-facts"><li>VST3対応・64-bit DAW</li><li>OBSだけなら追加ソフト不要</li><li>DiscordではVB-CABLEが必要</li></ul>
+          <ul class="platform-facts"><li><strong>対応環境</strong>Windows 11・x64</li><li><strong>プラグイン</strong>VST3</li><li><strong>利用先</strong>OBS／Discord</li></ul>
           <p class="release-notice" id="release-notice">現在は未署名です。正式版のコード署名を申請中です。</p>
           <a class="card-link" href="#windows-setup">Windowsの手順へ <span aria-hidden="true">↓</span></a>
         </article>
 
         <article class="platform-card mac-card">
-          <div class="platform-card-header"><div><p class="platform-label">macOS</p><h3>Apple Silicon</h3></div><span class="stage-badge">プレビュー版</span></div>
+          <div class="platform-card-header"><div><p class="platform-label">OS</p><h3>macOS</h3></div><span class="stage-badge">プレビュー版</span></div>
           <p class="platform-summary">DAWの音をOBSへ送る用途向けです。Discordには通常不要です。</p>
-          <div class="purpose-chips" aria-label="macOS版の用途"><span class="obs-chip">OBS</span><span class="native-chip">Discordは標準機能</span></div>
+          <div class="purpose-chips" aria-label="macOS版の用途"><span class="obs-chip">OBS</span></div>
           <a class="download-button mac-download" id="mac-download" href="https://github.com/yoruhinot/DawAudioStreamer/releases/download/v0.4.0-macos-preview.1/DawAudioStreamer-0.4.0-macos-preview.1-macOS-AppleSilicon.zip">
-            <span class="download-icon" aria-hidden="true">↓</span><span><strong id="mac-download-title">macOSプレビュー版をダウンロード</strong><small id="mac-download-version">Apple Silicon・macOS 13以降</small></span>
+            <span class="download-icon" aria-hidden="true">↓</span><span><strong id="mac-download-title">macOSプレビュー版をダウンロード</strong><small id="mac-download-version">macOS 13以降・Apple Silicon</small></span>
           </a>
-          <ul class="platform-facts"><li>AU／VST3対応DAW</li><li>Apple Silicon・macOS 13以降</li><li>OBS用ソースを同梱</li></ul>
+          <ul class="platform-facts"><li><strong>対応環境</strong>macOS 13以降・Apple Silicon</li><li><strong>プラグイン</strong>AU／VST3</li><li><strong>利用先</strong>OBS</li></ul>
           <p class="release-notice">Appleの正式な署名・公証前です。</p>
-          <a class="card-link" href="#macos">Macの手順へ <span aria-hidden="true">↓</span></a>
+          <a class="card-link" href="#macos">macOSの手順へ <span aria-hidden="true">↓</span></a>
         </article>
       </div>
     </section>
@@ -100,19 +100,19 @@
         <div class="flow-heading"><span>1</span><div><h3>OSに合わせてインストール</h3><p>ここだけOSごとに手順が違います。</p></div></div>
         <div class="install-grid">
           <section class="install-card" id="windows-setup">
-            <p class="platform-label">WINDOWS 11</p><h4>インストーラーを実行</h4>
+            <p class="platform-label">Windows 11</p><h4>インストーラーを実行</h4>
             <p>OBS、Discord、DAWを終了してから、ダウンロードしたインストーラーを実行します。</p>
           </section>
           <section class="install-card" id="macos">
-            <p class="platform-label">macOS PREVIEW</p><h4>Install.commandを実行</h4>
+            <p class="platform-label">macOS 13以降</p><h4>Install.commandを実行</h4>
             <p>ZIPを展開し、「Install.command」をControlキーを押しながらクリックして［開く］を選びます。</p>
-            <small>Apple Silicon・macOS 13以降。署名・公証前のプレビュー版です。</small>
+            <small>対応環境：macOS 13以降・Apple Silicon。署名・公証前のプレビュー版です。</small>
           </section>
         </div>
 
-        <div class="flow-heading" id="daw"><span>2</span><div><h3>DAWのマスターに挿す</h3><p>ここからはWindows・Mac共通です。最終的な音が通る場所の最後に「DAS Send」を1個追加します。</p></div></div>
+        <div class="flow-heading" id="daw"><span>2</span><div><h3>DAWのマスターに挿す</h3><p>ここからはWindows・macOS共通です。最終的な音が通る場所の最後に「DAS Send」を1個追加します。</p></div></div>
         <div class="daw-block">
-          <div class="subheading"><h4>DAWごとの場所</h4><p>WindowsはVST3、MacはAUまたはVST3を使用できます。</p></div>
+          <div class="subheading"><h4>DAWごとの場所</h4><p>WindowsはVST3、macOSはAUまたはVST3を使用できます。</p></div>
           <div class="daw-list">
             <article class="daw-card"><header><strong>Studio One Pro 8</strong><span>動作確認済み</span></header><p>コンソールの「メイン」チャンネルにある、インサートの最後へ追加します。</p></article>
             <article class="daw-card"><header><strong>Cubase</strong><span>動作確認済み</span></header><p>MixConsoleの「Stereo Out」にある、Insertsの最後へ追加します。</p></article>
@@ -124,27 +124,27 @@
         <div class="route-choice-grid">
           <a class="route-choice obs-choice" href="#obs">
             <div class="destination-label obs-label"><span class="wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>OBS</strong></div>
-            <h4>配信・録画</h4><p>Windows・Macで同じ3手順。追加ソフトは不要です。</p><span class="route-arrow" aria-hidden="true">↓</span>
+            <h4>配信・録画</h4><p>Windows・macOSで同じ3手順。追加ソフトは不要です。</p><span class="route-arrow" aria-hidden="true">↓</span>
           </a>
           <a class="route-choice discord-choice" href="#discord">
             <div class="destination-label discord-label"><span class="share-icon" aria-hidden="true"></span><strong>DISCORD</strong></div>
-            <h4>画面共有</h4><p>WindowsではVB-CABLEを使用。Macでは通常DAS不要です。</p><span class="route-arrow" aria-hidden="true">↓</span>
+            <h4>画面共有</h4><p>WindowsではVB-CABLEを使用。macOSでは通常DAS不要です。</p><span class="route-arrow" aria-hidden="true">↓</span>
           </a>
         </div>
 
         <div class="route-details">
           <section class="destination-card obs-guide" id="obs">
-            <header class="detail-header"><div class="destination-label obs-label"><span class="wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>OBS</strong></div><span class="platform-scope">WINDOWS + macOS</span></header>
-            <h4>OBSへ送る3手順</h4><p>WindowsでもMacでも操作は同じです。</p>
+            <header class="detail-header"><div class="destination-label obs-label"><span class="wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>OBS</strong></div><span class="platform-scope">Windows + macOS</span></header>
+            <h4>OBSへ送る3手順</h4><p>WindowsでもmacOSでも操作は同じです。</p>
             <ol><li><span>1</span>OBSの「ソース」で［＋］を押す</li><li><span>2</span>「DAS Audio（DAW）」を追加</li><li><span>3</span>DAWを再生して音声ミキサーのメーターを確認</li></ol>
             <p class="result-note success-note">追加ソフトは不要です</p>
           </section>
 
           <section class="destination-card discord-guide" id="discord">
             <span class="anchor-alias" id="discord-share" aria-hidden="true"></span>
-            <header class="detail-header"><div class="destination-label discord-label"><span class="share-icon" aria-hidden="true"></span><strong>DISCORD</strong></div><span class="platform-scope">WINDOWS</span></header>
+            <header class="detail-header"><div class="destination-label discord-label"><span class="share-icon" aria-hidden="true"></span><strong>DISCORD</strong></div><span class="platform-scope">Windows</span></header>
             <h4>Discordの画面共有へ送る</h4><p>WindowsではVB-CABLEを、DAS内部の音声経路として使用します。</p>
-            <div class="native-mac-note"><strong>Macではこの設定は不要</strong><p>DAWアプリまたは画面全体を共有すれば、macOS標準機能で音声も共有できます。</p></div>
+            <div class="native-mac-note"><strong>macOSではこの設定は不要</strong><p>DAWアプリまたは画面全体を共有すれば、macOS標準機能で音声も共有できます。</p></div>
             <div id="vbcable" class="dependency-box">
               <strong>先にVB-CABLEをインストール</strong>
               <ol><li><span>1</span>公式ZIPを展開</li><li><span>2</span>「VBCABLE_Setup_x64.exe」を管理者として実行</li><li><span>3</span>［Install Driver］を押してWindowsを再起動</li></ol>
@@ -164,9 +164,9 @@
       <div class="faq-grid">
         <details><summary>DAS SendがDAWに出てこない</summary><p>DAWのVST3またはAUプラグインを再スキャンします。インストール後にDAWを再起動していない場合は、一度終了して開き直してください。</p></details>
         <details><summary>OBSにDAS Audioが出てこない</summary><p>OBSを完全に終了して開き直します。その後、「ソース」の［＋］をもう一度確認してください。</p></details>
-        <details><summary>Windows版のDiscordがVB-CABLEのまま</summary><p>VB-CABLEの64-bit版を管理者として導入し、Windowsを再起動してください。</p></details>
+        <details><summary>Windows版のDiscordがVB-CABLEのまま</summary><p>VB-CABLEのx64版を管理者として導入し、Windowsを再起動してください。</p></details>
         <details><summary>音が二重に聞こえる</summary><p>OBSでDAS Audioとデスクトップ音声の両方から、同じDAW音声を取り込んでいないか確認します。DAS Sendも1個だけにしてください。</p></details>
-        <details><summary>アンインストールしたい</summary><p>Windowsは「インストールされているアプリ」から削除します。MacはDAWとOBSを終了して「Uninstall.command」を実行します。</p></details>
+        <details><summary>アンインストールしたい</summary><p>Windowsは「インストールされているアプリ」から削除します。macOSはDAWとOBSを終了して「Uninstall.command」を実行します。</p></details>
         <details><summary>それでも解決しない</summary><p><a href="https://github.com/yoruhinot/DawAudioStreamer/issues">GitHub Issues</a>で使用OS、DAW、OBSのバージョンと症状を知らせてください。</p></details>
       </div>
     </section>
@@ -181,6 +181,6 @@
     <span class="trademark-note">OBS、Discord、VB-CABLEの公式製品ではありません。</span>
   </footer>
 
-  <script src="app.js?v=20260905" defer></script>
+  <script src="app.js?v=20260905-2" defer></script>
 </body>
 </html>
