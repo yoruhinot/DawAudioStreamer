@@ -163,6 +163,19 @@ int main(const int argc, char** argv) {
 
   juce::AudioBuffer<float> audio(2, 512);
   juce::MidiBuffer midi;
+  audio.clear();
+  audio.setSample(0, 0, 0.25F);
+  audio.setSample(1, 0, -0.25F);
+  plugin->processBlockBypassed(audio, midi);
+  if (audio.getSample(0, 0) != 0.25F || audio.getSample(1, 0) != -0.25F) {
+    std::cerr << "バイパス中にDAWへ戻す音声が変化しました\n";
+    return 13;
+  }
+  if (ring.availableToRead() != 0) {
+    std::cerr << "バイパス中に配信用音声が送信されました\n";
+    return 14;
+  }
+
   auto duplicate = format.createInstanceFromDescription(*descriptions[0], 44100.0, 512, error);
   if (!duplicate) {
     std::cerr << "2個目のDAS Sendを生成できません: " << error << '\n';

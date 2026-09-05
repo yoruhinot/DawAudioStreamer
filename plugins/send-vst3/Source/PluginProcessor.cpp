@@ -118,6 +118,7 @@ DasSendProcessor::~DasSendProcessor() {
 
 void DasSendProcessor::prepareToPlay(const double sampleRate, const int samplesPerBlock) {
   releaseResources();
+  bypassed_.store(false, std::memory_order_relaxed);
   // r8brain's internal latency scales with its maximum block size. DAWs may still
   // deliver a larger block occasionally, so processBlock chunks it safely.
   const auto maximumInputFrames = static_cast<std::size_t>(std::max(1, samplesPerBlock));
@@ -166,6 +167,7 @@ bool DasSendProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const 
 
 void DasSendProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer&) {
   juce::ScopedNoDenormals noDenormals;
+  bypassed_.store(false, std::memory_order_relaxed);
   if (!primarySender_ || (!ring_ && !obsRing_ && !discordRing_) ||
       !sampleRateSupported_.load(std::memory_order_relaxed)) return;
   const auto inputFrames = static_cast<std::size_t>(buffer.getNumSamples());
@@ -184,6 +186,12 @@ void DasSendProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Midi
     writeTransport(frames);
     offset += chunk;
   }
+}
+
+void DasSendProcessor::processBlockBypassed(juce::AudioBuffer<float>& buffer,
+                                            juce::MidiBuffer& midi) {
+  bypassed_.store(true, std::memory_order_relaxed);
+  juce::AudioProcessor::processBlockBypassed(buffer, midi);
 }
 
 void DasSendProcessor::writeTransport(const std::uint32_t frames) noexcept {

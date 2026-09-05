@@ -230,6 +230,14 @@ void DasSendEditor::timerCallback() {
     detail_.setText(text("DAS Sendは1個だけ使用してください。追加分は音を送りません。",
                          "Use one DAS Send only. Additional instances do not send audio."),
                     juce::dontSendNotification);
+  } else if (processor_.isBypassed()) {
+    obsState_ = VisualState::waiting;
+    discordState_ = VisualState::waiting;
+    updateCard(obsStatus_, text("バイパス中", "BYPASSED"), obsState_);
+    updateCard(discordStatus_, text("バイパス中", "BYPASSED"), discordState_);
+    detail_.setText(text("DAS Sendを有効にすると配信を再開します。",
+                         "Enable DAS Send to resume streaming."),
+                    juce::dontSendNotification);
   } else if (!processor_.sampleRateSupported()) {
     obsState_ = VisualState::error;
     discordState_ = VisualState::error;
