@@ -23,6 +23,7 @@ public:
   void releaseResources() override;
   bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
   void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+  void processBlockBypassed(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
   juce::AudioProcessorEditor* createEditor() override;
   bool hasEditor() const override { return true; }
   const juce::String getName() const override { return JucePlugin_Name; }
@@ -40,6 +41,7 @@ public:
   [[nodiscard]] double currentSampleRate() const noexcept { return sampleRate_.load(); }
   [[nodiscard]] bool sampleRateSupported() const noexcept { return sampleRateSupported_.load(); }
   [[nodiscard]] bool transportReady() const noexcept { return transportReady_.load(); }
+  [[nodiscard]] bool isBypassed() const noexcept { return bypassed_.load(); }
   [[nodiscard]] bool isPrimarySender() const noexcept { return primarySender_; }
   [[nodiscard]] std::uint64_t obsConsumerHeartbeat() const noexcept {
     return obsConsumerHeartbeat_.load(std::memory_order_relaxed);
@@ -64,6 +66,7 @@ private:
   std::atomic<double> sampleRate_ {48000.0};
   std::atomic<bool> sampleRateSupported_ {true};
   std::atomic<bool> transportReady_ {};
+  std::atomic<bool> bypassed_ {};
   std::atomic<std::uint64_t> obsConsumerHeartbeat_ {};
   std::atomic<std::uint64_t> engineConsumerHeartbeat_ {};
   void writeTransport(std::uint32_t frames) noexcept;
