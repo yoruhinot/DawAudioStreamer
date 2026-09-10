@@ -5,6 +5,13 @@ on:
   pull_request:
     branches:
       - main
+  workflow_call:
+    inputs:
+      version:
+        description: Version string used in the package name
+        type: string
+        required: false
+        default: "0.4.1-macos-preview.1"
 
 concurrency:
   group: macos-preview-${{ github.event.pull_request.number || github.ref }}
@@ -13,14 +20,13 @@ concurrency:
 permissions:
   contents: read
 
-env:
-  DAS_VERSION: "0.4.1-macos-preview.1"
-
 jobs:
   build:
     name: macOS preview (${{ matrix.label }})
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 60
+    env:
+      DAS_VERSION: ${{ inputs.version || '0.4.1-macos-preview.1' }}
     strategy:
       fail-fast: false
       matrix:

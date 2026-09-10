@@ -1,0 +1,93 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - id: v
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+  macos:
+    needs: version
+    uses: ./.github/workflows/macos-preview.yml
+    with:
+      version: ${{ needs.version.outputs.version }}
+
+  windows:
+    needs: version
+    runs-on: windows-2025
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Configure
+        run: >-
+          cmake --preset windows-msvc-release
+          -DDAS_ISCC_EXECUTABLE="C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+
+      - name: Build installer
+        run: cmake --build build/windows-msvc-release --config Release --target das_installer
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v6
+        with:
+          name: windows-installer
+          path: build/installer/*.exe
+          if-no-files-found: error
+
+  publish:
+    needs: [version, macos, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v6
+        with:
+          path: artifacts
+
+      - name: Build release notes
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v h="## [$version]" '
+            index($0, h) == 1 { flag = 1; next }
+            /^## \[/ && flag { exit }
+            flag && /^\[[^]]+\]: *https?:/ { next }
+            flag { print }
+          ' CHANGELOG.md | sed -e '/./,$!d' > notes.md
+          prev=$(git describe --tags --abbrev=0 "${GITHUB_REF_NAME}^" 2>/dev/null || true)
+          if [ -n "$prev" ]; then
+            printf '\n**Full Changelog**: %s/%s/compare/%s...%s\n' \
+              "${GITHUB_SERVER_URL}" "${GITHUB_REPOSITORY}" "$prev" "$GITHUB_REF_NAME" >> notes.md
+          fi
+          [ -s notes.md ] || echo "Release $GITHUB_REF_NAME" > notes.md
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          prerelease=""
+          case "$GITHUB_REF_NAME" in *-*) prerelease="--prerelease" ;; esac
+          files=$(find artifacts -type f \( -name '*.exe' -o -name '*.zip' \))
+          gh release create "$GITHUB_REF_NAME" \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file notes.md \
+            $prerelease \
+            $files
