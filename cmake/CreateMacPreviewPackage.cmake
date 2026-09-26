@@ -20,7 +20,8 @@ if(NOT DEFINED DAS_ARCH_LABEL OR "${DAS_ARCH_LABEL}" STREQUAL "")
 endif()
 set(package_name "DawAudioStreamer-${DAS_VERSION}-macOS-${DAS_ARCH_LABEL}")
 set(package_root "${output_root}/${package_name}")
-set(payload_root "${package_root}/payload")
+set(setup_app "${package_root}/DawAudioStreamer Setup.app")
+set(payload_root "${setup_app}/Contents/Resources/payload")
 
 string(FIND "${package_root}" "${output_root}/" package_is_inside)
 if(NOT package_is_inside EQUAL 0)
@@ -40,16 +41,31 @@ file(REMOVE_RECURSE "${package_root}")
 file(MAKE_DIRECTORY "${payload_root}" "${package_root}/licenses")
 file(COPY "${vst3}" "${au}" "${obs}" DESTINATION "${payload_root}")
 file(COPY
-  "${source_root}/installer/macos/Install.command"
-  "${source_root}/installer/macos/Uninstall.command"
-  "${source_root}/installer/macos/Language.zsh"
   "${source_root}/installer/macos/README-macOS.txt"
   DESTINATION "${package_root}")
-file(CHMOD
-  "${package_root}/Install.command"
-  "${package_root}/Uninstall.command"
-  PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE
-              WORLD_READ WORLD_EXECUTE)
+file(MAKE_DIRECTORY "${setup_app}/Contents/MacOS")
+if(NOT DAS_VERSION MATCHES "^([0-9]+\\.[0-9]+\\.[0-9]+)")
+  message(FATAL_ERROR "DAS_VERSION must start with a numeric x.y.z version")
+endif()
+set(DAS_SETUP_VERSION "${CMAKE_MATCH_1}")
+configure_file("${source_root}/installer/macos/Setup-Info.plist.in"
+               "${setup_app}/Contents/Info.plist" @ONLY)
+if(DAS_ARCH_LABEL STREQUAL "AppleSilicon")
+  set(setup_arch arm64)
+elseif(DAS_ARCH_LABEL STREQUAL "Intel")
+  set(setup_arch x86_64)
+else()
+  message(FATAL_ERROR "Unsupported setup architecture: ${DAS_ARCH_LABEL}")
+endif()
+execute_process(COMMAND /usr/bin/xcrun swiftc -swift-version 5 -O
+  -target "${setup_arch}-apple-macosx13.0" -framework AppKit
+  "${source_root}/installer/macos/SetupCore.swift"
+  "${source_root}/installer/macos/SetupApp.swift"
+  -o "${setup_app}/Contents/MacOS/DASSetup"
+  RESULT_VARIABLE setup_build_result)
+if(NOT setup_build_result EQUAL 0)
+  message(FATAL_ERROR "Failed to build macOS Setup app")
+endif()
 file(CHMOD
   "${payload_root}/DAS Send.vst3/Contents/MacOS/DAS Send"
   "${payload_root}/DAS Send.component/Contents/MacOS/DAS Send"
@@ -92,7 +108,8 @@ file(WRITE "${package_root}/SOURCE.txt"
 foreach(bundle
     "${payload_root}/DAS Send.vst3"
     "${payload_root}/DAS Send.component"
-    "${payload_root}/das-obs-source.plugin")
+    "${payload_root}/das-obs-source.plugin"
+    "${setup_app}")
   execute_process(COMMAND /usr/bin/codesign --force --deep --sign - "${bundle}"
                   RESULT_VARIABLE sign_result)
   if(NOT sign_result EQUAL 0)

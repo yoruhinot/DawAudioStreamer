@@ -15,9 +15,8 @@ First-time setup
 
 Windows may show a security warning during installation.
 
-The installer checks for VB-CABLE for Discord. If none is found, OBS
-still works fine. For Discord support, install the driver from the VB-CABLE
-page that opens at the end of setup. DawAudioStreamer itself does not install
+After installation, follow either OBS or Discord below.
+OBS does not need VB-CABLE. DawAudioStreamer itself does not install
 third-party drivers or change Windows default audio settings.
 
 OBS
@@ -25,16 +24,21 @@ OBS
 
 1. In OBS, click [+] under Sources.
 2. Add DAS Audio (DAW).
-3. Play something in your DAW — if the OBS audio meter moves, you're done.
+3. Play audio in your DAW, check the OBS audio meter and listen to a short recording.
+
+No source settings are needed. Older versions may say "No properties available"; this is normal.
 
 Discord
 -------
+
+First install VB-CABLE and restart Windows. Setup guide:
+https://yoruhinot.github.io/DawAudioStreamer/en/?lang=en#vbcable
 
 1. Confirm the Discord indicator in DAS Send shows a green "OK".
 2. In Discord, open Share Screen.
 3. To share your DAW only, choose your DAW application under Apps.
 4. To include VST windows or other windows, choose your monitor under Screen.
-5. Start sharing.
+5. Start sharing and ask a viewer to confirm they can hear the audio.
 
 There are no extra modes or companion apps in DAS Send. If a full-screen share
 picks up audio from other Windows apps, switching to the DAW application share
@@ -44,7 +48,8 @@ Status display
 --------------
 
 Green "OK"
-  Working — OBS is receiving audio.
+  OBS is connected; the Discord audio path is ready for screen sharing.
+  This does not guarantee that a stream or viewer can hear the audio.
 
 Gray "WAIT"
   Add DAS Audio (DAW) as a source in OBS.

@@ -146,3 +146,44 @@ test('Each language uses its own walkthrough video and poster', () => {
     assert.ok(fs.statSync(path.join(site, poster)).size > 0);
   }
 });
+
+test('Setup keeps one common OBS route and localized Mac recovery guidance', () => {
+  for (const filename of ['index.html', 'en/index.html']) {
+    const html = fs.readFileSync(path.join(site, filename), 'utf8');
+    assert.equal((html.match(/id="obs"/g) || []).length, 1);
+    assert.equal((html.match(/id="macos-help"/g) || []).length, 1);
+    assert.ok(html.includes('DawAudioStreamer Setup.app'));
+    assert.ok(html.includes('href="#macos-help"'));
+    assert.match(html, /https:\/\/support\.apple\.com\/(?:ja-jp\/)?102445/);
+    assert.match(html, /No properties available|有効なプロパティがありません/);
+    assert.match(html, /short recording|短い録画/);
+    assert.match(html, /Older ZIPs|旧版のZIP/);
+  }
+});
+
+test('A direct link and a repeated help click both expand the FAQ', () => {
+  const help = { open: false };
+  const events = {};
+  let click;
+  const location = { hash: '#macos-help' };
+  vm.runInNewContext(appCode, {
+    document: {
+      documentElement: { lang: 'en' },
+      querySelector: selector => selector === '#macos-help' ? help : null,
+      querySelectorAll: () => [{ addEventListener: (_, fn) => { click = fn; } }]
+    },
+    window: { location, addEventListener: (event, fn) => { events[event] = fn; } },
+    fetch: async () => { throw Error('offline'); }
+  });
+  assert.equal(help.open, true);
+  help.open = false;
+  click();
+  assert.equal(help.open, true);
+  help.open = false;
+  location.hash = '#obs';
+  events.hashchange();
+  assert.equal(help.open, false);
+  location.hash = '#macos-help';
+  events.hashchange();
+  assert.equal(help.open, true);
+});

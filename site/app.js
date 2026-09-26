@@ -5,6 +5,19 @@ const macPicker = document.querySelector("#mac-download");
 const macDownloadArm = document.querySelector("#mac-download-arm");
 const macDownloadIntel = document.querySelector("#mac-download-intel");
 
+// A troubleshooting link should reveal the answer, not just a collapsed heading.
+const macHelp = document.querySelector("#macos-help");
+if (macHelp) {
+  const revealMacHelp = () => {
+    if (window.location.hash === "#macos-help") macHelp.open = true;
+  };
+  window.addEventListener("hashchange", revealMacHelp);
+  document.querySelectorAll('a[href="#macos-help"]').forEach(link => {
+    link.addEventListener("click", () => { macHelp.open = true; });
+  });
+  revealMacHelp();
+}
+
 if (macPicker) {
   document.addEventListener("click", (event) => {
     if (macPicker.open && !macPicker.contains(event.target)) macPicker.open = false;

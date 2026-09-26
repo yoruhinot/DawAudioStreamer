@@ -31,7 +31,7 @@
   <meta name="twitter:description" content="DAW audio to OBS. Discord screen share on Windows too. No changes to your audio interface.">
   <meta name="twitter:image" content="https://yoruhinot.github.io/DawAudioStreamer/og.png?v=20260908">
   <meta name="twitter:image:alt" content="DawAudioStreamer — Stream your DAW audio straight to OBS / Discord">
-  <link rel="stylesheet" href="../styles.css?v=20260910-i18n">
+  <link rel="stylesheet" href="../styles.css?v=20260927-setup">
 </head>
 <body>
   <header class="site-header">
@@ -133,9 +133,9 @@
             <p>Close OBS, Discord, and your DAW, then run the downloaded installer.</p>
           </section>
           <section class="install-card" id="macos">
-            <p class="platform-label">macOS 13+</p><h4>Run Install.command</h4>
-            <p>Extract the ZIP, then Ctrl-click "Install.command" and choose Open.</p>
-            <small>Requires macOS 13+ · Intel or Apple Silicon.</small>
+            <p class="platform-label">macOS 13+</p><h4>Open Setup</h4>
+            <p>Extract the ZIP and close your DAW and OBS. Open “DawAudioStreamer Setup.app”, click Install / Update and wait for completion.</p>
+            <small><a href="#macos-help">Can't open or install?</a> · Older ZIPs use “Install.command”.</small>
           </section>
         </div>
 
@@ -166,8 +166,8 @@
           <section class="destination-card obs-guide" id="obs">
             <header class="detail-header"><div class="destination-label obs-label"><span class="wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>OBS</strong></div><span class="platform-scope">Windows + macOS</span></header>
             <h4>3 steps to OBS</h4><p>Same on Windows and macOS.</p>
-            <ol><li><span>1</span>Click + under Sources in OBS</li><li><span>2</span>Add DAS Audio (DAW)</li><li><span>3</span>Play your DAW and check the OBS audio meter</li></ol>
-            <p class="result-note success-note">No extra software needed</p>
+            <ol><li><span>1</span>Click + under Sources in OBS</li><li><span>2</span>Add DAS Audio (DAW) — no settings needed</li><li><span>3</span>Play audio, check the meter and a short recording</li></ol>
+            <p class="result-note success-note">No VB-CABLE or other extra software needed</p>
           </section>
 
           <section class="destination-card discord-guide" id="discord">
@@ -180,7 +180,7 @@
               <ol><li><span>1</span>Extract the official ZIP</li><li><span>2</span>Run "VBCABLE_Setup_x64.exe" as administrator</li><li><span>3</span>Click Install Driver and restart Windows</li></ol>
               <a class="secondary-button" href="https://vb-audio.com/Cable/">VB-CABLE official site <span aria-hidden="true">↗</span></a>
             </div>
-            <ol class="discord-final-steps"><li><span>4</span>Confirm DAS Send shows a green OK</li><li><span>5</span>Share your DAW or full screen in Discord</li></ol>
+            <ol class="discord-final-steps"><li><span>4</span>Check the Discord indicator in DAS Send shows a green OK</li><li><span>5</span>Share your DAW or full screen in Discord and ask a viewer to check the audio</li></ol>
             <div class="important-note"><strong>Don't touch these settings</strong><p>Do not set "CABLE Input" as your DAW output or Discord microphone. DAS uses it internally.</p></div>
           </section>
         </div>
@@ -192,11 +192,13 @@
     <section class="trouble-section" id="trouble">
       <div class="section-heading"><p class="eyebrow">TROUBLESHOOTING</p><h2>Troubleshooting</h2><p>Open only the item that applies to you.</p></div>
       <div class="faq-grid">
+        <details id="macos-help"><summary>Can't open or install Setup on Mac</summary><p>After trying to open it, go to System Settings → Privacy &amp; Security → Open Anyway → Open. Only do this for your trusted official download. Do not bypass malware or damaged-app warnings; contact support instead. <a href="https://support.apple.com/102445">Apple's guide</a></p><p>For write-access errors, use Show in Finder, then Get Info → Sharing &amp; Permissions on the affected folder. Ask your Mac's administrator if you cannot change access. Setup does not change permissions.</p><p>For missing files, download and fully extract the ZIP again. If recovery files remain, do not delete them; use Copy details and contact support. Wait for “Installation complete” before continuing to your DAW and OBS.</p><p>Older Install.command versions ask for a language: press Enter to use the default. Terminal's “Process completed” does not mean installation succeeded. Look for the script's own installation-complete message.</p></details>
+        <details><summary>OBS says “No properties available”</summary><p>Older versions show this because the source needs no settings. It is normal. Close the dialog, insert one DAS Send on your DAW master, then play audio and check the OBS meter and a short recording.</p></details>
         <details><summary>DAS Send doesn't appear in my DAW</summary><p>Rescan VST3 or AU plugins in your DAW. If you haven't restarted your DAW since installing, close and reopen it.</p></details>
         <details><summary>DAS Audio doesn't appear in OBS</summary><p>Fully close and reopen OBS, then check + under Sources again.</p><p>Older OBS versions may not show DAS Audio. If it's missing, update OBS to the latest version and try again.</p></details>
         <details><summary>Discord on Windows is stuck on VB-CABLE</summary><p>Install the x64 version of VB-CABLE as administrator and restart Windows.</p></details>
         <details><summary>I hear doubled audio</summary><p>Check that you're not capturing the same DAW audio through both DAS Audio and Desktop Audio in OBS. Also make sure there's only one DAS Send instance.</p></details>
-        <details><summary>I want to uninstall</summary><p>On Windows, remove it from Installed apps in Windows Settings. On macOS, close your DAW and OBS and run "Uninstall.command".</p></details>
+        <details><summary>I want to uninstall</summary><p>On Windows, remove it from Installed apps in Windows Settings. On macOS, close your DAW and OBS, choose Uninstall in Setup.app and wait for completion. DAW projects and OBS scenes are kept. Older ZIPs use “Uninstall.command”.</p></details>
         <details><summary>Still not working</summary><p>For bugs or requests, reach out on <a href="https://x.com/yoruhinot">X (@yoruhinot)</a> or <a href="https://github.com/yoruhinot/DawAudioStreamer/issues">GitHub Issues</a>. Include your OS, DAW, and OBS version along with a description of the problem.</p></details>
       </div>
     </section>
@@ -210,6 +212,6 @@
     <span class="trademark-note">Not affiliated with OBS, Discord, or VB-CABLE.</span>
   </footer>
 
-  <script src="../app.js?v=20260910-mac" defer></script>
+  <script src="../app.js?v=20260927-setup" defer></script>
 </body>
 </html>

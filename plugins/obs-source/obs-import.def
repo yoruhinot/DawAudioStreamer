@@ -2,6 +2,8 @@ LIBRARY obs
 EXPORTS
   obs_register_source_s
   obs_source_output_audio
+  obs_properties_create
+  obs_properties_add_text
   obs_module_load_locale
   os_gettime_ns
   text_lookup_destroy

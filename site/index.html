@@ -29,7 +29,7 @@
   <meta name="twitter:description" content="DAWの音をOBSへ。WindowsではDiscordの画面共有にも。オーディオインターフェースの設定はそのまま。">
   <meta name="twitter:image" content="https://yoruhinot.github.io/DawAudioStreamer/og.png?v=20260908">
   <meta name="twitter:image:alt" content="DawAudioStreamer — DAWの音を、そのまま配信へ。OBS / Discord">
-  <link rel="stylesheet" href="styles.css?v=20260910-i18n">
+  <link rel="stylesheet" href="styles.css?v=20260927-setup">
 </head>
 <body>
   <header class="site-header">
@@ -131,9 +131,9 @@
             <p>OBS、Discord、DAWを終了してから、ダウンロードしたインストーラーを実行します。</p>
           </section>
           <section class="install-card" id="macos">
-            <p class="platform-label">macOS 13以降</p><h4>Install.commandを実行</h4>
-            <p>ZIPを展開し、「Install.command」をControlキーを押しながらクリックして［開く］を選びます。</p>
-            <small>対応環境：macOS 13以降・Intel／Apple Silicon。</small>
+            <p class="platform-label">macOS 13以降</p><h4>Setupを開く</h4>
+            <p>ZIPを展開し、DAWとOBSを終了。「DawAudioStreamer Setup.app」で［インストール / 更新］を押し、完了を確認します。</p>
+            <small><a href="#macos-help">開けない・インストールできない場合</a> · 旧版のZIPは「Install.command」を開きます。</small>
           </section>
         </div>
 
@@ -164,8 +164,8 @@
           <section class="destination-card obs-guide" id="obs">
             <header class="detail-header"><div class="destination-label obs-label"><span class="wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>OBS</strong></div><span class="platform-scope">Windows + macOS</span></header>
             <h4>OBSへ送る3手順</h4><p>WindowsでもmacOSでも操作は同じです。</p>
-            <ol><li><span>1</span>OBSの「ソース」で［＋］を押す</li><li><span>2</span>「DAS Audio（DAW）」を追加</li><li><span>3</span>DAWを再生して音声ミキサーのメーターを確認</li></ol>
-            <p class="result-note success-note">追加ソフトは不要です</p>
+            <ol><li><span>1</span>OBSの「ソース」で［＋］を押す</li><li><span>2</span>「DAS Audio（DAW）」を追加（設定不要）</li><li><span>3</span>DAWを再生し、メーターと短い録画で音を確認</li></ol>
+            <p class="result-note success-note">VB-CABLEなどの追加ソフトは不要です</p>
           </section>
 
           <section class="destination-card discord-guide" id="discord">
@@ -178,7 +178,7 @@
               <ol><li><span>1</span>公式ZIPを展開</li><li><span>2</span>「VBCABLE_Setup_x64.exe」を管理者として実行</li><li><span>3</span>［Install Driver］を押してWindowsを再起動</li></ol>
               <a class="secondary-button" href="https://vb-audio.com/Cable/">VB-CABLE公式サイト <span aria-hidden="true">↗</span></a>
             </div>
-            <ol class="discord-final-steps"><li><span>4</span>DAS Sendが緑の「OK」になることを確認</li><li><span>5</span>DiscordでDAWまたは画面全体を共有</li></ol>
+            <ol class="discord-final-steps"><li><span>4</span>DAS SendのDiscord欄が緑の「OK」になることを確認</li><li><span>5</span>DiscordでDAWまたは画面全体を共有し、視聴側で音を確認</li></ol>
             <div class="important-note"><strong>設定は変えません</strong><p>「CABLE Input」をDAWの出力やDiscordのマイクに選ばないでください。DASが内部で使用します。</p></div>
           </section>
         </div>
@@ -190,11 +190,13 @@
     <section class="trouble-section" id="trouble">
       <div class="section-heading"><p class="eyebrow">TROUBLESHOOTING</p><h2>うまくいかないとき</h2><p>該当する項目だけ開いて確認してください。</p></div>
       <div class="faq-grid">
+        <details id="macos-help"><summary>MacでSetupを開けない・インストールできない</summary><p>開こうとしてブロックされた場合は、［システム設定］→［プライバシーとセキュリティ］→［このまま開く］→［開く］へ進みます。信頼できる公式配布物に限る手順です。マルウェア検出・破損の警告なら続行せずご相談ください。<a href="https://support.apple.com/ja-jp/102445">Appleの案内</a></p><p>書き込み権限のエラーは［Finderで表示］から対象フォルダの［情報を見る］→［共有とアクセス権］を確認。変更できない場合はMacの管理者へ相談してください。Setupが権限を変更することはありません。</p><p>ファイル不足ならZIPを再ダウンロードして全体を展開。復旧ファイルの案内が出た場合は削除せず、［詳細をコピー］してサポートへお知らせください。［インストール完了］を確認してからDAWとOBSへ進みます。</p><p>旧版のInstall.commandでは、言語選択でEnterを押すと既定の言語で進みます。Terminalの［プロセスが完了しました］は成功の表示ではありません。スクリプト自身の完了メッセージを確認してください。</p></details>
+        <details><summary>OBSに「有効なプロパティがありません」と出る</summary><p>旧版では設定項目がないため表示されます。故障ではありません。そのまま画面を閉じ、DAWのマスターにDAS Sendを1個追加してください。DAWを再生し、OBSのメーターと短い録画で音を確認します。</p></details>
         <details><summary>DAS SendがDAWに出てこない</summary><p>DAWのVST3またはAUプラグインを再スキャンします。インストール後にDAWを再起動していない場合は、一度終了して開き直してください。</p></details>
         <details><summary>OBSにDAS Audioが出てこない</summary><p>OBSを完全に終了して開き直し、「ソース」の［＋］をもう一度確認してください。</p><p>OBSのバージョンが古いと、DAS Audioが表示されない場合があります。表示されない場合は、OBSを最新版に更新して試してください。</p></details>
         <details><summary>Windows版のDiscordがVB-CABLEのまま</summary><p>VB-CABLEのx64版を管理者として導入し、Windowsを再起動してください。</p></details>
         <details><summary>音が二重に聞こえる</summary><p>OBSでDAS Audioとデスクトップ音声の両方から、同じDAW音声を取り込んでいないか確認します。DAS Sendも1個だけにしてください。</p></details>
-        <details><summary>アンインストールしたい</summary><p>Windowsは「インストールされているアプリ」から削除します。macOSはDAWとOBSを終了して「Uninstall.command」を実行します。</p></details>
+        <details><summary>アンインストールしたい</summary><p>Windowsは「インストールされているアプリ」から削除します。macOSはDAWとOBSを終了し、Setup.appの［アンインストール］を選び、完了を確認してください。DAWプロジェクト・OBSシーンは残ります。旧版のZIPでは「Uninstall.command」を使用します。</p></details>
         <details><summary>それでも解決しない</summary><p>不具合や要望は<a href="https://x.com/yoruhinot">X（@yoruhinot）</a>または<a href="https://github.com/yoruhinot/DawAudioStreamer/issues">GitHub Issues</a>へ。使用OS、DAW、OBSのバージョンと症状を添えてください。</p></details>
       </div>
     </section>
@@ -208,6 +210,6 @@
     <span class="trademark-note">OBS、Discord、VB-CABLEの公式製品ではありません。</span>
   </footer>
 
-  <script src="app.js?v=20260910-mac" defer></script>
+  <script src="app.js?v=20260927-setup" defer></script>
 </body>
 </html>

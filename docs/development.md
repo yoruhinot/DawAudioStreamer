@@ -44,6 +44,10 @@ cmake --build --preset macos-preview-intel
 ctest --preset macos-preview-intel
 ```
 
-The distributable ZIP is built by `cmake/CreateMacPreviewPackage.cmake` (see the `macos-preview` CI workflow for the exact invocation); it bundles the plugins with `Install.command` / `Uninstall.command`, ad-hoc signed. CI builds both arches on native runners.
+The distributable ZIP is built by `cmake/CreateMacPreviewPackage.cmake` (see the `macos-preview` CI workflow for the exact invocation). It compiles the Swift/AppKit Setup app with the native Xcode toolchain and embeds the three plugins. Bundles and the outer app are ad-hoc signed, not Developer ID signed or notarized. CI builds both arches on native runners and tests installation, rollback and removal in temporary homes, including the extracted ZIP's actual payload.
+
+Run the isolated installer tests on macOS with `swiftc -swift-version 5 installer/macos/SetupCore.swift tests/macos_setup_tests.swift -o /tmp/das-setup-tests` then `/tmp/das-setup-tests`. Do not run as root. The tests never install into your real Library.
+
+Before publishing the new package and site together, test a browser-downloaded ZIP on a Mac: Gatekeeper approval, Japanese/English setup windows, plugin scanning in a DAW, OBS source creation, reinstall and uninstall. File copying preserves quarantine; Setup never removes it, changes permissions, or elevates privileges. A successful file installation does not prove the host will allow a quarantined plugin to load. Test that boundary explicitly before release. Power loss or failed rollback leaves labeled recovery folders and blocks further changes; do not delete recovery files before inspecting them.
 
 Dependencies and their pinned revisions are listed in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). The release source ZIP includes offline-rebuildable dependency sources.
