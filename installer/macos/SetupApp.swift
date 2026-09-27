@@ -51,9 +51,11 @@ final class SetupApp: NSObject, NSApplicationDelegate {
         language = NSSegmentedControl(labels: ["日本語", "English"], trackingMode: .selectOne, target: self, action: #selector(changeLanguage))
         language.selectedSegment = japanese ? 0 : 1
         stack.addArrangedSubview(language)
-        titleLabel = NSTextField(labelWithString: "")
+        titleLabel = NSTextField(wrappingLabelWithString: "")
         titleLabel.font = .boldSystemFont(ofSize: 23)
+        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         stack.addArrangedSubview(titleLabel)
+        titleLabel.widthAnchor.constraint(equalTo: stack.widthAnchor).isActive = true
         body = NSTextField(wrappingLabelWithString: "")
         body.font = .systemFont(ofSize: 14)
         body.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -81,7 +83,7 @@ final class SetupApp: NSObject, NSApplicationDelegate {
 
     @objc private func changeLanguage() { japanese = language.selectedSegment == 0; refresh() }
     private func refresh() {
-        titleLabel.stringValue = t("DASをこのMacに追加", "Add DAS to this Mac")
+        titleLabel.stringValue = t("DawAudioStreamerをこのMacに追加", "Add DawAudioStreamer to this Mac")
         body.stringValue = t("DAWとOBSを終了してから進めてください。\n\nこのユーザーにVST3・AU・OBSプラグインをインストールします。音声デバイスやDAWの設定は変更しません。",
                              "Close your DAW and OBS before continuing.\n\nInstall VST3, AU and OBS plugins for this user. Audio devices and DAW settings are not changed.")
         installButton.title = t("インストール / 更新", "Install / Update")
@@ -94,7 +96,7 @@ final class SetupApp: NSObject, NSApplicationDelegate {
     @objc private func install() { run(install: true) }
     @objc private func uninstall() {
         let alert = NSAlert()
-        alert.messageText = t("DASをアンインストールしますか？", "Uninstall DAS?")
+        alert.messageText = t("DawAudioStreamerをアンインストールしますか？", "Uninstall DawAudioStreamer?")
         alert.informativeText = t("このユーザーのDAS Send（VST3・AU）とDAS Audio（OBS）だけを削除します。DAWプロジェクト・OBSシーンは残ります。DAWとOBSを終了してください。",
                                  "Remove only this user's DAS Send (VST3 / AU) and DAS Audio (OBS). DAW projects and OBS scenes are kept. Close your DAW and OBS first.")
         alert.addButton(withTitle: t("キャンセル", "Cancel"))
@@ -162,10 +164,10 @@ final class SetupApp: NSObject, NSApplicationDelegate {
     private func showSuccess(install: Bool, warnings: [String]) {
         titleLabel.stringValue = install ? t("インストール完了", "Installation complete") : t("アンインストール完了", "Uninstall complete")
         body.stringValue = install
-            ? t("DAWとOBSを開き直してください。\n1. DAWのマスターの最後にDAS Sendを1個追加。\n2. OBSのソースにDAS Audio（DAW）を追加。\n3. DAWを再生し、メーターと短い録画で音を確認。\n\nDAWに出ない場合は、プラグインを再スキャンしてください。",
-                "Reopen your DAW and OBS.\n1. Insert one DAS Send at the end of the DAW master.\n2. Add DAS Audio (DAW) in OBS Sources.\n3. Play audio, check the meter and a short recording.\n\nIf missing in your DAW, rescan plugins.")
-            : t("DASのプラグインを削除しました。\nDAWプロジェクト・OBSシーンは変更していません。\nSetupアプリは不要ならゴミ箱へ移動できます。",
-                "DAS plugins have been removed.\nDAW projects and OBS scenes were not changed.\nYou can move the Setup app to Trash if no longer needed.")
+            ? t("DAWとOBSを開き直してください。\n1. DAWのマスターの最後にDAS Sendを1個追加。\n2. OBSのソースにDAS Audio（DAW）を追加。\n3. DAWを再生し、OBSの音声ミキサーや録画などで音を確認。\n\nDAWに出ない場合は、プラグインを再スキャンしてください。",
+                "Reopen your DAW and OBS.\n1. Insert one DAS Send at the end of the DAW master.\n2. Add DAS Audio (DAW) in OBS Sources.\n3. Play audio and check the OBS audio mixer or a recording.\n\nIf missing in your DAW, rescan plugins.")
+            : t("DawAudioStreamerのプラグインを削除しました。\nDAWプロジェクト・OBSシーンは変更していません。\nSetupアプリは不要ならゴミ箱へ移動できます。",
+                "DawAudioStreamer plugins have been removed.\nDAW projects and OBS scenes were not changed.\nYou can move the Setup app to Trash if no longer needed.")
         if !warnings.isEmpty {
             let alert = NSAlert()
             alert.alertStyle = .warning

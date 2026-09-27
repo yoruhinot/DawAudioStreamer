@@ -24,7 +24,7 @@ OBS
 
 1. In OBS, click [+] under Sources.
 2. Add DAS Audio (DAW).
-3. Play audio in your DAW, check the OBS audio meter and listen to a short recording.
+3. Play audio in your DAW and check the OBS audio mixer or a recording.
 
 No source settings are needed. Older versions may say "No properties available"; this is normal.
 

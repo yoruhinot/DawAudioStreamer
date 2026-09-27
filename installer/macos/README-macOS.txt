@@ -2,12 +2,14 @@ DawAudioStreamer — macOS
 =======================
 macOS 13+ · Intel or Apple Silicon (download the ZIP for your Mac)
 
+日本語の手順は、このファイルの後半にあります。
+
 1. Extract the entire ZIP and close your DAW and OBS.
 2. Open DawAudioStreamer Setup.app and click Install / Update.
 3. Wait for “Installation complete”, then reopen your DAW and OBS.
 4. Insert one DAS Send at the end of your DAW master.
 5. In OBS Sources, add DAS Audio (DAW). No source settings are needed.
-6. Play audio, check the OBS meter and listen to a short recording.
+6. Play audio and check the OBS audio mixer or a recording.
 
 Setup follows your Mac's language; 日本語 / English switches it.
 Keep Setup.app to update or uninstall later. No Terminal commands are needed.
@@ -64,7 +66,7 @@ macOS 13以降 · Intel／Apple Silicon（お使いのMacに合うZIPを選ん�
 3. ［インストール完了］を確認してからDAWとOBSを開き直します。
 4. DAWのマスターの最後にDAS Sendを1個挿します。
 5. OBSのソースへDAS Audio（DAW）を追加します。ソースの設定は不要です。
-6. DAWを再生し、OBSのメーターと短い録画で音を確認します。
+6. DAWを再生し、OBSの音声ミキサーや録画などで音を確認します。
 
 言語はMacの設定に合わせて自動選択されます。日本語／Englishで変更できます。
 更新・削除にも使うのでSetup.appを残しておいてください。Terminal操作は不要です。

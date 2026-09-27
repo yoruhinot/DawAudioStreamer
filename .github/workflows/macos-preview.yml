@@ -86,7 +86,7 @@ jobs:
             -DDAS_ARCH_LABEL=${{ matrix.label }} \
             -P cmake/CreateMacPreviewPackage.cmake
           package=build/dist/DawAudioStreamer-${{ env.DAS_VERSION }}-macOS-${{ matrix.label }}
-          test -f "$package/README-macOS.txt"
+          test -f "$package/README_はじめにお読みください.txt"
           app="$package/DawAudioStreamer Setup.app"
           payload="$app/Contents/Resources/payload"
           test -x "$app/Contents/MacOS/DASSetup"
@@ -99,6 +99,7 @@ jobs:
             /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$bundle/Contents/Info.plist" | grep -Fx '0.4.2'
           done
           ditto -x -k "$package.zip" build/setup-archive-check
+          cmp installer/macos/README-macOS.txt "build/setup-archive-check/$(basename "$package")/README_はじめにお読みください.txt"
           codesign --verify --deep --strict "build/setup-archive-check/$(basename "$package")/DawAudioStreamer Setup.app"
           build/setup-tests/test-setup "build/setup-archive-check/$(basename "$package")/DawAudioStreamer Setup.app/Contents/Resources/payload"
 

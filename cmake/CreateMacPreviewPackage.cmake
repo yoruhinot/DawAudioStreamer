@@ -40,9 +40,9 @@ endforeach()
 file(REMOVE_RECURSE "${package_root}")
 file(MAKE_DIRECTORY "${payload_root}" "${package_root}/licenses")
 file(COPY "${vst3}" "${au}" "${obs}" DESTINATION "${payload_root}")
-file(COPY
+configure_file(
   "${source_root}/installer/macos/README-macOS.txt"
-  DESTINATION "${package_root}")
+  "${package_root}/README_はじめにお読みください.txt" COPYONLY)
 file(MAKE_DIRECTORY "${setup_app}/Contents/MacOS")
 if(NOT DAS_VERSION MATCHES "^([0-9]+\\.[0-9]+\\.[0-9]+)")
   message(FATAL_ERROR "DAS_VERSION must start with a numeric x.y.z version")

@@ -32,7 +32,7 @@ If macOS blocks opening Setup, see the [Mac setup help](https://yoruhinot.github
 
 1. In OBS, click **+** under Sources.
 2. Add **DAS Audio (DAW)** — no settings needed. “No properties available” in older versions is normal.
-3. Play audio, check the OBS meter and listen to a short recording.
+3. Play audio and check the OBS audio mixer or a recording.
 
 ### 3. Discord
 

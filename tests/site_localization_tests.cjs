@@ -156,7 +156,7 @@ test('Setup keeps one common OBS route and localized Mac recovery guidance', () 
     assert.ok(html.includes('href="#macos-help"'));
     assert.match(html, /https:\/\/support\.apple\.com\/(?:ja-jp\/)?102445/);
     assert.match(html, /No properties available|有効なプロパティがありません/);
-    assert.match(html, /short recording|短い録画/);
+    assert.match(html, /audio mixer or a recording|音声ミキサーや録画/);
     assert.match(html, /Older ZIPs|旧版のZIP/);
   }
 });

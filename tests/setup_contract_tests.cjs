@@ -53,3 +53,24 @@ test('Mac CI exercises isolated tests and the extracted release payload on both 
   assert.match(ci, /test-setup "build\/setup-archive-check/);
   assert.doesNotMatch(ci, /macos_language_tests/);
 });
+
+test('Mac guide has a bilingual filename in the package and extracted ZIP checks', () => {
+  const guide = 'README_はじめにお読みください.txt';
+  const pack = read('cmake/CreateMacPreviewPackage.cmake');
+  assert.ok(pack.includes(`"\${package_root}/${guide}" COPYONLY`));
+  assert.ok(read('.github/workflows/macos-preview.yml').includes(`test -f "$package/${guide}"`));
+  assert.ok(read('.github/workflows/macos-preview.yml').includes(`cmp installer/macos/README-macOS.txt "build/setup-archive-check/$(basename "$package")/${guide}"`));
+  const text = read('installer/macos/README-macOS.txt');
+  assert.match(text, /日本語の手順は、このファイルの後半/);
+  assert.match(text, /Installation complete/);
+  assert.match(text, /インストール完了/);
+});
+
+test('Setup uses the product name; OBS confirmation methods are alternatives', () => {
+  const app = read('installer/macos/SetupApp.swift');
+  assert.match(app, /DawAudioStreamerをこのMacに追加/);
+  assert.match(app, /Add DawAudioStreamer to this Mac/);
+  assert.doesNotMatch(app, /DASを|Add DAS to this Mac|Uninstall DAS\?/);
+  assert.match(read('plugins/obs-source/data/locale/ja-JP.ini'), /音声ミキサーや録画などで音を確認できます/);
+  assert.match(read('plugins/obs-source/data/locale/en-US.ini'), /audio mixer or a recording/);
+});

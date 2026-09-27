@@ -164,7 +164,7 @@
           <section class="destination-card obs-guide" id="obs">
             <header class="detail-header"><div class="destination-label obs-label"><span class="wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>OBS</strong></div><span class="platform-scope">Windows + macOS</span></header>
             <h4>OBSへ送る3手順</h4><p>WindowsでもmacOSでも操作は同じです。</p>
-            <ol><li><span>1</span>OBSの「ソース」で［＋］を押す</li><li><span>2</span>「DAS Audio（DAW）」を追加（設定不要）</li><li><span>3</span>DAWを再生し、メーターと短い録画で音を確認</li></ol>
+            <ol><li><span>1</span>OBSの「ソース」で［＋］を押す</li><li><span>2</span>「DAS Audio（DAW）」を追加（設定不要）</li><li><span>3</span>DAWを再生し、音声ミキサーや録画などで音を確認</li></ol>
             <p class="result-note success-note">VB-CABLEなどの追加ソフトは不要です</p>
           </section>
 
@@ -191,7 +191,7 @@
       <div class="section-heading"><p class="eyebrow">TROUBLESHOOTING</p><h2>うまくいかないとき</h2><p>該当する項目だけ開いて確認してください。</p></div>
       <div class="faq-grid">
         <details id="macos-help"><summary>MacでSetupを開けない・インストールできない</summary><p>開こうとしてブロックされた場合は、［システム設定］→［プライバシーとセキュリティ］→［このまま開く］→［開く］へ進みます。信頼できる公式配布物に限る手順です。マルウェア検出・破損の警告なら続行せずご相談ください。<a href="https://support.apple.com/ja-jp/102445">Appleの案内</a></p><p>書き込み権限のエラーは［Finderで表示］から対象フォルダの［情報を見る］→［共有とアクセス権］を確認。変更できない場合はMacの管理者へ相談してください。Setupが権限を変更することはありません。</p><p>ファイル不足ならZIPを再ダウンロードして全体を展開。復旧ファイルの案内が出た場合は削除せず、［詳細をコピー］してサポートへお知らせください。［インストール完了］を確認してからDAWとOBSへ進みます。</p><p>旧版のInstall.commandでは、言語選択でEnterを押すと既定の言語で進みます。Terminalの［プロセスが完了しました］は成功の表示ではありません。スクリプト自身の完了メッセージを確認してください。</p></details>
-        <details><summary>OBSに「有効なプロパティがありません」と出る</summary><p>旧版では設定項目がないため表示されます。故障ではありません。そのまま画面を閉じ、DAWのマスターにDAS Sendを1個追加してください。DAWを再生し、OBSのメーターと短い録画で音を確認します。</p></details>
+        <details><summary>OBSに「有効なプロパティがありません」と出る</summary><p>旧版では設定項目がないため表示されます。故障ではありません。そのまま画面を閉じ、DAWのマスターにDAS Sendを1個追加してください。DAWを再生し、OBSの音声ミキサーや録画などで音を確認できます。</p></details>
         <details><summary>DAS SendがDAWに出てこない</summary><p>DAWのVST3またはAUプラグインを再スキャンします。インストール後にDAWを再起動していない場合は、一度終了して開き直してください。</p></details>
         <details><summary>OBSにDAS Audioが出てこない</summary><p>OBSを完全に終了して開き直し、「ソース」の［＋］をもう一度確認してください。</p><p>OBSのバージョンが古いと、DAS Audioが表示されない場合があります。表示されない場合は、OBSを最新版に更新して試してください。</p></details>
         <details><summary>Windows版のDiscordがVB-CABLEのまま</summary><p>VB-CABLEのx64版を管理者として導入し、Windowsを再起動してください。</p></details>
