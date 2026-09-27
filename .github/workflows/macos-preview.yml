@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 env:
-  DAS_VERSION: "0.4.2-macos-preview.1"
+  DAS_VERSION: "0.4.4-macos-preview.1"
 
 jobs:
   build:
@@ -59,8 +59,8 @@ jobs:
           cmake --build --preset ${{ matrix.preset }} --target das_obs_source --parallel 3
           plist=$(find build/${{ matrix.preset }}/plugins/obs-source -path '*/das-obs-source.plugin/Contents/Info.plist' -print -quit)
           test -f "$plist"
-          /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$plist" | grep -Fx '0.4.2'
-          /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$plist" | grep -Fx '0.4.2'
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$plist" | grep -Fx '0.4.4'
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$plist" | grep -Fx '0.4.4'
 
       - name: Build
         run: cmake --build --preset ${{ matrix.preset }} --parallel 3
@@ -95,8 +95,8 @@ jobs:
           test -x "$payload/DAS Send.component/Contents/MacOS/DAS Send"
           test -x "$payload/das-obs-source.plugin/Contents/MacOS/das-obs-source"
           for bundle in "$payload"/*; do
-            /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$bundle/Contents/Info.plist" | grep -Fx '0.4.2'
-            /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$bundle/Contents/Info.plist" | grep -Fx '0.4.2'
+            /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$bundle/Contents/Info.plist" | grep -Fx '0.4.4'
+            /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$bundle/Contents/Info.plist" | grep -Fx '0.4.4'
           done
           ditto -x -k "$package.zip" build/setup-archive-check
           cmp installer/macos/README-macOS.txt "build/setup-archive-check/$(basename "$package")/README_はじめにお読みください.txt"

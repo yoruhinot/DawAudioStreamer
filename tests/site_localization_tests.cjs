@@ -128,7 +128,7 @@ test('Both HTML pages load language selection and link to published Mac packages
     for (const [id, arch] of [['arm', 'AppleSilicon'], ['intel', 'Intel']]) {
       const link = html.match(new RegExp(`<a[^>]+id="mac-download-${id}"[^>]*>`))[0];
       assert.doesNotMatch(link, /aria-disabled|tabindex/);
-      assert.ok(link.includes(`releases/download/v0.4.2-macos-preview.1/DawAudioStreamer-0.4.2-macos-preview.1-macOS-${arch}.zip`));
+      assert.ok(link.includes(`releases/download/v0.4.4-macos-preview.1/DawAudioStreamer-0.4.4-macos-preview.1-macOS-${arch}.zip`));
     }
     assert.match(html, /href="(?:\.\.\/|en\/)\?lang=(?:ja|en)"/);
   }

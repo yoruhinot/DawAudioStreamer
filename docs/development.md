@@ -27,7 +27,7 @@ Key build outputs:
 
 - VST3: `build/windows-msvc-release/plugins/send-vst3/DasSend_artefacts/Release/VST3/DAS Send.vst3`
 - OBS plugin: `build/windows-msvc-release/plugins/obs-source/Release/das-obs-source.dll`
-- Installer: `build/installer/DawAudioStreamer-Setup-0.4.3.exe`
+- Installer: `build/installer/DawAudioStreamer-Setup-0.4.4.exe`
 
 ## macOS (preview)
 

@@ -27,7 +27,7 @@ cmake --build build/windows-msvc-release --config Release --target das_installer
 
 - VST3：`build/windows-msvc-release/plugins/send-vst3/DasSend_artefacts/Release/VST3/DAS Send.vst3`
 - OBSプラグイン：`build/windows-msvc-release/plugins/obs-source/Release/das-obs-source.dll`
-- インストーラー：`build/installer/DawAudioStreamer-Setup-0.4.3.exe`
+- インストーラー：`build/installer/DawAudioStreamer-Setup-0.4.4.exe`
 
 ## macOS（プレビュー版）
 
