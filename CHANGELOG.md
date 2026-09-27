@@ -1,5 +1,12 @@
 # 変更履歴
 
+## [0.4.4] - 2026-09-27
+
+- macOSプレビュー版に、インストールと削除を行うSetupアプリを追加
+- macOSでのインストール失敗時に、原因と対処方法を表示
+- OBSソース追加時の不要な設定画面を省略し、プロパティに使い方を表示
+- Windowsのインストール完了後の案内を整理
+
 ## [0.4.3] - 2026-09-10
 
 - Windowsインストーラーを日本語・英語の言語選択に対応
@@ -50,3 +57,4 @@ VB-CABLEの公式ページを開けます。
 [0.4.1]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.1
 [0.4.2]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.2
 [0.4.3]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.3
+[0.4.4]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.4

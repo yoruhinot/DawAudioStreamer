@@ -23,6 +23,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Test setup and site contracts
+        run: node --test tests/site_localization_tests.cjs tests/setup_contract_tests.cjs
+
       - name: Configure
         run: >-
           cmake -S . -B build/windows-ci

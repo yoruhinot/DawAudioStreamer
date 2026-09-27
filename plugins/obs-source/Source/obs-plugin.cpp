@@ -15,7 +15,7 @@
 #include <thread>
 
 OBS_DECLARE_MODULE()
-OBS_MODULE_USE_DEFAULT_LOCALE("das-obs-source", "ja-JP")
+OBS_MODULE_USE_DEFAULT_LOCALE("das-obs-source", "en-US")
 MODULE_EXPORT const char* obs_module_description(void) {
   return "DAS SendからDAW音声を直接受信します";
 }
@@ -88,7 +88,7 @@ struct DasObsSource final {
   std::array<float, kBlockFrames> right {};
 };
 
-const char* sourceName(void*) { return "DAS Audio（DAW）"; }
+const char* sourceName(void*) { return obs_module_text("DASAudioSource"); }
 
 void* createSource(obs_data_t*, obs_source_t* source) {
   try {
@@ -100,13 +100,20 @@ void* createSource(obs_data_t*, obs_source_t* source) {
 
 void destroySource(void* data) { delete static_cast<DasObsSource*>(data); }
 
+obs_properties_t* sourceProperties(void*) {
+  auto* properties = obs_properties_create();
+  obs_properties_add_text(properties, "setup_help", obs_module_text("SetupHelp"), OBS_TEXT_INFO);
+  return properties;
+}
+
 obs_source_info sourceInfo {
     .id = "das_audio_source",
     .type = OBS_SOURCE_TYPE_INPUT,
-    .output_flags = OBS_SOURCE_AUDIO | OBS_SOURCE_DO_NOT_DUPLICATE,
+    .output_flags = OBS_SOURCE_AUDIO | OBS_SOURCE_DO_NOT_DUPLICATE | OBS_SOURCE_CAP_DONT_SHOW_PROPERTIES,
     .get_name = sourceName,
     .create = createSource,
     .destroy = destroySource,
+    .get_properties = sourceProperties,
 };
 } // namespace
 

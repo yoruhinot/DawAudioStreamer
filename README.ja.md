@@ -12,8 +12,7 @@ Windows版（VST3）とIntel／Apple Silicon向けmacOSプレビュー版（AU�
 ## 先に確認
 
 - **OBSだけで使う：** DawAudioStreamerのインストーラーだけで使えます。
-- **Discordにも音を載せる：** VB-CABLEが必要です。入っていないPCでは、インストール完了時に
-  VB-CABLEの公式ページが開きます。
+- **WindowsでDiscordにも音を載せる：** VB-CABLEが必要です。[Discordの導入手順](https://yoruhinot.github.io/DawAudioStreamer/?lang=ja#discord)へ進んでください。
 
 macOSでは主にOBS向けに使用します。DiscordはmacOS標準の画面共有音声を利用できるため、
 DawAudioStreamerや仮想オーディオデバイスは不要です。
@@ -24,17 +23,18 @@ DawAudioStreamerや仮想オーディオデバイスは不要です。
 
 1. OBS、Discord、DAWを終了します。
 2. [Releases](https://github.com/yoruhinot/DawAudioStreamer/releases)からインストーラーを入手します。
-3. インストーラーを実行します。
+3. Windowsはインストーラーを実行。MacはZIPを展開し、**DawAudioStreamer Setup.app**を開き、インストール完了を確認します。
 4. DAWのマスターバスの最後へ「DAS Send」を1個挿します。
 
-Discordでも使う場合は、開いた[VB-CABLE公式ページ](https://vb-audio.com/Cable/)から
-ドライバーを導入し、案内に従ってWindowsを再起動してください。
+WindowsでDiscordも使う場合は、[VB-CABLEの導入手順](https://yoruhinot.github.io/DawAudioStreamer/?lang=ja#vbcable)に沿って導入し、Windowsを再起動してください。OBSには不要です。
+
+Macで起動をブロックされた場合は[Macの導入ヘルプ](https://yoruhinot.github.io/DawAudioStreamer/?lang=ja#macos-help)へ。旧版のMac ZIPはInstall.commandを使用します。
 
 ### 2. OBS
 
 1. OBSの「ソース」で［＋］を押します。
-2. 「DAS Audio（DAW）」を追加します。
-3. DAWを再生し、OBSの音声ミキサーが動けば完了です。
+2. 「DAS Audio（DAW）」を追加します（設定不要）。旧版で「有効なプロパティがありません」と出ても正常です。
+3. DAWを再生し、OBSの音声ミキサーや録画などで音を確認します。
 
 ### 3. Discord
 
@@ -43,12 +43,13 @@ Discordでも使う場合は、開いた[VB-CABLE公式ページ](https://vb-aud
 3. DAWだけを見せるならDAWアプリ、VST画面も見せるなら画面全体を選びます。
 
 Discordのマイク設定はそのままで構いません。
+視聴する人にも音が届くことを確認してください。
 
 ## VSTの表示
 
 | 表示 | 対処 |
 |---|---|
-| 緑の `OK` | 使用できます。OBS側は音声を受信中です。 |
+| 緑の `OK` | OBSは接続、Discordは共有用音声の準備を示します。録画・視聴側でも音を確認してください。 |
 | 灰色の `WAIT` | OBSで「DAS Audio（DAW）」を追加してください。 |
 | 黄色の `VB-CABLE` | VB-CABLEを導入してWindowsを再起動してください。 |
 | 黄色の `1 ONLY` | DAS Sendを1個だけ残してください。 |

@@ -27,7 +27,7 @@ cmake --build build/windows-msvc-release --config Release --target das_installer
 
 - VST3：`build/windows-msvc-release/plugins/send-vst3/DasSend_artefacts/Release/VST3/DAS Send.vst3`
 - OBSプラグイン：`build/windows-msvc-release/plugins/obs-source/Release/das-obs-source.dll`
-- インストーラー：`build/installer/DawAudioStreamer-Setup-0.4.3.exe`
+- インストーラー：`build/installer/DawAudioStreamer-Setup-0.4.4.exe`
 
 ## macOS（プレビュー版）
 
@@ -44,7 +44,11 @@ cmake --build --preset macos-preview-intel
 ctest --preset macos-preview-intel
 ```
 
-配布用ZIPは`cmake/CreateMacPreviewPackage.cmake`で作成します（正確なコマンドは`macos-preview` CIワークフローを参照）。プラグインと`Install.command`／`Uninstall.command`をアドホック署名で同梱します。CIは両アーキテクチャをネイティブランナーでビルドします。
+配布用ZIPは`cmake/CreateMacPreviewPackage.cmake`で作成します（正確なコマンドは`macos-preview` CIワークフローを参照）。XcodeでSwift/AppKitのSetupアプリをビルドし、3種のプラグインを内包します。プラグインとアプリはアドホック署名であり、Developer ID署名・公証ではありません。CIは両アーキテクチャをネイティブでビルドし、一時ホームで導入・復旧・削除と、ZIPから展開した実payloadをテストします。
+
+Macでの単体テスト：`swiftc -swift-version 5 installer/macos/SetupCore.swift tests/macos_setup_tests.swift -o /tmp/das-setup-tests` の後に `/tmp/das-setup-tests`。rootでは実行しないでください。実ユーザーのLibraryには導入しません。
+
+新パッケージとサイトを同時公開する前に、ブラウザでダウンロードしたZIPを実機で確認してください。Gatekeeperの承認、日英の画面、DAWのプラグインスキャン、OBSソース追加、再導入・削除が対象です。Setupは隔離属性を除去せず、権限変更や管理者への昇格もしません。コピーの成功と、隔離されたプラグインをホストが読み込めることは別なので、公開前に必ず確認します。電源断・復旧失敗では復旧用フォルダを残して再変更を止めます。内容を確認するまで削除しないでください。
 
 使用している依存ライブラリと固定revisionは
 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md)に記載しています。Releaseの対応ソースZIPには、

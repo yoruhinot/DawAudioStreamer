@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 env:
-  DAS_VERSION: "0.4.2-macos-preview.1"
+  DAS_VERSION: "0.4.4-macos-preview.1"
 
 jobs:
   build:
@@ -36,10 +36,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Check installer language selection
+      - name: Test Setup in an isolated temporary home
         run: |
-          /bin/zsh -n installer/macos/Install.command installer/macos/Uninstall.command installer/macos/Language.zsh
-          python3 tests/macos_language_tests.py
+          mkdir -p build/setup-tests
+          xcrun swiftc -swift-version 5 installer/macos/SetupCore.swift tests/macos_setup_tests.swift -o build/setup-tests/test-setup
+          build/setup-tests/test-setup
+          xcrun swiftc -swift-version 5 -framework AppKit installer/macos/SetupCore.swift installer/macos/SetupApp.swift -o build/setup-tests/DASSetup
 
       - name: Install OBS Studio
         run: |
@@ -57,8 +59,8 @@ jobs:
           cmake --build --preset ${{ matrix.preset }} --target das_obs_source --parallel 3
           plist=$(find build/${{ matrix.preset }}/plugins/obs-source -path '*/das-obs-source.plugin/Contents/Info.plist' -print -quit)
           test -f "$plist"
-          /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$plist" | grep -Fx '0.4.2'
-          /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$plist" | grep -Fx '0.4.2'
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$plist" | grep -Fx '0.4.4'
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$plist" | grep -Fx '0.4.4'
 
       - name: Build
         run: cmake --build --preset ${{ matrix.preset }} --parallel 3
@@ -84,17 +86,22 @@ jobs:
             -DDAS_ARCH_LABEL=${{ matrix.label }} \
             -P cmake/CreateMacPreviewPackage.cmake
           package=build/dist/DawAudioStreamer-${{ env.DAS_VERSION }}-macOS-${{ matrix.label }}
-          test -f "$package/README-macOS.txt"
-          test -f "$package/Language.zsh"
-          test -x "$package/Install.command"
-          test -x "$package/Uninstall.command"
-          test -x "$package/payload/DAS Send.vst3/Contents/MacOS/DAS Send"
-          test -x "$package/payload/DAS Send.component/Contents/MacOS/DAS Send"
-          test -x "$package/payload/das-obs-source.plugin/Contents/MacOS/das-obs-source"
-          for bundle in "$package"/payload/*; do
-            /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$bundle/Contents/Info.plist" | grep -Fx '0.4.2'
-            /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$bundle/Contents/Info.plist" | grep -Fx '0.4.2'
+          test -f "$package/README_はじめにお読みください.txt"
+          app="$package/DawAudioStreamer Setup.app"
+          payload="$app/Contents/Resources/payload"
+          test -x "$app/Contents/MacOS/DASSetup"
+          codesign --verify --deep --strict "$app"
+          test -x "$payload/DAS Send.vst3/Contents/MacOS/DAS Send"
+          test -x "$payload/DAS Send.component/Contents/MacOS/DAS Send"
+          test -x "$payload/das-obs-source.plugin/Contents/MacOS/das-obs-source"
+          for bundle in "$payload"/*; do
+            /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$bundle/Contents/Info.plist" | grep -Fx '0.4.4'
+            /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$bundle/Contents/Info.plist" | grep -Fx '0.4.4'
           done
+          ditto -x -k "$package.zip" build/setup-archive-check
+          cmp installer/macos/README-macOS.txt "build/setup-archive-check/$(basename "$package")/README_はじめにお読みください.txt"
+          codesign --verify --deep --strict "build/setup-archive-check/$(basename "$package")/DawAudioStreamer Setup.app"
+          build/setup-tests/test-setup "build/setup-archive-check/$(basename "$package")/DawAudioStreamer Setup.app/Contents/Resources/payload"
 
       - name: Create corresponding source archive
         if: matrix.label == 'AppleSilicon'

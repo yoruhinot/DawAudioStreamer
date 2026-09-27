@@ -28,7 +28,7 @@
 html { scroll-behavior: smooth; }
 body { margin: 0; min-height: 100vh; color: var(--ink); background: var(--paper); }
 a { color: inherit; }
-section, article[id], div[id] { scroll-margin-top: 110px; }
+section, article[id], div[id], details[id] { scroll-margin-top: 110px; }
 
 .site-header, main, footer { width: min(1200px, calc(100% - 48px)); margin-inline: auto; }
 .site-header {

@@ -38,8 +38,8 @@ elseif(APPLE)
     NO_DEFAULT_PATH
     REQUIRED)
   target_link_libraries(das_obs_source PRIVATE "${DAS_OBS_LIBRARY}")
-  target_sources(das_obs_source PRIVATE data/locale/ja-JP.ini)
-  set_source_files_properties(data/locale/ja-JP.ini PROPERTIES
+  target_sources(das_obs_source PRIVATE data/locale/ja-JP.ini data/locale/en-US.ini)
+  set_source_files_properties(data/locale/ja-JP.ini data/locale/en-US.ini PROPERTIES
     MACOSX_PACKAGE_LOCATION "Resources/locale")
   set_target_properties(das_obs_source PROPERTIES
     BUNDLE TRUE
