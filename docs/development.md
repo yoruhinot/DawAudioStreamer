@@ -29,6 +29,14 @@ Key build outputs:
 - OBS plugin: `build/windows-msvc-release/plugins/obs-source/Release/das-obs-source.dll`
 - Installer: `build/installer/DawAudioStreamer-Setup-0.4.4.exe`
 
+## Windows CI artifacts
+
+The Windows workflow builds and tests on GitHub-hosted runners, then creates the unsigned installer and matching source ZIP. Its `DawAudioStreamer-Windows-unsigned-<commit>` artifact also includes SHA-256 hashes and `BUILD-INFO.json` with the exact checkout and workflow run. A missing installer or source ZIP fails the build. Artifacts are kept for 30 days.
+
+PR builds are for review only. After merging, use a successful `main` build for release preparation; the workflow does not sign files, create tags, or publish releases. Signing remains pending under the [code signing policy](../CODE_SIGNING.md).
+
+Packaging tests run without installing software: `node --test tests/windows_package_tests.cjs`. Their fixtures live in temporary directories, not your plug-in folders.
+
 ## macOS (preview)
 
 - Intel or Apple Silicon Mac, macOS 13 or later

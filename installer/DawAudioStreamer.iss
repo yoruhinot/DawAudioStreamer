@@ -1,13 +1,21 @@
 ﻿#define MyAppName "DawAudioStreamer"
+#ifndef MyAppVersion
 #define MyAppVersion "0.4.4"
+#endif
+#ifndef MyAppFileVersion
 #define MyAppFileVersion "0.4.4.0"
+#endif
 #define MyAppPublisher "yoruhinot"
 #define MyAppCopyright "Copyright (c) 2026 yoruhinot"
 #define MyAppUrl "https://github.com/yoruhinot/DawAudioStreamer"
 #define MyAppSupportUrl "https://github.com/yoruhinot/DawAudioStreamer/issues"
 #define MyAppUpdatesUrl "https://github.com/yoruhinot/DawAudioStreamer/releases"
+#ifndef BuildRoot
 #define BuildRoot "..\build\windows-msvc-release"
-#define SourceArchive "..\build\source\DawAudioStreamer-0.4.4-source.zip"
+#endif
+#ifndef SourceArchive
+#define SourceArchive "..\build\source\DawAudioStreamer-" + MyAppVersion + "-source.zip"
+#endif
 
 [Setup]
 AppId={{A2AB3F48-3BA4-46A2-9AE8-E46A6D107BA3}
@@ -70,6 +78,8 @@ Source: "..\docs\QuickStart.en.txt"; DestDir: "{app}"; DestName: "QuickStart.txt
 Source: "..\docs\QuickStart.ja.txt"; DestDir: "{app}"; DestName: "QuickStart.txt"; Languages: japanese; Flags: ignoreversion
 Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\README.ja.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\CODE_SIGNING.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\CODE_SIGNING.ja.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\CHANGELOG.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\PRIVACY.md"; DestDir: "{app}"; Flags: ignoreversion

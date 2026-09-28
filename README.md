@@ -82,6 +82,8 @@ Close your DAW and OBS, then remove DawAudioStreamer from **Installed apps** in 
 
 Download from [GitHub Releases](https://github.com/yoruhinot/DawAudioStreamer/releases). Windows and macOS may show a security warning on first run.
 
+[Code signing policy](CODE_SIGNING.md)
+
 For bugs or feature requests, reach out on [X (@yoruhinot)](https://x.com/yoruhinot) or open an [Issue](https://github.com/yoruhinot/DawAudioStreamer/issues).
 
 ## License

@@ -1,6 +1,9 @@
 name: Windows
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -15,27 +18,44 @@ permissions:
 
 jobs:
   build:
-    name: Build and test
+    name: Build, test and package
     runs-on: windows-2025
     timeout-minutes: 60
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
 
       - name: Test setup and site contracts
-        run: node --test tests/site_localization_tests.cjs tests/setup_contract_tests.cjs
+        run: node --test tests/site_localization_tests.cjs tests/setup_contract_tests.cjs tests/windows_package_tests.cjs
 
       - name: Configure
-        run: >-
-          cmake -S . -B build/windows-ci
-          -G "Visual Studio 18 2026" -A x64
-          -DDAS_BUILD_TESTS=ON
-          -DDAS_BUILD_OBS_PLUGIN=ON
-          -DDAS_ENABLE_JUCE=ON
+        shell: pwsh
+        run: |
+          $iscc = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6/ISCC.exe'
+          if (-not (Test-Path -LiteralPath $iscc -PathType Leaf)) {
+            throw 'Inno Setup 6 is required to build the Windows installer.'
+          }
+          cmake --preset windows-msvc-release "-DDAS_ISCC_EXECUTABLE=$iscc"
 
       - name: Build
-        run: cmake --build build/windows-ci --config Release --parallel 3
+        run: cmake --build --preset windows-msvc-release --parallel 3
 
       - name: Test
-        run: ctest --test-dir build/windows-ci -C Release --output-on-failure
+        run: ctest --preset windows-msvc-release
+
+      - name: Build unsigned installer and corresponding source
+        run: cmake --build --preset windows-msvc-release --target das_installer
+
+      - name: Collect and verify package
+        run: node cmake/StageWindowsArtifacts.cjs
+
+      - name: Upload unsigned package
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: DawAudioStreamer-Windows-unsigned-${{ github.sha }}
+          path: build/windows-artifacts/*
+          if-no-files-found: error
+          retention-days: 30

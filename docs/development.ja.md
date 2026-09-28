@@ -29,6 +29,14 @@ cmake --build build/windows-msvc-release --config Release --target das_installer
 - OBSプラグイン：`build/windows-msvc-release/plugins/obs-source/Release/das-obs-source.dll`
 - インストーラー：`build/installer/DawAudioStreamer-Setup-0.4.4.exe`
 
+## Windows CIの成果物
+
+WindowsワークフローはGitHubの実行環境でビルド・テストした後、未署名のインストーラーと対応ソースZIPを作成します。`DawAudioStreamer-Windows-unsigned-<commit>`にはSHA-256と、対象コミット・実行元を記録した`BUILD-INFO.json`も含まれます。インストーラーやソースZIPがなければ失敗します。保存期間は30日です。
+
+PRのビルドはレビュー用です。リリース準備にはマージ後の`main`の成功ビルドを使用します。このワークフローは署名・タグ作成・リリース公開を行いません。署名は[コード署名方針](../CODE_SIGNING.ja.md)に記載した準備段階です。
+
+パッケージ処理のテスト：`node --test tests/windows_package_tests.cjs`。一時フォルダ内のテストデータだけを使用し、実際のプラグインフォルダにはインストールしません。
+
 ## macOS（プレビュー版）
 
 - IntelまたはApple Silicon搭載Mac・macOS 13以降
