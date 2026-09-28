@@ -2,8 +2,10 @@
 
 [日本語](PRIVACY.ja.md)
 
-DawAudioStreamer has no telemetry, usage analytics, crash reporting, auto-update, ads, or account features. The product itself makes no network connections.
+DawAudioStreamer has no telemetry, usage analytics, crash reporting, auto-update, ads, or account features. Its audio components do not send data over the network.
 
-The only data it handles is real-time audio passed within the same Windows user session — from your DAW to the OBS and Discord audio sessions. Audio is never written to disk, and the shared memory used by the product is released when the process exits. Screen capture and streaming are handled entirely by Discord; this product does not read video frames.
+On Windows and macOS, DAW audio is passed locally to the OBS source through shared memory for the same user. Windows also supports a local audio path for Discord screen sharing. DawAudioStreamer does not record audio files or read screen images; OBS and Discord handle recording, screen capture and streaming.
 
-Any data you actually stream to OBS or Discord is subject to their respective privacy policies. DawAudioStreamer does not modify Discord's microphone settings, your DAW's ASIO configuration, or Windows default audio devices.
+Opening a help link in Setup launches your browser. Visiting the website or downloading files connects to the respective hosting services. The website requests release information from GitHub and stores your chosen language locally in your browser. This is separate from the plug-ins' local audio processing.
+
+Information sent through those services is subject to their policies: [GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement), [OBS](https://obsproject.com/privacy-policy), [Discord](https://discord.com/privacy), and your chosen streaming provider. DawAudioStreamer does not modify Discord's microphone settings, your DAW's audio-interface configuration, or Windows default audio devices.

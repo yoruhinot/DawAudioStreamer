@@ -20,7 +20,7 @@ endif()
 file(REMOVE_RECURSE "${staging_root}")
 file(MAKE_DIRECTORY "${package_root}" "${package_root}/third-party")
 
-foreach(directory apps cmake docs installer libs plugins tests LICENSES)
+foreach(directory .github apps cmake docs installer libs plugins tests LICENSES)
   file(COPY "${source_root}/${directory}" DESTINATION "${package_root}")
 endforeach()
 
@@ -29,6 +29,8 @@ foreach(file
     CHANGELOG.md
     CMakeLists.txt
     CMakePresets.json
+    CODE_SIGNING.md
+    CODE_SIGNING.ja.md
     LICENSE
     PRIVACY.md
     PRIVACY.ja.md

@@ -146,10 +146,16 @@ endif()
 
 if(WIN32 AND DAS_ENABLE_JUCE AND DAS_BUILD_OBS_PLUGIN)
   find_program(DAS_ISCC_EXECUTABLE ISCC.exe
-    HINTS "$ENV{LOCALAPPDATA}/Programs/Inno Setup 6")
+    HINTS "$ENV{LOCALAPPDATA}/Programs/Inno Setup 6"
+          "C:/Program Files (x86)/Inno Setup 6")
   if(DAS_ISCC_EXECUTABLE)
     add_custom_target(das_installer
-      COMMAND "${DAS_ISCC_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/installer/DawAudioStreamer.iss"
+      COMMAND "${DAS_ISCC_EXECUTABLE}"
+        "/DBuildRoot=${CMAKE_BINARY_DIR}"
+        "/DSourceArchive=${DAS_SOURCE_ARCHIVE}"
+        "/DMyAppVersion=${DAS_DISPLAY_VERSION}"
+        "/DMyAppFileVersion=${DAS_COMPONENT_VERSION}.0"
+        "${CMAKE_SOURCE_DIR}/installer/DawAudioStreamer.iss"
       WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
       DEPENDS DasSend_VST3 das_obs_source das_virtual_audio_check das_source_package
       COMMENT "DawAudioStreamerセットアップを生成しています"
