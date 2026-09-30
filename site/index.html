@@ -176,10 +176,11 @@
             <div id="vbcable" class="dependency-box">
               <strong>先にVB-CABLEをインストール</strong>
               <ol><li><span>1</span>公式ZIPを展開</li><li><span>2</span>「VBCABLE_Setup_x64.exe」を管理者として実行</li><li><span>3</span>［Install Driver］を押してWindowsを再起動</li></ol>
+              <p>再起動後、Windowsの出力先が普段使っているスピーカー・ヘッドホンなどになっているか確認してください。</p>
               <a class="secondary-button" href="https://vb-audio.com/Cable/">VB-CABLE公式サイト <span aria-hidden="true">↗</span></a>
             </div>
             <ol class="discord-final-steps"><li><span>4</span>DAS SendのDiscord欄が緑の「OK」になることを確認</li><li><span>5</span>DiscordでDAWまたは画面全体を共有し、視聴側で音を確認</li></ol>
-            <div class="important-note"><strong>設定は変えません</strong><p>「CABLE Input」をDAWの出力やDiscordのマイクに選ばないでください。DASが内部で使用します。</p></div>
+            <div class="important-note"><strong>設定は変えません</strong><p>「CABLE Input」をWindowsやDAWの出力、Discordのマイクに選ばないでください。DASが内部で使用します。</p></div>
           </section>
         </div>
 
@@ -195,6 +196,7 @@
         <details><summary>DAS SendがDAWに出てこない</summary><p>DAWのVST3またはAUプラグインを再スキャンします。インストール後にDAWを再起動していない場合は、一度終了して開き直してください。</p></details>
         <details><summary>OBSにDAS Audioが出てこない</summary><p>OBSを完全に終了して開き直し、「ソース」の［＋］をもう一度確認してください。</p><p>OBSのバージョンが古いと、DAS Audioが表示されない場合があります。表示されない場合は、OBSを最新版に更新して試してください。</p></details>
         <details><summary>Windows版のDiscordがVB-CABLEのまま</summary><p>VB-CABLEのx64版を管理者として導入し、Windowsを再起動してください。</p></details>
+        <details><summary>導入後、YouTubeやDiscordの通知音が聞こえない（Windows）</summary><p>Windowsの［設定］→［システム］→［サウンド］で、出力先を普段使っているスピーカー・ヘッドホン・オーディオインターフェースに戻してください。</p><p>DASを使うために、Windowsの出力先を「CABLE Input」に変更する必要はありません。DAWのASIO設定もそのままで使えます。</p></details>
         <details><summary>音が二重に聞こえる</summary><p>OBSでDAS Audioとデスクトップ音声の両方から、同じDAW音声を取り込んでいないか確認します。DAS Sendも1個だけにしてください。</p></details>
         <details><summary>アンインストールしたい</summary><p>Windowsは「インストールされているアプリ」から削除します。macOSはDAWとOBSを終了し、Setup.appの［アンインストール］を選び、完了を確認してください。DAWプロジェクト・OBSシーンは残ります。旧版のZIPでは「Uninstall.command」を使用します。</p></details>
         <details><summary>それでも解決しない</summary><p>不具合や要望は<a href="https://x.com/yoruhinot">X（@yoruhinot）</a>または<a href="https://github.com/yoruhinot/DawAudioStreamer/issues">GitHub Issues</a>へ。使用OS、DAW、OBSのバージョンと症状を添えてください。</p></details>

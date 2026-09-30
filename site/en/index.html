@@ -178,10 +178,11 @@
             <div id="vbcable" class="dependency-box">
               <strong>Install VB-CABLE first</strong>
               <ol><li><span>1</span>Extract the official ZIP</li><li><span>2</span>Run "VBCABLE_Setup_x64.exe" as administrator</li><li><span>3</span>Click Install Driver and restart Windows</li></ol>
+              <p>After restarting, check that Windows still uses your usual speakers or headphones for audio output.</p>
               <a class="secondary-button" href="https://vb-audio.com/Cable/">VB-CABLE official site <span aria-hidden="true">↗</span></a>
             </div>
             <ol class="discord-final-steps"><li><span>4</span>Check the Discord indicator in DAS Send shows a green OK</li><li><span>5</span>Share your DAW or full screen in Discord and ask a viewer to check the audio</li></ol>
-            <div class="important-note"><strong>Don't touch these settings</strong><p>Do not set "CABLE Input" as your DAW output or Discord microphone. DAS uses it internally.</p></div>
+            <div class="important-note"><strong>Don't touch these settings</strong><p>Do not set "CABLE Input" as your Windows or DAW output, or your Discord microphone. DAS uses it internally.</p></div>
           </section>
         </div>
 
@@ -197,6 +198,7 @@
         <details><summary>DAS Send doesn't appear in my DAW</summary><p>Rescan VST3 or AU plugins in your DAW. If you haven't restarted your DAW since installing, close and reopen it.</p></details>
         <details><summary>DAS Audio doesn't appear in OBS</summary><p>Fully close and reopen OBS, then check + under Sources again.</p><p>Older OBS versions may not show DAS Audio. If it's missing, update OBS to the latest version and try again.</p></details>
         <details><summary>Discord on Windows is stuck on VB-CABLE</summary><p>Install the x64 version of VB-CABLE as administrator and restart Windows.</p></details>
+        <details><summary>YouTube or Discord notification sounds stopped working after setup (Windows)</summary><p>Open Windows Settings → System → Sound and select your usual speakers, headphones or audio interface under Output.</p><p>You don't need to change your Windows output to "CABLE Input" to use DAS. Keep your DAW's ASIO settings as they are.</p></details>
         <details><summary>I hear doubled audio</summary><p>Check that you're not capturing the same DAW audio through both DAS Audio and Desktop Audio in OBS. Also make sure there's only one DAS Send instance.</p></details>
         <details><summary>I want to uninstall</summary><p>On Windows, remove it from Installed apps in Windows Settings. On macOS, close your DAW and OBS, choose Uninstall in Setup.app and wait for completion. DAW projects and OBS scenes are kept. Older ZIPs use “Uninstall.command”.</p></details>
         <details><summary>Still not working</summary><p>For bugs or requests, reach out on <a href="https://x.com/yoruhinot">X (@yoruhinot)</a> or <a href="https://github.com/yoruhinot/DawAudioStreamer/issues">GitHub Issues</a>. Include your OS, DAW, and OBS version along with a description of the problem.</p></details>
