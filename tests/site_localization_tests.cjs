@@ -161,6 +161,26 @@ test('Setup keeps one common OBS route and localized Mac recovery guidance', () 
   }
 });
 
+test('Both languages explain Windows output checks during setup and in troubleshooting', () => {
+  for (const [filename, check, symptom, settings, unchanged] of [
+    ['index.html', /Windowsの出力先.*普段使っている/, /YouTubeやDiscordの通知音/, /［設定］→［システム］→［サウンド］/, /DAWのASIO設定もそのまま/],
+    ['en/index.html', /Windows still uses your usual/, /YouTube or Discord notification sounds/, /Windows Settings → System → Sound/, /Keep your DAW's ASIO settings as they are/]
+  ]) {
+    const html = fs.readFileSync(path.join(site, filename), 'utf8');
+    const setup = html.match(/<div id="vbcable"[^>]*>([\s\S]*?)<\/div>/)[1];
+    assert.match(setup, check);
+    const warning = html.match(/<div class="important-note">([\s\S]*?)<\/div>/)[1];
+    assert.match(warning, /Windows/);
+    assert.match(warning, /CABLE Input/);
+    const faq = [...html.matchAll(/<details><summary>([\s\S]*?)<\/details>/g)]
+      .map(match => match[1]).find(text => symptom.test(text));
+    assert.ok(faq, `${filename}: Windows audio FAQ is missing`);
+    assert.match(faq, settings);
+    assert.match(faq, /CABLE Input/);
+    assert.match(faq, unchanged);
+  }
+});
+
 test('A direct link and a repeated help click both expand the FAQ', () => {
   const help = { open: false };
   const events = {};
