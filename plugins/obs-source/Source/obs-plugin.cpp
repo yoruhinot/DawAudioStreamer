@@ -11,8 +11,9 @@
 #include <cstddef>
 #include <cstdint>
 #include <memory>
-#include <span>
+#include <mutex>
 #include <thread>
+#include <vector>
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("das-obs-source", "en-US")
@@ -24,68 +25,114 @@ namespace {
 constexpr std::uint32_t kBlockFrames = 480;
 constexpr std::uint32_t kMaxBufferedFrames = 4800;
 
-struct DasObsSource final {
-  explicit DasObsSource(obs_source_t* owner) : source(owner) {
+// OBS側のリングは単一コンシューマーなので、DAS Audioソースが複数あっても
+// 読み出しはプロセス内で1スレッドにまとめ、同じ音声を全ソースへ配る。
+// ソースごとに読むとブロックを奪い合い、途切れとクリックノイズになる。
+class SharedReceiver final {
+public:
+  void add(obs_source_t* source) {
+    const std::lock_guard lifecycle(lifecycleMutex_);
+    {
+      const std::lock_guard lock(sourcesMutex_);
+      sources_.push_back(source);
+    }
+    if (!worker_.joinable()) start();
+  }
+
+  void remove(obs_source_t* source) {
+    const std::lock_guard lifecycle(lifecycleMutex_);
+    bool empty {};
+    {
+      const std::lock_guard lock(sourcesMutex_);
+      std::erase(sources_, source);
+      empty = sources_.empty();
+    }
+    if (empty) stop();
+  }
+
+  ~SharedReceiver() { stop(); }
+
+private:
+  void start() {
     const auto bytes = das::transport::requiredBytes(das::transport::kAudioCapacityFrames,
                                                       das::transport::kAudioChannels);
-    memory = das::transport::NamedSharedMemory::create(das::transport::kObsAudioMappingName, bytes);
-    if (memory.isOpen()) {
-      if (!memory.alreadyExisted())
-        das::transport::RingBuffer::initialize(memory.storage(),
+    memory_ = das::transport::NamedSharedMemory::create(das::transport::kObsAudioMappingName, bytes);
+    if (memory_.isOpen()) {
+      if (!memory_.alreadyExisted())
+        das::transport::RingBuffer::initialize(memory_.storage(),
                                                das::transport::kAudioCapacityFrames,
                                                das::transport::kAudioChannels,
                                                das::transport::kAudioSampleRate);
-      ring = std::make_unique<das::transport::RingBuffer>(memory.storage());
-      if (!ring->isCompatible()) ring.reset();
-      else ring->discardAll();
+      ring_ = std::make_unique<das::transport::RingBuffer>(memory_.storage());
+      if (!ring_->isCompatible()) ring_.reset();
+      else ring_->discardAll();
     }
-    worker = std::thread([this] { run(); });
+    stopping_.store(false, std::memory_order_release);
+    worker_ = std::thread([this] { run(); });
   }
 
-  ~DasObsSource() {
-    stopping.store(true, std::memory_order_release);
-    if (worker.joinable()) worker.join();
+  void stop() {
+    stopping_.store(true, std::memory_order_release);
+    if (worker_.joinable()) worker_.join();
+    ring_.reset();
+    memory_ = {};
   }
 
   void run() {
-    while (!stopping.load(std::memory_order_acquire)) {
-      const auto available = ring ? ring->availableToRead() : 0;
+    while (!stopping_.load(std::memory_order_acquire)) {
+      const auto available = ring_ ? ring_->availableToRead() : 0;
       if (available > kMaxBufferedFrames) {
-        ring->discardAll();
+        ring_->discardAll();
         continue;
       }
-      if (!ring || available < kBlockFrames) {
-        if (ring) ring->notifyConsumer();
+      if (!ring_ || available < kBlockFrames) {
+        if (ring_) ring_->notifyConsumer();
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
         continue;
       }
-      ring->notifyConsumer();
-      const auto read = ring->read(interleaved, kBlockFrames);
+      ring_->notifyConsumer();
+      const auto read = ring_->read(interleaved_, kBlockFrames);
       if (read != kBlockFrames) continue;
       for (std::uint32_t frame = 0; frame < kBlockFrames; ++frame) {
-        left[frame] = interleaved[frame * 2];
-        right[frame] = interleaved[frame * 2 + 1];
+        left_[frame] = interleaved_[frame * 2];
+        right_[frame] = interleaved_[frame * 2 + 1];
       }
       obs_source_audio audio {};
-      audio.data[0] = reinterpret_cast<std::uint8_t*>(left.data());
-      audio.data[1] = reinterpret_cast<std::uint8_t*>(right.data());
+      audio.data[0] = reinterpret_cast<std::uint8_t*>(left_.data());
+      audio.data[1] = reinterpret_cast<std::uint8_t*>(right_.data());
       audio.frames = kBlockFrames;
       audio.speakers = SPEAKERS_STEREO;
       audio.samples_per_sec = das::transport::kAudioSampleRate;
       audio.format = AUDIO_FORMAT_FLOAT_PLANAR;
       audio.timestamp = os_gettime_ns();
-      obs_source_output_audio(source, &audio);
+      // destroyはremove()でここが終わるのを待つため、出力中のソースは解放されない。
+      const std::lock_guard lock(sourcesMutex_);
+      for (auto* source : sources_) obs_source_output_audio(source, &audio);
     }
   }
 
+  std::mutex lifecycleMutex_;
+  std::mutex sourcesMutex_;
+  std::vector<obs_source_t*> sources_;
+  das::transport::NamedSharedMemory memory_;
+  std::unique_ptr<das::transport::RingBuffer> ring_;
+  std::atomic<bool> stopping_ {};
+  std::thread worker_;
+  std::array<float, kBlockFrames * 2> interleaved_ {};
+  std::array<float, kBlockFrames> left_ {};
+  std::array<float, kBlockFrames> right_ {};
+};
+
+SharedReceiver& receiver() {
+  static SharedReceiver instance;
+  return instance;
+}
+
+struct DasObsSource final {
+  explicit DasObsSource(obs_source_t* owner) : source(owner) { receiver().add(source); }
+  ~DasObsSource() { receiver().remove(source); }
+
   obs_source_t* source {};
-  das::transport::NamedSharedMemory memory;
-  std::unique_ptr<das::transport::RingBuffer> ring;
-  std::atomic<bool> stopping {};
-  std::thread worker;
-  std::array<float, kBlockFrames * 2> interleaved {};
-  std::array<float, kBlockFrames> left {};
-  std::array<float, kBlockFrames> right {};
 };
 
 const char* sourceName(void*) { return obs_module_text("DASAudioSource"); }
