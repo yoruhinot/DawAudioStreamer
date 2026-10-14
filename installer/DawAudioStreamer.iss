@@ -1,9 +1,9 @@
 ﻿#define MyAppName "DawAudioStreamer"
 #ifndef MyAppVersion
-#define MyAppVersion "0.4.4"
+#define MyAppVersion "0.4.5"
 #endif
 #ifndef MyAppFileVersion
-#define MyAppFileVersion "0.4.4.0"
+#define MyAppFileVersion "0.4.5.0"
 #endif
 #define MyAppPublisher "yoruhinot"
 #define MyAppCopyright "Copyright (c) 2026 yoruhinot"

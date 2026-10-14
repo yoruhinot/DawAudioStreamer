@@ -1,5 +1,9 @@
 # 変更履歴
 
+## [0.4.5] - 2026-10-13
+
+- OBSに「DAS Audio（DAW）」ソースが複数あると、音声が途切れたりクリックノイズが入ったりする問題を修正
+
 ## [0.4.4] - 2026-09-27
 
 - macOSプレビュー版に、インストールと削除を行うSetupアプリを追加
@@ -58,3 +62,4 @@ VB-CABLEの公式ページを開けます。
 [0.4.2]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.2
 [0.4.3]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.3
 [0.4.4]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.4
+[0.4.5]: https://github.com/yoruhinot/DawAudioStreamer/releases/tag/v0.4.5

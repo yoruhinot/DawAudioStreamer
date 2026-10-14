@@ -1,4 +1,4 @@
-DawAudioStreamer 0.4.3 Quick Start
+DawAudioStreamer 0.4.5 Quick Start
 ===================================
 
 Your DAW's audio interface and ASIO settings are not changed.
@@ -9,7 +9,7 @@ First-time setup
 ----------------
 
 1. Close OBS, Discord, and your DAW.
-2. Run DawAudioStreamer-Setup-0.4.3.exe.
+2. Run DawAudioStreamer-Setup-0.4.5.exe.
 3. Start your DAW.
 4. Insert one instance of DAS Send at the end of your project's master bus.
 
